@@ -8,7 +8,7 @@
 %\usepackage[pdftex]{graphicx}
 \usepackage[font=small,labelfont=bf, textfont=it]{caption}
 \usepackage{subcaption}
-%\usepackage[style=numeric,sorting=none, backend=bibtex8]{biblatex} % used literature
+\usepackage[style=numeric,sorting=none, backend=bibtex8]{biblatex} % used literature
 \usepackage{siunitx}
 \usepackage{hyperref}
 \usepackage{placeins}
@@ -40,6 +40,8 @@
 %\renewcommand{\submittedtext}{change the default text here if needed}
 \degree{Doctor of Philosophy}     %the degree
 \degreedate{Trinity 2020}         %the degree date
+
+\bibliography{Reference_list}        %use a bibtex bibliography file Reference_list.bib
 
 %end the preamble and start the document
 \begin{document}
@@ -81,8 +83,8 @@
 \addcontentsline{toc}{chapter}{Bibliography}
 %uncomment next line to change bibliography name to references
 %\renewcommand{\bibname}{References}
-\bibliography{Reference_list}        %use a bibtex bibliography file Reference_list.bib
-\bibliographystyle{plain}  %use the plain bibliography style
+
+\printbibliography
 
 \end{document}
 
