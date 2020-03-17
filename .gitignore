@@ -4,6 +4,7 @@
 *.alg
 *.aux
 *.bbl
+*.bib
 *.blg
 *.dvi
 *.fdb_latexmk
@@ -28,6 +29,7 @@
 *.pdf
 *.pdfsync
 *.ps
+*.run.xml
 *.snm
 *.synctex.gz
 *.toc
