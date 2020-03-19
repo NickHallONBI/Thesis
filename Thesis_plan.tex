@@ -1,0 +1,308 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.4 (15/5/16)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com) with extensive modifications by
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twoside,onecolumn]{article}
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage[pdftex]{graphicx}
+\usepackage[font=small,labelfont=bf, textfont=it]{caption}
+\usepackage{subcaption}
+\usepackage[style=numeric,sorting=none, backend=bibtex8]{biblatex} % used literature
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{placeins}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{wasysym}
+\usepackage{xcolor}
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt, textwidth = 526pt]{geometry} % Document margins
+\usepackage{booktabs} % Horizontal rules in tables
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{noitemsep} % Make itemize lists more compact
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\itshape} % Set the abstract itself to italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{Accessible Adaptive Optics and Super-resolution Microscopy to Enable Improved Imaging $\bullet$ Thesis plan} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+\usepackage{titling} % Customizing the title section
+
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\bibliography{Reference_list} % literature reference file
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\title{Accessible Adaptive Optics and Super-resolution Microscopy to Enable Improved Imaging} % Article title
+\author{%
+\textsc{Nicholas Hall} \\[1ex] % Your name
+\normalsize Oxford Nottingham Biomedical Imaging CDT \\ % Course/department
+\normalsize University of Oxford \\ % Institution
+\normalsize \href{mailto:nicholas.hall@dtc.ox.ac.uk}{nicholas.hall@dtc.ox.ac.uk} \\ % Your email address
+\normalsize Thesis plan
+}
+
+\date{} % Leave empty to omit a date
+\renewcommand{\maketitlehookd}{%
+}
+
+\begin{document}
+
+% Print the title
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Thesis Plan}
+
+
+\begin{enumerate}[label*=\arabic*.]
+	
+	\item \textbf{Introduction}
+	\begin{enumerate}[label*=\arabic*.]
+		\item Introduction to Microscopy
+		\begin{itemize}
+			\item This is the section the give a brief overview of geometric optics, microscopy, fluorescence and, particularly, resolution.
+		\end{itemize}
+		\item Super-resolution Microscopy
+		\begin{itemize}
+			\item Introduction to the fact that there are methods for overcoming the resolution limit and different techniques with different pros/cons
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Structured Illumination Microscopy
+			\begin{itemize}
+				\item General overview of SIM, particularly Gustafsson-style SIM.
+			\end{itemize}
+			\item SIMFlux Microscopy
+			\begin{itemize}
+				\item Overview of SIMFlux
+			\end{itemize}
+		\end{enumerate}
+		\item Optical Aberrations
+		\begin{itemize}
+			\item Talk about the effect optical aberration have on PSF quality and therefore image quality/resolution. Also worth talking about optical aberrations and ``non-optical'' aberrations i.e. piston, tip and tilt.
+		\end{itemize}
+		\item Adaptive Optics
+		\begin{itemize}
+			\item Here we introduce adaptive optics and their already proven usefulness in correcting for aberrations in microscopy.
+			\item Raise but don't address the non-generalised nature of current implementations
+		\end{itemize}
+		\item Overview and Aims of the Thesis
+		\begin{itemize}
+			\item Here is where you should really hammer home that current implementations are a) not generalised and b) not accessible to biogists.
+			\item Present the story of the thesis: "I have created a robust, generalised accessible adaptive optics implementation. It solves a range of common biology problems and works across multiple sample types and imaging modality. It's generalised so it can be transferred between systems." Thats the novel contribution.
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Methods and Implementations}
+	\begin{enumerate}[label*=\arabic*.]
+		\item DeepSIM
+		\begin{itemize}
+			\item This is the system that the bulk of the data is/will be collected from so it's important to explain the components of it.
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item DeepSIM Optical Set-up
+			\begin{itemize}
+				\item Explain dual beam paths, multiple lasers with the same exit point, etc.
+				\item Explain interferometric path for direct wavefront sensing and why it's preferred over Shack-Hartmann.
+			\end{itemize}
+			\item Optical Alignment
+			\begin{itemize}
+				\item Here's an opportunity to talk about BeamDelta and the need to minimise optical misalignment as DMs (and  AO components in general) cannot offer infinite correction so you still want a well algined system you do minor corrections than a poorly aligned system that you can't fully correct.
+			\end{itemize}
+			\item \textit{Microscope}
+			\begin{itemize}
+				\item Talk about the need for hardware control in bespoke microscope systems and for precise, coordinated timing control.
+			\end{itemize}
+			\item \textit{Cockpit}
+			\begin{itemize}
+				\item Here need to talk about having an accessible interface for biologist to use.
+				\item Mention peculiarities with DeepSIM (i.e. no eye pieces) and call back to the previous inaccessibly of AO to biologists due to complex interfaces.
+			\end{itemize}
+		\end{enumerate}
+		\item Adaptive Optics control software
+		\begin{itemize}
+			\item Here we need to highlight the control software in the abstract. Afterall, it's the main element of the story in this thesis. The specific uses of it, the problems it solves, the metrics, etc will come later.
+			\item Mainly talk about the workflows in the abstract
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Setup
+			\begin{itemize}
+				\item Before you can do any correction, you have to calibrate the DM and this is usually an involved process. These methods make it accessible (again, call back to title/main message)
+			\end{itemize}
+			\begin{enumerate}[label*=\arabic*.]
+				\item Phase Unwrapping
+				\begin{itemize}
+					\item Talk about this as a direct wavefront sensing technique using interferometry.
+				\end{itemize}
+				\item Calibration
+				\begin{itemize}
+					\item Talk about need to calibrate the mirror to meaningfully correct optical aberrations
+				\end{itemize}
+				\item  Characterisation
+				\begin{itemize}
+					\item Talk about how this makes it usable for a user to evaluate the quality of calibration
+				\end{itemize}
+				\item System correction
+				\begin{itemize}
+					\item Talk about needing to correct for system aberration correction and the process for this.
+					\item This will be used for the Remote focusing section
+				\end{itemize}
+			\end{enumerate}
+		\item Use case
+		\begin{itemize}
+			\item This section is mainly to talk about sensorless AO, but in the abstract. Don't need to talk about metrics right now, they will be covered in the specific sections.
+			\item Also probably worth talking about the other usablilty things (i.e. resetting DM, setting parameters, etc)
+		\end{itemize}
+		\end{enumerate}
+	\end{enumerate}
+
+	\item \textbf{Remote focusing and eliminating motion artefacts}
+	\begin{enumerate}[label*=\arabic*.]
+		\item Overview of Motion Artefacts
+		\begin{itemize}
+			\item Explain here how motion artifacts destroy image quality
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Sample Perturbation in Incompressible Media
+			\begin{itemize}
+				\item Highlight problems with DeepSIM being an upright system
+			\end{itemize}
+		\end{enumerate}
+		\item Remote Focus Calibration
+		\begin{enumerate}[label*=\arabic*.]
+			\item Phase Flattening using Interferometric Wavefront Sensing
+			\begin{itemize}
+				\item Call back to System Correction section as it's similar
+			\end{itemize}
+			\item Phase Flattening Accuracy
+			\begin{itemize}
+				\item Discuss accuracy of RF i.e. how accurate does defocusing but 1$\mu$m compare to moving the stage 1$\mu$m
+			\end{itemize}
+		\end{enumerate}
+		\item Biological Exemplar
+		\begin{itemize}
+			\item Explain why the particular sample needs the correction provided, what you can't normally resolve without AO and show how  AO improves it.
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Experimental Setup
+			\item Sample preperation
+		\end{enumerate}
+		\item Experimental Results
+	\end{enumerate}
+
+	\item \textbf{Enabling Structured Illumination Microscopy at greater depth}
+	\begin{enumerate}[label*=\arabic*.]
+		\item Sample Induced Aberrations in Thick Samples
+		\begin{itemize}
+			\item Recap sample induced aberrations and how they impair SIM imaging in-particular
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Scattering Aberrations
+			\begin{itemize}
+				\item Worth highlighting that at a certain point, you lose image quality to scattering aberrations which AO can't help with.
+			\end{itemize}
+		\end{enumerate}
+		\item Sensorless Adaptive Optics
+		\begin{enumerate}[label*=\arabic*.]
+			\item Image Quality Metric
+			\begin{itemize}
+				\item Talk about Fourir Power metric and why it's good for SIM image correction
+			\end{itemize}
+			\item IsoSense
+			\begin{itemize}
+				\item Recap how this helps with image structure anisotropy
+			\end{itemize}
+		\end{enumerate}
+		\item Biological Exemplar: Drosophila Neuro-muscular Junctions
+		\begin{itemize}
+			\item Explain why the particular sample needs the correction provided, what you can't normally resolve without AO and show how  AO improves it.
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Experimental Setup
+			\item Sample preperation
+		\end{enumerate}
+		\item Experimental Results
+	\end{enumerate}
+
+	\item \textbf{Removing sample based aberration from SIMFlux data}
+	\begin{enumerate}[label*=\arabic*.]
+		\item Sample Induced Aberrations in SMLM
+		\begin{itemize}
+			\item Recap sample induced aberrations and how they impair SMLM imaging in-particular
+		\end{itemize}
+		\item SMLM-specific Image Quality Metric
+		\begin{itemize}
+			\item Talk about Second Moment of Fourier transform metric
+		\end{itemize}
+		\item Biological Exemplar: Chromatin
+		\begin{itemize}
+			\item Explain why the particular sample needs the correction provided, what you can't normally resolve without AO and show how  AO improves it.
+		\end{itemize}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Experimental Setup
+			\item Sample preperation
+		\end{enumerate}
+		\item Experimental Results
+	\end{enumerate}
+	\item \textbf{Discussion and future work}
+	\item \textbf{References}
+\end{enumerate}
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+
+\printbibliography
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
