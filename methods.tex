@@ -42,15 +42,53 @@
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations, but performing this step is not something non-specialist user may know how to do or how to assess if the process has been successful.vSecondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While direct wavefront measurements do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, they often vary between sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} For these reasons, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
-Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users.
+Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:Cockpit_UI}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/DeepSIM_control_software.png}
+		\caption{}
+		\label{fig:DeepSIM_control_software}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.35\linewidth, scale=0.5]{images/DM_methods_cockpit.jpg}
+		\caption{}
+		\label{fig:DM_methods_cockpit}
+	\end{subfigure}
+	\caption{(a) Cockpit UI for controlling DeepSIM (b) Deformable mirror specific functions on the Cockpit UI}
+	\label{fig:Cockpit_UI}
+\end{figure}
 
 \subsection{Set-up Methods}
 \label{subsec:set_up_methods}
 
+As previously described, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beampath is used for calibrating the deformable mirror. The interferometric image is formed by the interference between the reference beam arm and the system beam arm. However due to differences in magnification, the size of the reference beam is larger than that of the system beam. Therefore it is necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Cockpit implements such a method as the functionality of the "Select ROI" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the windown shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the inferferometric ROI. This coordinates of this ROI are saved to the microscope's configuration files with the "Save ROI" button.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{images/ROI_selector_init.jpg}
+		\caption{}
+		\label{fig:ROI_selector_init}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{images/ROI_selector.jpg}
+		\caption{}
+		\label{fig:ROI_selector}
+	\end{subfigure}
+	\caption{User interface for selecting the interferometric region of interest (a) The ROI selecter UI when it is first initialised (b) UI with the ROI selected}
+	\label{fig:ROI_selectors}
+\end{figure}
+
 \subsubsection{Direct wavefront sensing}
 \label{subsubsec:direct_wavefront_sensing}
 
-The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within Microscope-AOtools are calibration and system aberration correction. These are both situation where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proved more challenging  to implement in an automatic fashion. Interferometric data can be defined as:
+The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within DeepSIM and Microscope-AOtools are calibration and system aberration correction. These are both situation where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proved more challenging  to implement in an automatic fashion. Interferometric data can be defined as:
 
 \begin{equation}\label{eq:I_basic}
 I(x,y,t) = a(x,y) + b(x,y)cos[\phi(x,y) + \Phi_{R}(x,y,t)]
@@ -74,7 +112,7 @@ Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{
 \phi(x,y) = \arctan \frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}
 \end{equation}
 
-In the phase unwrapping workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the region of interest (ROI), that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. This is provided by the user. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
+In the phase unwrapping workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. This is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
 
 \begin{figure*}
 	\centering
@@ -185,7 +223,27 @@ Having performed the FFT (\ref{fig:puw_new_fringe_fft}), an array described by E
 
 The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$. An 2D  algorithm is used to unwrap the phase map and yield a phase map similar to Figure~\ref{fig:puw_unwrapped_phase} is obtained.\cite{herraez2002fast} Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
 
-This automation does have a drawback. The location of the phase component of the Fourier transform is determined by finding the maximum intensity in the data represented by Figure~\ref{fig:puw_new_fringe_fft_centre_blocked} and then performing a number of centre of mass calculations to find the `true' centre of the phase component. However, this `true' centre may still be incorrect by a few pixels. This leads to an artificial introduction of tip and/or tilt in the final wavefront and this artificial tip/tilt cannot be separated from the true tip/tilt. Therefore, this phase unwrapping implementation cannot be said to be sensitive to tip or tilt. However, since tip and tilt (along with piston) are not considered to be a true optical aberration, this seems a small price to pay for a fully automated phase unwrapping workflow.
+This automation does have a drawback. The location of the phase component of the Fourier transform is determined by finding the maximum intensity in the data represented by Figure~\ref{fig:puw_new_fringe_fft_centre_blocked} and then performing a number of centre of mass calculations to find the `true' centre of the phase component. However, this `true' centre may still be incorrect by a few pixels. This leads to an artificial introduction of tip and/or tilt in the final wavefront and this artificial tip/tilt cannot be separated from the true tip/tilt. Therefore, this phase unwrapping implementation cannot be said to be sensitive to tip or tilt. However, since tip and tilt (along with piston) are not considered to be a true optical aberration, this is a small price to pay for a fully automated phase unwrapping workflow.
+
+This phase unwrapping method is used as part of other methods, but it is also useful for a user to be able to visualise the phase. Principly this is because if the interferogram is not well focused on the camera it can result in the wavefront being heavily distorted by the Zernike mode corresponding to the defocus optical aberration (Noll Index 4). This can mask smaller wavefront deformations caused by the movement of the DM actuators and therefore bias calibration measurements. It is can also be useful to view the system aberrations present, to check the difference applying the system aberration correction makes to the wavefront shape and to manually check for discontinuities. Cockpit implements such a method as the functionality of the "Visualise Phase" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the windown shown in Figure~\ref{fig:phase_viewer_phase}, displaying the phase wavefront acquired from the interferogram. The display can be changed to the power spectrum of the interferogram, Figure~\ref{fig:phase_viewer_ft}, and back by pressing the "Real/Fourier Transform switch" button. 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/phase_viewer_phase.jpg}
+		\caption{}
+		\label{fig:phase_viewer_phase}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/phase_viewer_ft.jpg}
+		\caption{}
+		\label{fig:phase_viewer_ft}
+	\end{subfigure}
+	\caption{(a) Phase viewer window showing the unwrapped phase acquired from the interferogram (b) Phase viewer window showing the power spectrum of the interferogram. }
+	\label{fig:phase_viewer}
+\end{figure}
 
 \subsubsection{Calibration}
 \label{subsubsec:calibration}
@@ -266,7 +324,7 @@ Fitting linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \
 	\label{fig:Ith_actuator_calibration_workflow}
 \end{figure}
 
-In general, $\boldsymbol{B}$ is singular and therefore has no true inverse and so we must use a pseudo-inverse, calculated using single value decomposition (SVD). However, some values of $\boldsymbol{B}$ may be small since the physical position of certain actuators will mean they have limited influence on creating certain Zernike modes. A control matrix calculated without thresholding out these small values will quickly lead to a saturation of the DM actuators (i.e. all actuators at their maximum stroke length) when corrections are calculated.\cite{booth2005methods} Therefore the calibration method incorporates a threshold by default and the exact threshold can be varied by experienced users.
+In general, $\boldsymbol{B}$ is singular and therefore has no true inverse and so we must use a pseudo-inverse, calculated using single value decomposition (SVD). However, some values of $\boldsymbol{B}$ may be small since the physical position of certain actuators will mean they have limited influence on creating certain Zernike modes. A control matrix calculated without thresholding out these small values will quickly lead to a saturation of the DM actuators (i.e. all actuators at their maximum stroke length) when corrections are calculated.\cite{booth2005methods} Therefore the calibration method incorporates a threshold by default and the exact threshold can be varied by experienced users. The calibration routine is initiated by pressing the "Calibrate" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
 \subsubsection{Characterisation}
 \label{subsubsec:characterisation}
@@ -284,18 +342,21 @@ In an ideal situation, where the control matrix provided a perfect linear map fr
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics{./images/characterisation_assay_ideal.png}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.8\linewidth, scale=0.5]{./images/characterisation_assay_ideal.png}
 		\caption{}
 		\label{fig:characterisation_assay_ideal}
 	\end{subfigure}
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics{./images/characterisation_assay_real.png}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{./images/characterisation_assay_real.png}
 		\caption{}
 		\label{fig:characterisation_assay_real}
 	\end{subfigure}
-	\begin{subfigure}{0.4\textwidth}
-		\includegraphics{./images/characterisation_assay_real_diag_and_avg.png}
+	\begin{subfigure}{0.9\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth, scale=0.5]{./images/characterisation_assay_real_diag_and_avg.png}
 		\caption{}
 		\label{fig:characterisation_assay_ideal_diag_and_avg}
 	\end{subfigure}
@@ -303,7 +364,7 @@ In an ideal situation, where the control matrix provided a perfect linear map fr
 	\label{fig:characterisation_assay_results}
 \end{figure}
 
-Whether a calibration routine is considered a 'success' depends on the requirements of the DM within the system. Taking the characterisation assay shown in Figure~\ref{fig:characterisation_assay_real}, if success criteria for the DM is to be able correct for the first 20 Zernike modes with an 80\% accuracy, the calibration routine could be considered successful based on the characterisation assay generated. However, if the success criteria were for 90\% recreation accuracy for the first 30 Zernike modes, then the calibration routine would not have been successful and would need to be performed again, likely with altered parameters. It is left to the user to determine the success criteria for the DM calibration but Microscope-AOtools provides the tool necessary to determine whether they have been satisfied or not.
+Whether a calibration routine is considered a 'success' depends on the requirements of the DM within the system. Taking the characterisation assay shown in Figure~\ref{fig:characterisation_assay_real}, if success criteria for the DM is to be able correct for the first 20 Zernike modes with an 80\% accuracy, the calibration routine could be considered successful based on the characterisation assay generated. However, if the success criteria were for 90\% recreation accuracy for the first 30 Zernike modes, then the calibration routine would not have been successful and would need to be performed again, likely with altered parameters. It is left to the user to determine the success criteria for the DM calibration but Microscope-AOtools provides the tool necessary to determine whether they have been satisfied or not. The charaterisation routine is initiated by pressing the "Characterise" button shown in Figure~\ref{fig:DM_methods_cockpit}. Once the characterisation routine is complete, the characterisation assay and plot of the Zernike mode amplitudes on the diagonal, Figures~\ref{fig:characterisation_assay_real} and \ref{fig:characterisation_assay_ideal_diag_and_avg}, are displayed in a window for the user.
 
 \subsubsection{System Aberration Correction}
 \label{subsubsec:system_correction}
@@ -344,6 +405,8 @@ Figure~\ref{fig:direct_wavefront_correction} shows the results of one such wavef
 \end{figure}
 
 Similar to the calibration routine, the success criteria for direct wavefront correction is left to the user. For direct wavefront corrections preformed on samples, the preference may be to obtain the best possible correction within \textit{N} iterations. For system aberration corrections using an interferometer, where photo bleaching is not an issue, is may be preferable to simply set a minimum error and continue to iterate until this threshold is reached. Microscope-AOtools implements both options to ensure generalisability.
+
+
 
 \subsection{Use Case Methods}
 \label{subsec:use_case_methods}
