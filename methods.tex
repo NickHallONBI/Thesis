@@ -42,23 +42,42 @@
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations, but performing this step is not something non-specialist user may know how to do or how to assess if the process has been successful.vSecondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While direct wavefront measurements do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, they often vary between sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} For these reasons, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
-Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:Cockpit_UI}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods.
+Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:Cockpit_UI}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect these routines will be explained in the relevant sections.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.45\textwidth}
+	\begin{subfigure}{0.64\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth, scale=0.5]{images/DeepSIM_control_software.png}
 		\caption{}
 		\label{fig:DeepSIM_control_software}
 	\end{subfigure}
-	\begin{subfigure}{0.45\textwidth}
+	\begin{subfigure}{0.23\textwidth}
 		\centering
-		\includegraphics[width=0.35\linewidth, scale=0.5]{images/DM_methods_cockpit.jpg}
+		\includegraphics[width=\linewidth]{images/DM_methods_cockpit.jpg}
 		\caption{}
 		\label{fig:DM_methods_cockpit}
 	\end{subfigure}
-	\caption{(a) Cockpit UI for controlling DeepSIM (b) Deformable mirror specific functions on the Cockpit UI}
+
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/DM_methods_cockpit_options.png}
+		\caption{}
+		\label{fig:DM_methods_cockpit_options}
+	\end{subfigure}
+	\begin{subfigure}{0.29\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/direct_wavefront_sensing_options.jpg}
+		\caption{}
+		\label{fig:DM_direct_wavefront_sensing_options}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/sensorless_ao_parameters.jpg}
+		\caption{}
+		\label{fig:DM_sensorless_ao_parameters}
+	\end{subfigure}
+	\caption{(a) Cockpit UI for controlling DeepSIM (b) Deformable mirror specific functions on the Cockpit UI (c) Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods (d) Options window for varying the parameters used in the system aberration routing correciton routing. Spawned by the "Set System Flat Calculation Parameters" button (e) Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
 	\label{fig:Cockpit_UI}
 \end{figure}
 
@@ -315,13 +334,24 @@ z_{p,1} & z_{p,2} & \cdots & z_{p,m}
 \end{bmatrix}
 \end{equation}
 
-Fitting linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics between the $l$-th actuator's position and the $k$-th Zernike mode, $b_{k,l}$. In this way, we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. Figure~\ref{fig:Ith_actuator_calibration_workflow} shows a flowchart representing this process for the $l$-th actuator as implemented in Microscope-AOtools. This is process is repeated for all $N$ actuators.
+Fitting linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics between the $l$-th actuator's position and the $k$-th Zernike mode, $b_{k,l}$. In this way, we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. Figure~\ref{fig:calibration_workflow} shows a flowchart representing this process as implemented in Microscope-AOtools.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.4\textwidth, scale=0.5]{./images/Ith_actuator_calibration_workflow.jpg}
-	\caption{Flowchart depicting the the process for calibrating the $l$-th actuator of the deformable mirror. The influence functions returned are $b_{k,l}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
-	\label{fig:Ith_actuator_calibration_workflow}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/calibration_routine_workflow.jpg}
+		\caption{}
+		\label{fig:calibration_routine_workflow}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/Ith_actuator_calibration_workflow_blue_border.jpg}
+		\caption{}
+		\label{fig:Ith_actuator_calibration_workflow_blue_border}
+	\end{subfigure}
+	\caption{(a) Flowchart depicting the generalised calibration routine implemented in Mircoscope-AOtools (b)Flowchart depicting the the process for calibrating the $l$-th actuator of the deformable mirror, the dashed blue process in (a). The influence functions returned are $b_{k,l}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
+	\label{fig:calibration_workflow}
 \end{figure}
 
 In general, $\boldsymbol{B}$ is singular and therefore has no true inverse and so we must use a pseudo-inverse, calculated using single value decomposition (SVD). However, some values of $\boldsymbol{B}$ may be small since the physical position of certain actuators will mean they have limited influence on creating certain Zernike modes. A control matrix calculated without thresholding out these small values will quickly lead to a saturation of the DM actuators (i.e. all actuators at their maximum stroke length) when corrections are calculated.\cite{booth2005methods} Therefore the calibration method incorporates a threshold by default and the exact threshold can be varied by experienced users. The calibration routine is initiated by pressing the "Calibrate" button shown in Figure~\ref{fig:DM_methods_cockpit}.
@@ -406,7 +436,7 @@ Figure~\ref{fig:direct_wavefront_correction} shows the results of one such wavef
 
 Similar to the calibration routine, the success criteria for direct wavefront correction is left to the user. For direct wavefront corrections preformed on samples, the preference may be to obtain the best possible correction within \textit{N} iterations. For system aberration corrections using an interferometer, where photo bleaching is not an issue, is may be preferable to simply set a minimum error and continue to iterate until this threshold is reached. Microscope-AOtools implements both options to ensure generalisability.
 
-
+The charaterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the waevefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threashold is $\inf$. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default these are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy greater than 75\% (i.e. a value above 0.75 on the diagonal of the Chararacterisation assay for that mode). Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
 \subsection{Use Case Methods}
 \label{subsec:use_case_methods}
@@ -425,28 +455,13 @@ In many biological applications, direct wavefront sensing is not possible and so
 
 The complexity of sensorless adaptive optics correction lies in selecting the best image quality metric. There have been numerous metrics developed which have been shown to be effective on certain sample types or imaging modalities.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} In order for an adaptive optics implementation to be considered generalised, it should not be tied to a particular sample type or imaging modality. For this reason, Microscope-AOtools offers a range of image quality metrics, all located in the \textit{aoMetrics.py}, and which we will discuss shortly.  
 
-Unlike the calibration, characterisation and direct wavefront sensing techniques, an automated sensorless adaptive optics routine is not implemented in Microscope-AOtools. This is a design choice since to do so would mean giving AOtools control over multiple pieces of hardware such as imaging cameras, light sources, etc. Python Microscope already fulfils this role and so we decided to not reimplement work already done elsewhere. Figure~\ref{fig:sensorless_correction_workflows} shows the options for sensorless correction workflows.
-
-Applying the $j$-th amplitudes of the $i$-th Zernike modes is a method present in Microscope-AOtools by passing a 1-D array of $N$ Zernike mode amplitudes to the \lstinline|set_phase| function. The user has to set up their system to take images after each array of Zernike mode amplitudes is applied. The two main decisions a user has to make when constructing their sensorless correction workflow are when to measure the image quality metric and when to apply the corrections for each Zernike modes. In the workflows in Figure~\ref{fig:sensorless_correction_workflow_1} and \ref{fig:sensorless_correction_workflow_2} the correction is calculated for one Zernike mode and then applied before correcting the next Zernike mode. If the order of correction is chosen well so that the modes with the largest amplitudes are corrected first, this can have significant benefit over the workflow shown in Figure~\ref{fig:sensorless_correction_workflow_3}. Measuring the image quality metrics for single images, a stack of $M$ images for one Zernike mode or $NM$ images for all Zernike modes are all methods which Microscope-AOtools has as the functions \lstinline|measure_metric|, \lstinline|correct_sensorless_single_mode| and \lstinline|correct_sensorless_all_modes| respectively. In the case of the latter two the function returns the best Zernike mode amplitude for the single Zernike mode and all Zernike modes measured respectively.
+Unlike the calibration, characterisation and direct wavefront sensing techniques, the sensorless adaptive optics routine is not a method implemented in Microscope-AOtools and simply called by Cockpit. Instead, the sensorless correction routine relies on coordination from Cockpit, Python Microscope and Microscope-AOtools. The biological sample is set up in the image plane. A known amplitude of the first Zernike mode to be corrected for is applied to the DM by Microscope-AOtools, Then the light sources and camera are triggered by Python Microscope and the image data is collected by cockpit. This is repeated for $M$ measurements. Then, Cockpit passes the $M$ images to Microscope-AOtools where the image quality metric for each image is evaluated. These values are then used to fit a Gaussian function and the mean of the Gaussian yields the Zernike mode amplitudes which should yield the maximum image quality, $a_{max}$. This amplitude is then applied to the DM and stored as the offset on top of which all further corrections should be applied. This process is then repeated for $N$ Zernike modes. This whole process is then repeated for $T$ iterations. Finally, the recorded Zernike mode amplitudes which have been corrected for and the actuator positions associated with that correction are stored in in Cockpit's internal configuration. The sensorless adaptive optics routine is initiated by pressing the "Sensorless AO" button shown in Figure~\ref{fig:DM_methods_cockpit}. The workflow of this routine is shown in Figure~\ref{fig:sensorless_correction_workflow_DeepSIM}
 
 \begin{figure}[h]
-	\begin{subfigure}{0.425\textwidth}
-		\includegraphics[scale=0.55]{./images/sensorless_correction_workflow_1.jpg}
-		\caption{}
-		\label{fig:sensorless_correction_workflow_1}
-	\end{subfigure}
-	\begin{subfigure}{0.425\textwidth}
-		\includegraphics[scale=0.55]{./images/sensorless_correction_workflow_2.jpg}
-		\caption{}
-		\label{fig:sensorless_correction_workflow_2}
-	\end{subfigure}
-	
 	\centering
-	\begin{subfigure}{0.425\textwidth}
-		\includegraphics[scale=0.55]{./images/sensorless_correction_workflow_3.jpg}
-		\caption{}
-		\label{fig:sensorless_correction_workflow_3}
-	\end{subfigure}
-	\caption{Flowcharts depicting the sensorless correction routine options (a) An image for each amplitude of the $i$-th Zernike mode is taken and the image quality metric is immediately evaluated. Once all the images for the $i$-th Zernike mode have been taken, the best Zernike amplitude is found as described in Figure~\ref{fig:sensorless_correction_method} and applied (b) All $M$ images are taken, then the quality metric is obtained for all $M$ images, the best Zernike amplitude is found and applied (c) All the images for all the $N$ Zernike modes are obtained with no correction applied in between modes. The image quaility metric then measured for every image and the best amplitude for each Zernike mode is found. The correction for all modes is applied simultaneously at the end of the workflow.}
-	\label{fig:sensorless_correction_workflows}
+	\includegraphics[scale=0.65]{./images/sensorless_correction_workflow_DeepSIM.jpg}
+	\caption{Flowchart depicting the sensorless correction routine implemented on DeepSIM. All $M$ images are taken, then the quality metric is obtained for all $M$ images, the best Zernike amplitude is found and applied }
+	\label{fig:sensorless_correction_workflow_DeepSIM}
 \end{figure}
+
+Clearly, this sensorless routine has multiple parameters and there is a limited degree to which these can be automatically selected. To this end, Figures~\ref{fig:DM_methods_cockpit_options} \&~\ref{fig:DeepSIM_control_software} have allow a user to vary these parameters. Figure~\ref{fig:DM_methods_cockpit_options} shows various options the user can select for the image quality metric to be used. As previously mentioned, different image quality metrics are optimised for different imaging modalities and sample types. Allowing the user to easily switch between metrics is critical for a generalised implementation of adaptive optics which is accessible to users. Figure~\ref{fig:DeepSIM_control_software} shows a window which allows the user to vary the number of iterations, $T$, the Zernike modes to be corrected, $N$ and the number of measurements for each mode, $M$. By default, the Zernike modes corrected for are $1^{st}$ and $2^{nd}$ order spherical aberration, coma, astigmatism and trefoil as these are often the source of the most significant wavefront deformation, and therefore loss of image quality, in biological samples. The amplitudes applied to the DM are evenly spaced between the "Aberration range minima", $j_{min}$ and "Aberration range minima", $j_{max}$,in $M$ intervals. To ensure that the Gaussian fitting to find $a_{max}$ yields a reasonable value, the fitting has bounds defined as $(j_{max}-j_{min}) \pm 0.25(j_{max}-j_{min})$.
