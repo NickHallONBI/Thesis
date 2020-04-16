@@ -3,84 +3,87 @@
 \section{DeepSIM}
 \label{sec:DeepSIM}
 
+3D structured illumination microscopy (3D-SIM) is a super-resolution microscopy technique which is well suited to imaging live biological samples due to the relatively few images required to reconstruct a super-resolution image. However, to date this application has not been exploited. This is for two principle reasons. Firstly, live biological samples have to be suspended in some form of media to sustain them. This required an upright microscopy configuration and all available SIM systems to date have an inverted configuration. Secondly, imaging a depths $>20\mu m$ remains a challenge for traditional 3D-SIM methods due to limited background rejection and optical aberrations degrading the stripe contrast necessary for successful SIM imaging.\cite{wu2018faster} Therefore most 3D-SIM imaging has been limited to thin specimens. DeepSIM is a bespoke microscope designed to address these issues, being an open and flexible upright microscope platform optimised for rapid 3D SIM image stacks deep in large samples by implementing adaptive optics. 
+
+\subsection{DeepSIM Optical Set-up}
+\label{subsec:DeepSIM_optics}
+
+Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM). The SLM acts as a diffraction grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then demagnified and reimaged onto the deformable mirror. The beam is then demagnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the deformable mirror. At this point the emission beam path is redirected by a dichroic mirror, magnified and then reimaged onto the EMCCD camera. There is a secondary dichroic which separates the "red" colour channel from the "green" colour channel. \textit{(Note: find out the wavelength bandpass properties of this dichroic and define them here.)}
+	
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/DeepSIM_complete_beam_paths.jpg}
+	\caption{Complete beam path layout for DeepSIM. DeepSIM has multiple paths that can changed by flipping the numbered pairs/individual mirrors. The green paths denotes the exitation beam paths. The solid green path shows the structured illumination (SI) beam path. The dashed green path shows the widefield beam path. This is changed to the interference beam path but flipping up the lens and pellicle pair. The dot-dashed green path shows the excitation path which bypasses the deformable mirror. The dot-dot-dashed green path shows the excitation path going through the $10\times$ air objective. The orange path denotes the emission beam path.}
+	\label{fig:DeepSIM_complete_beam_paths}
+\end{figure}
+	
+Raising the \circled{1} pair of flip mirrors bypasses the SLM and changes the excitation beam path to a widefield configuration. Raising the \circled{2} pair of flip mirrors bypasses the DM. This is a useful configuration when the DM has not yet been calibrated since the neutral position of the DM actuators have a worse flatness profile than that of a plane mirror. Without calibration, the DM surface cannot be flattened and may contribute to the aberrations present in the imaging system. Raising the \circled{3} flip mirror directs the exitation beam path through the $10 \times$ air objective. This beam path is used for field of view (FOV) mapping.
+
+
+
 \begin{itemize}
-	\item This is the system that the bulk of the data is/will be collected from so it's important to explain the components of it.
+	\item Explain interferometric path for direct wavefront sensing and why it's preferred over Shack-Hartmann.
 \end{itemize}
 
-	\subsection{DeepSIM Optical Set-up}
-	\label{subsec:DeepSIM_optics}
+\subsection{Optical Alignment}
+\label{subsec:alignment}
 	
-	\begin{figure}[h]
+\begin{itemize}
+	\item Here's an opportunity to talk about BeamDelta and the need to minimise optical misalignment as DMs (and  AO components in general) cannot offer infinite correction so you still want a well algined system you do minor corrections than a poorly aligned system that you can't fully correct.
+\end{itemize}
+
+\subsection{\textit{Microscope}}
+\label{subsec:microscope}
+	
+\begin{itemize}
+	\item Talk about the need for hardware control in bespoke microscope systems and for precise, coordinated timing control.
+\end{itemize}
+
+\subsection{\textit{Cockpit}}
+\label{subsec:cockpit}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.575\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{images/DeepSIM_complete_beam_paths.jpg}
-		\caption{Complete beam path layout for DeepSIM. DeepSIM has multiple paths that can changed by flipping the numbered pairs/individual mirrors. The green paths denotes the exitation beam paths. The solid green path shows the structured illumination (SI) beam path. The dashed green path shows the widefield beam path. This is changed to the interference beam path but flipping up the lens and pellicle pair. The dot-dashed green path shows the excitation path which bypasses the deformable mirror. The dot-dot-dashed green path shows the excitation path going through the $10\times$ air objective. The orange path denotes the emission beam path.}
-		\label{fig:DeepSIM_complete_beam_paths}
-	\end{figure}
-	
-	\begin{itemize}
-		\item Explain dual beam paths, multiple lasers with the same exit point, etc.
-		\item Explain interferometric path for direct wavefront sensing and why it's preferred over Shack-Hartmann.
-	\end{itemize}
-
-	\subsection{Optical Alignment}
-	\label{subsec:alignment}
-	
-	\begin{itemize}
-		\item Here's an opportunity to talk about BeamDelta and the need to minimise optical misalignment as DMs (and  AO components in general) cannot offer infinite correction so you still want a well algined system you do minor corrections than a poorly aligned system that you can't fully correct.
-	\end{itemize}
-
-	\subsection{\textit{Microscope}}
-	\label{subsec:microscope}
-	
-	\begin{itemize}
-		\item Talk about the need for hardware control in bespoke microscope systems and for precise, coordinated timing control.
-	\end{itemize}
-
-	\subsection{\textit{Cockpit}}
-	\label{subsec:cockpit}
-
-	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_main_window.png}
+		\caption{}
+		\label{fig:DeepSIM_control_software_main_window}
+	\end{subfigure}
+	\begin{subfigure}{0.365\textwidth}
 		\centering
-		\begin{subfigure}{0.575\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_main_window.png}
-			\caption{}
-			\label{fig:DeepSIM_control_software_main_window}
-		\end{subfigure}
-		\begin{subfigure}{0.365\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_camera.png}
-			\caption{}
-			\label{fig:DeepSIM_control_software_camera}
-		\end{subfigure}
+		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_camera.png}
+		\caption{}
+		\label{fig:DeepSIM_control_software_camera}
+	\end{subfigure}
 		
-		\begin{subfigure}{0.51\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_stage_control.png}
-			\caption{}
-			\label{fig:DeepSIM_control_software_stage_control}
-		\end{subfigure}
-		\begin{subfigure}{0.45\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_mosaic.png}
-			\caption{}
-			\label{fig:DeepSIM_control_software_mosaic}
-		\end{subfigure}
-		\caption{Cockpit UI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
-		\label{fig:Cockpit_UI}
-	\end{figure}
+	\begin{subfigure}{0.51\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_stage_control.png}
+		\caption{}
+		\label{fig:DeepSIM_control_software_stage_control}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_mosaic.png}
+		\caption{}
+		\label{fig:DeepSIM_control_software_mosaic}
+	\end{subfigure}
+	\caption{Cockpit UI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
+	\label{fig:Cockpit_UI}
+\end{figure}
 	
-	\begin{itemize}
-		\item Here need to talk about having an accessible interface for biologist to use.
-		\item Mention peculiarities with DeepSIM (i.e. no eye pieces) and call back to the previous inaccessibly of AO to biologists due to complex interfaces.
-	\end{itemize}
+\begin{itemize}
+	\item Here need to talk about having an accessible interface for biologist to use.
+	\item Mention peculiarities with DeepSIM (i.e. no eye pieces) and call back to the previous inaccessibly of AO to biologists due to complex interfaces.
+\end{itemize}
 
 \section{Adaptive Optics Control Software}
 \label{sec:AOtools}
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations, but performing this step is not something non-specialist user may know how to do or how to assess if the process has been successful.vSecondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While direct wavefront measurements do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, they often vary between sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} For these reasons, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
-Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DM_methods}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect these routines will be explained in the relevant sections.
+Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect these routines will be explained in the relevant sections.
 
 \begin{figure}[H]
 	\centering
@@ -110,7 +113,7 @@ Microscope-AOtools provides such an implementation, utilising Python Microscope 
 		\label{fig:DM_sensorless_ao_parameters}
 	\end{subfigure}
 	\caption{(a) Deformable mirror specific functions on the Cockpit UI (b) Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods (c) Options window for varying the parameters used in the system aberration routing correciton routing. Spawned by the "Set System Flat Calculation Parameters" button (d) Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
-	\label{fig:DM_methods}
+	\label{fig:DeepSIM_control_software}
 \end{figure}
 
 \subsection{Set-up Methods}
