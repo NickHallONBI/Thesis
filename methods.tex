@@ -10,6 +10,13 @@
 	\subsection{DeepSIM Optical Set-up}
 	\label{subsec:DeepSIM_optics}
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{images/DeepSIM_complete_beam_paths.jpg}
+		\caption{Complete beam path layout for DeepSIM. DeepSIM has multiple paths that can changed by flipping the numbered pairs/individual mirrors. The green paths denotes the exitation beam paths. The solid green path shows the structured illumination (SI) beam path. The dashed green path shows the widefield beam path. This is changed to the interference beam path but flipping up the lens and pellicle pair. The dot-dashed green path shows the excitation path which bypasses the deformable mirror. The dot-dot-dashed green path shows the excitation path going through the $10\times$ air objective. The orange path denotes the emission beam path.}
+		\label{fig:DeepSIM_complete_beam_paths}
+	\end{figure}
+	
 	\begin{itemize}
 		\item Explain dual beam paths, multiple lasers with the same exit point, etc.
 		\item Explain interferometric path for direct wavefront sensing and why it's preferred over Shack-Hartmann.
@@ -31,6 +38,37 @@
 
 	\subsection{\textit{Cockpit}}
 	\label{subsec:cockpit}
+
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.575\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_main_window.png}
+			\caption{}
+			\label{fig:DeepSIM_control_software_main_window}
+		\end{subfigure}
+		\begin{subfigure}{0.365\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_camera.png}
+			\caption{}
+			\label{fig:DeepSIM_control_software_camera}
+		\end{subfigure}
+		
+		\begin{subfigure}{0.51\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_stage_control.png}
+			\caption{}
+			\label{fig:DeepSIM_control_software_stage_control}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/DeepSIM_control_software_mosaic.png}
+			\caption{}
+			\label{fig:DeepSIM_control_software_mosaic}
+		\end{subfigure}
+		\caption{Cockpit UI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
+		\label{fig:Cockpit_UI}
+	\end{figure}
 	
 	\begin{itemize}
 		\item Here need to talk about having an accessible interface for biologist to use.
@@ -42,43 +80,37 @@
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations, but performing this step is not something non-specialist user may know how to do or how to assess if the process has been successful.vSecondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While direct wavefront measurements do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, they often vary between sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} For these reasons, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
-Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:Cockpit_UI}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect these routines will be explained in the relevant sections.
+Microscope-AOtools provides such an implementation, utilising Python Microscope to provide control over the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics which can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DM_methods}. The overall UI presented to users of DeepSIM is shown in Figure~\ref{fig:DeepSIM_control_software} and the functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Use-case methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect these routines will be explained in the relevant sections.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.64\textwidth}
-		\centering
-		\includegraphics[width=1\linewidth, scale=0.5]{images/DeepSIM_control_software.png}
-		\caption{}
-		\label{fig:DeepSIM_control_software}
-	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.25\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/DM_methods_cockpit.jpg}
 		\caption{}
 		\label{fig:DM_methods_cockpit}
 	\end{subfigure}
-
-	\begin{subfigure}{0.4\textwidth}
+	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/DM_methods_cockpit_options.png}
 		\caption{}
 		\label{fig:DM_methods_cockpit_options}
 	\end{subfigure}
-	\begin{subfigure}{0.29\textwidth}
+
+	\begin{subfigure}{0.45\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/direct_wavefront_sensing_options.jpg}
 		\caption{}
 		\label{fig:DM_direct_wavefront_sensing_options}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.35\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/sensorless_ao_parameters.jpg}
 		\caption{}
 		\label{fig:DM_sensorless_ao_parameters}
 	\end{subfigure}
-	\caption{(a) Cockpit UI for controlling DeepSIM (b) Deformable mirror specific functions on the Cockpit UI (c) Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods (d) Options window for varying the parameters used in the system aberration routing correciton routing. Spawned by the "Set System Flat Calculation Parameters" button (e) Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
-	\label{fig:Cockpit_UI}
+	\caption{(a) Deformable mirror specific functions on the Cockpit UI (b) Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods (c) Options window for varying the parameters used in the system aberration routing correciton routing. Spawned by the "Set System Flat Calculation Parameters" button (d) Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
+	\label{fig:DM_methods}
 \end{figure}
 
 \subsection{Set-up Methods}
@@ -436,7 +468,7 @@ Figure~\ref{fig:direct_wavefront_correction} shows the results of one such wavef
 
 Similar to the calibration routine, the success criteria for direct wavefront correction is left to the user. For direct wavefront corrections preformed on samples, the preference may be to obtain the best possible correction within \textit{N} iterations. For system aberration corrections using an interferometer, where photo bleaching is not an issue, is may be preferable to simply set a minimum error and continue to iterate until this threshold is reached. Microscope-AOtools implements both options to ensure generalisability.
 
-The charaterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the waevefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threashold is $\inf$. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default these are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy greater than 75\% (i.e. a value above 0.75 on the diagonal of the Chararacterisation assay for that mode). Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
+The charaterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the waevefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threashold is $\infty$ and so any wavefront deformation will yeild an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default these are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy greater than 75\% (i.e. a value above 0.75 on the diagonal of the Chararacterisation assay for that mode). Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
 \subsection{Use Case Methods}
 \label{subsec:use_case_methods}
