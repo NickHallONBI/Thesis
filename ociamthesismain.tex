@@ -26,6 +26,9 @@
 \setlist[itemize]{noitemsep} % Make itemize lists more compact
 \usepackage{hyperref} % For hyperlinks in the PDF
 
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 %input macros (i.e. write your own macros file called mymacros.tex 
 %and uncomment the next line)
