@@ -8,7 +8,7 @@
 \subsection{DeepSIM Optical Set-up}
 \label{subsec:DeepSIM_optics}
 
-Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM). The SLM acts as a diffraction grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then demagnified and reimaged onto the deformable mirror. The beam is then demagnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the deformable mirror. At this point the emission beam path is redirected by a dichroic mirror (Chroma Technology ZT405/488/561/640rpc), magnified and then reimaged onto the Andor iXon EMCCD cameras. There is a secondary dichroic (Chroma Technology ZT561rdc-xr) which separates the "red" colour channel (562nm-800nm) from the "green" colour channel (390nm-562nm). 
+Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM) at a shallow angle ($<10^{\circ}$). The SLM acts as a diffraction grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then demagnified and reimaged onto the Alpao 69-actuator deformable mirror (DM). The beam is then demagnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the DM. At this point the emission beam path is redirected by a dichroic mirror (Chroma Technology ZT405/488/561/640rpc), magnified and then reimaged onto the Andor iXon Ultra EMCCD cameras. There is a secondary dichroic (Chroma Technology ZT561rdc-xr) which separates the "red" colour channel (562nm-800nm) from the "green" colour channel (390nm-562nm). Since the DM is in both the exitation and emission paths it is able to correct for aberrations in both paths.
 	
 \begin{figure}[h]
 	\centering
@@ -24,9 +24,18 @@ Raising both the \circled{1} pair of flip mirrors and the \circled{4} flip mount
 \subsection{Optical Alignment}
 \label{subsec:alignment}
 	
-\begin{itemize}
-	\item Here's an opportunity to talk about BeamDelta and the need to minimise optical misalignment as DMs (and  AO components in general) cannot offer infinite correction so you still want a well algined system you do minor corrections than a poorly aligned system that you can't fully correct.
-\end{itemize}
+Being a bespoke microscopy system, DeepSIM was assembled from individual components and aligned by hand. This alignment process is critical for ensuring the microscopy system itself introduces the smallest amount of aberrations. Aberrations in the imaging system can degrade the ability to reliably image the high spatial frequency of the illumination pattern.\cite{debarre2008adaptive,booth2015aberrations} Whilst DeepSIM incorperates a DM for performing aberration correction, every DM has a limited stroke length and the actuator response is often not linear at the limits of this stroke length. Correcting for relatively large system aberrations due to a poorly aligned system is likely to lead to insufficent remaining stroke length to correct for the sample induced aberrations. Therefore, having a well aligned system is still critical even for AO-enabled microscopy systems such as DeepSIM.
+
+Firstly the upright bridge to hold the objectives and the stage in their upright configuration was constructed and installed on the optical table. One of the lasers was then installed and the beam paths shown in Figure~\ref{fig:DeepSIM_complete_beam_paths} was constructed without the lenses. The beam was kept either parallel or perpendicular to the optical table where appropriate and passing through the centre of the objective appature. The beam was kept parallel to the table by positioning an iris at the beam height at the laser and 'walking' this iris down the beam path, ensuring that after each reflection the beam remains at the same height. Once this beam path was establised, the lenses were added sequentially and aligned. Finally, the other lasers are coaligned to this beam path. The result is the complete optical setup shown in Figure~\ref{fig:DeepSIM_physical_optics}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/DeepSIM_SIM_path_annotated_bright.jpg}
+	\caption{The aligned DeepSIM optical set-up. The 3D-SIM excitation (green) and emission (red) beam paths are annotated.}
+	\label{fig:DeepSIM_physical_optics}
+\end{figure}
+
+The alignment of the lenses and the coalignment of the lasers is typically done by eye. The quality of the alignment done in this manner is highly subjective and dependant on a number of factors that affect the quality of their judgement that two beams are in the same position on an pinhole/iris. BeamDelta was used to align the optical componets of DeepSIM as it offers a more accurate, less hazardous and faster approach to optical element alignment.\cite{dobbie2019beamdelta}
 
 \subsection{\textit{Microscope}}
 \label{subsec:microscope}
