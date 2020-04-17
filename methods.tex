@@ -40,12 +40,12 @@ The alignment of the lenses and the coalignment of the lasers is typically done 
 \subsection{\textit{Microscope}}
 \label{subsec:microscope}
 	
-\begin{itemize}
-	\item Talk about the need for hardware control in bespoke microscope systems and for precise, coordinated timing control.
-\end{itemize}
+There is a requirement for control over all the hardware elements of DeepSIM. This can pose a problem since each hardware component has its own low level software libraries and they are distributed over several machines. Additionally, in order to ensure rapid imaging of 3D-SIM Z-data stacks there is a requirement for precise timing control of all the optical hardware, such as laser, cameras, etc, which must act in concert. To solve these challenges, the DeepSIM's hardware is controlled via Python Microscope, an open source Python package which allows the optical elements to be synchronised with hardware triggers. For this, DeepSIM utilises a digital signal processor (DSP).
 
 \subsection{\textit{Cockpit}}
 \label{subsec:cockpit}
+
+
 
 \begin{figure}[H]
 	\centering
