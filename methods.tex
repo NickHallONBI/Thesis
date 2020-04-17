@@ -45,9 +45,9 @@ There is a requirement for control over all the hardware elements of DeepSIM. Th
 \subsection{\textit{Cockpit}}
 \label{subsec:cockpit}
 
+Being a bespoke microscope DeepSIM requires a bespoke graphical user interface (GUI) which is accessible to users. For this purpose DeepSIM implemented Cockpit, highly flexible and adaptable open source Python-base GUI environment. Figure~\ref{fig:Cockpit_UI} shows the GUI used to control DeepSIM. In the main window, Figure~\ref{fig:DeepSIM_control_software_main_window}, a user can enable and disable the various hardware elements. They can also swap between the various beam paths shown in Figure~\ref{fig:DeepSIM_complete_beam_paths}. A user also has access to the automated AO methods, the specifics of which will be discussed later. Figure~\ref{fig:DeepSIM_control_software_stage_control} shows the window which can be used to control the XY stage, and the course mechanical and fine piezo Z stages as well as display the location of each. The step control and step size for each of these are assigned to keyboard shortcuts. 
 
-
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{0.575\textwidth}
 		\centering
@@ -74,14 +74,11 @@ There is a requirement for control over all the hardware elements of DeepSIM. Th
 		\caption{}
 		\label{fig:DeepSIM_control_software_mosaic}
 	\end{subfigure}
-	\caption{Cockpit UI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
+	\caption{Cockpit GUI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
 	\label{fig:Cockpit_UI}
 \end{figure}
-	
-\begin{itemize}
-	\item Here need to talk about having an accessible interface for biologist to use.
-	\item Mention peculiarities with DeepSIM (i.e. no eye pieces) and call back to the previous inaccessibly of AO to biologists due to complex interfaces.
-\end{itemize}
+
+Unlike commercal microscopes, DeepSIM does not have any eye-pieces. Ordinarliy this would present a problem for simply locating the sample, let alone locating a specific region or structure of interest within the sample. To overcome this limitation, Cockpit implements a Mosaic window shown in Figure~\ref{fig:DeepSIM_control_software_mosaic}. When the mosaic is run, Cockpit moves the stage in a anti-clockwise spiral pattern and takes an image at each position. These images are then stored in the mosaic window and can be used to mark sites of interest for imaging. The use-case for this is that a user takes an initial mosaic using the $10\times$ objective to find the sample and identify some broad regions of interest. They then swap to the $60\times$ objective for a more detailed mosaic in the previously identified regions, locate specific sites of interest which they can then mark. These sites can then be visited by the user individually and have data collected manually using the "Single-site experiment" option or each site can be visited and data collected in an automated fashion using the "Multi-site experiment option". In this way DeepSIM can function well without eye-pieces and is easily controlled by a potential user.
 
 \section{Adaptive Optics Control Software}
 \label{sec:AOtools}
