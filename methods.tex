@@ -8,7 +8,7 @@
 \subsection{DeepSIM Optical Set-up}
 \label{subsec:DeepSIM_optics}
 
-Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM). The SLM acts as a diffraction grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then demagnified and reimaged onto the deformable mirror. The beam is then demagnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the deformable mirror. At this point the emission beam path is redirected by a dichroic mirror, magnified and then reimaged onto the EMCCD camera. There is a secondary dichroic which separates the "red" colour channel from the "green" colour channel. \textit{(Note: find out the wavelength bandpass properties of this dichroic and define them here.)}
+Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM). The SLM acts as a diffraction grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then demagnified and reimaged onto the deformable mirror. The beam is then demagnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the deformable mirror. At this point the emission beam path is redirected by a dichroic mirror (Chroma Technology ZT405/488/561/640rpc), magnified and then reimaged onto the Andor iXon EMCCD cameras. There is a secondary dichroic (Chroma Technology ZT561rdc-xr) which separates the "red" colour channel (562nm-800nm) from the "green" colour channel (390nm-562nm). 
 	
 \begin{figure}[h]
 	\centering
@@ -19,11 +19,7 @@ Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schemati
 	
 Raising the \circled{1} pair of flip mirrors bypasses the SLM and changes the excitation beam path to a widefield configuration. Raising the \circled{2} pair of flip mirrors bypasses the DM. This is a useful configuration when the DM has not yet been calibrated since the neutral position of the DM actuators have a worse flatness profile than that of a plane mirror. Without calibration, the DM surface cannot be flattened and may contribute to the aberrations present in the imaging system. Raising the \circled{3} flip mirror directs the exitation beam path through the $10 \times$ air objective. This beam path is used for field of view (FOV) mapping.
 
-
-
-\begin{itemize}
-	\item Explain interferometric path for direct wavefront sensing and why it's preferred over Shack-Hartmann.
-\end{itemize}
+Raising both the \circled{1} pair of flip mirrors and the \circled{4} flip mounted pellicle beamsplitter and lens changes both the excitation and emission beam paths to create an interferometer. Half of the excitation beam is picked off by the 50:50 beamsplitter and directed straight into the Ximea XiQ camera. This is the interferometer reference arm. The sample beam arm proceeds through the regular excitation beam path. Placing a mirror in the focal plane of the $60\times$ objective reflects the beam arm through the emission beam path until it is reflected by the pellicle into the Ximea XiQ camera. This interferogram can interrogated to yeild an image of the phase wavefront. Since the DM is in the sample arm, varying the shape of the DM surface will change the shape of the phase wavefront. Measuring how the movement of the DM's actuators influences the shape of the phase wavefront allows the DM to be calibrated. 
 
 \subsection{Optical Alignment}
 \label{subsec:alignment}
