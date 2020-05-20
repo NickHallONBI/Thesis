@@ -468,15 +468,15 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.33\textwidth}
+	\begin{subfigure}{0.35\textwidth}
 		\centering
-		\includegraphics[scale=2]{./images/system_wavefront_before_correction_adv.png}
+		\includegraphics[width=1\linewidth, scale=2]{./images/system_wavefront_before_correction_adv.png}
 		\caption{}
 		\label{fig:aberrated_wavefront_defocus_ptt_rmv_crop_phase_only}
 	\end{subfigure}
 	\begin{subfigure}{0.425\textwidth}
 		\centering
-		\includegraphics[scale=2]{./images/system_wavefront_after_correction_best_20it_adv.png}
+		\includegraphics[width=1\linewidth, scale=2]{./images/system_wavefront_after_correction_best_20it_adv_edit.jpg}
 		\caption{}
 		\label{fig:flattened_wavefront_20it}
 	\end{subfigure}
@@ -491,7 +491,7 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 	\label{fig:direct_wavefront_correction}
 \end{figure}
 
-Similar to the calibration routine, the success criteria for system aberration correction is left to the user. For system aberration corrections it may be preferable to set a minimum wavefront error and continue to iterate until this threshold is reached. However a user may wish to only spend $N$ iterations correcting the wavefront. Microscope-AOtools implements both options to ensure generalisability and these parameters can be set by the user utilising the option window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options}. As with the calibration and characterisation methods, the wavefront flattening routine relies on a user selected phase acquisition method selected from the suite of implemented phase acquisition methods. This generalised construction ensures that the applicability of Microscope-AOtools to any adaptive element with any wavefront sensing technique is preserved throughout all the set-up methods.
+For system aberration corrections it may be preferable to set a minimum wavefront error and continue to iterate until this threshold is reached. However a user may wish to only spend $N$ iterations correcting the wavefront. Microscope-AOtools implements both options to ensure generalisability and these parameters can be set by the user utilising the option window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options}. As with the calibration and characterisation methods, the wavefront flattening routine relies on a user selected phase acquisition method selected from the suite of implemented phase acquisition methods. This generalised construction ensures that the applicability of Microscope-AOtools to any adaptive element with any wavefront sensing technique is preserved throughout all the set-up methods.
 
 The characterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
