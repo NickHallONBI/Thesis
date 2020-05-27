@@ -20,6 +20,80 @@
 	\subsection{Image Quality Metric: Fourier Power}
 	\label{subsec:fourier_power_metric}
 	
+	As mentioned in Section~\ref{subsubsec:sensorless_correction}, 
+	sensorless AO correction requires an image quality metric which
+	is well suited to both the imaging modality and the desired 
+	sample. Microscope-AOtools implements a suite of image quality
+	metrics to chose from. Since SIM data is contingent on high
+	quality Fourier information, a sensible starting point for 
+	the image quality metric, $S$, is the total power of the Fourier
+	spectrum:
+	
+	\begin{equation}\label{eq:fourier_power_spectrum}
+		S = \sum\limits_{n,m}{\vline \tilde{\textbf{D}}_{n,m} \vline^2}
+	\end{equation}
+	
+	Where $\tilde{\textbf{D}}$ is the 2D discrete Fourier transform of 
+	the observed fluorescent signal and $n$ and $m$ are the pixel coordinates 
+	with ranges $[0, N-1]$ and $[0, M-1]$ respectively, where $N$ and $M$ are the
+	number of pixels along each dimension of the image. From Parseval's Theorem, 
+	$\sum\limits_{n,m}\vline \tilde{\textbf{D}}_{n,m} \vline^2$ is
+	the power of the observed signal. However, the Fourier spectrum
+	obtained is not entirely composed of sample information. The 
+	fluorescent signal is the convolution of the distribution of fluorescent 
+	emission, $E(\bar{r})$, and the system point spread function (PSF), 
+	$H(\bar{r})$: 
+	
+	\begin{equation}\label{eq:fluor_signal_real}
+		D(\bar{r}) = (E \circledast H)(\bar{r})
+	\end{equation}
+	
+	In Fourier space, this convolution becomes $\tilde{\textbf{D}}(\bar{k}) 
+	= \tilde{\textbf{E}}(\bar{k}) \tilde{\textbf{H}}(\bar{k}) = 
+	\tilde{\textbf{E}}(\bar{k}) \textbf{O}(\bar{k})$, where the tilde ($\sim$)
+	represent the Fourier transform of the corresponding real-space functions and 
+	$\textbf{O}(\bar{k})$ is the system optical transfer function (OTF).\cite{gustafsson2008three} The OTF both attenuates the sample structure spatial frequencies and acts as
+	a lowpass filter. Since $\tilde{\textbf{D}}_{n,m}$ is the 2D discrete
+	Fourier tranform of the observed data, this lowpass filter, $\mu_{n,m}$, is
+	defined as:
+	
+	\begin{equation}\label{eq:circular_mask}
+	\mu_{n,m} = 
+	\begin{cases}
+	1, & \sqrt{n'^{2} + m'^{2}} \le w\\
+	0, & \sqrt{n'^{2} + m'^{2}} > w\\ 
+	\end{cases}
+	\end{equation}
+	
+	Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $w$ a radius 
+	defined as the size of the field of view of the image divided by the Abbe
+	diffraction limit for the system, $\frac{1.22\lambda}{2NA}$.\cite{abbe1873beitrage} 
+	
+	Within the OTF lowpass limit, certain spatial frequencies will be dominated
+	by noise contributions. As such, when attempting to quantify the power 
+	contribution from the fluorescent it is desireable to ignore the noise
+	contributions. A thresholding mask, $\tau_{n,m}$ is created and defined as:
+	
+	\begin{equation}\label{eq:noise_threshold_mask}
+	\tau_{n,m} = 
+	\begin{cases}
+	0, & \vline \tilde{\textbf{D}}_{n,m} \vline^2 < \delta\\
+	1, & \vline \tilde{\textbf{D}}_{n,m} \vline^2 \ge \delta\\ 
+	\end{cases}
+	\end{equation}
+	
+	Where $\delta$ is a noise threshold defined as:
+		
+	\begin{equation}\label{eq:noise_threshold}
+	\delta = \frac{\alpha}{P_{noise}}\sum\limits_{l,k}{\vline \tilde{\textbf{D}}_{l,k} \vline^2}
+	\end{equation}
+	
+	Where $\vline \tilde{\textbf{D}}_{l,k} \vline^2$ is the power in the 
+	$l$-th, $k$-th spatial frequency where $l$ \& $k$ are the coordinates 
+	where $\mu_{n,m} = 0$, $P_{noise}$ is the total number of pixels 
+	outside the OTF lowpass limit and $\alpha$ is a user defined 
+	amplification factor. 
+	
 	\begin{itemize}
 		\item Talk about Fourir Power metric and why it's good for SIM image correction
 	\end{itemize}
@@ -27,9 +101,83 @@
 	\subsection{IsoSense}
 	\label{subsec:isosense}
 	
-	\begin{itemize}
-		\item Recap how this helps with image structure anisotropy
-	\end{itemize}
+	Anisotropies in the sample structure can bias the corrections
+	towards improving the image quality in a non-uniform manner.
+	There has recently been a technique developed to overcome 
+	this issue; IsoSense\cite{vzurauskas2019isosense}. It relies 
+	on producing spatially structured light in order to fill 
+	empty sections of the image Fourier spectrum. IsoSense is 
+	designed to be used in structured illumination microscopy 
+	(SIM) setups since they often incorporate spatial light 
+	modulators (SLM) as high-speed, dynamic diffraction 
+	gratings and SIM is particularly sensitive to Fourier
+	space anisotropies.
+	
+	Microscope-AOtools incorporates the methods necessary to implement
+	IsoSense. Figure~\ref{fig:isosense_visualisation} shows both
+	the structured illumination pattern applied to the SLM 
+	and the location of the beams in Fourier space. The illumination
+	pattern shown in Figure~\ref{fig:isosense_visualisation_real} is
+	the inverse Fourier transform of the 4-beam interference pattern 
+	in Figure~\ref{fig:isosense_visualisation_ft}. The location 
+	of these beams, $\bar{\kappa}$, are: 
+	$(0,0)$, $(0,\gamma w)$, $(0,-\gamma w)$, $(\gamma w, 0)$, 
+	$(-\gamma w, 0)$, $(\frac{\gamma w}{2}, \frac{\gamma w}{2})$, 
+	$(-\frac{\gamma w}{2}, \frac{\gamma w}{2})$, $(\frac{\gamma w}{2},
+	 -\frac{\gamma w}{2})$, $(-\frac{\gamma w}{2}, 
+	 -\frac{\gamma w}{2})$. $u,v$ are the spatial frequency 
+	analogues of the $x,y$ axes. $w$ is the Abbe diffraction limit and 
+	$\gamma$ is a user defined fill fraction. This fill
+	fraction controls the positions of the beams in the interference
+	pattern and hence the region of the Fourier spectrum which will 
+	be enhanced over normal illumination. The resultant fluorescent image 
+	obtained, $F(x,y)$, can be described as:
+	
+	\begin{equation}\label{eq:isosense_real}
+		F(\bar{r}) = D(\bar{r}) \times I(\bar{r})
+	\end{equation}	
+	
+	Where $I(\bar{r})$ is the interference pattern, similar to that shown in 
+	Figure\ref{fig:isosense_visualisation_real} and $E(\bar{r})$ is the sample
+	structure as before. Applying a Fourier transform yeilds:
+	
+	\begin{equation}\label{eq:isosense_ft}
+		\begin{split}
+			\mathcal{F}[F(\bar{r})] &= \mathcal{F}[D(\bar{r})\times I(\bar{r})] \\
+			\tilde{\textbf{F}}(\bar{k}) &= \tilde{\textbf{D}}(\bar{k}) \circledast \tilde{\textbf{I}}(\bar{k}) \\
+			\tilde{\textbf{F}}(\bar{k}) &= \sum_{\bar{\kappa}}\iint\tilde{\textbf{D}}(\bar{k})\delta(\bar{k} - \bar{\kappa})dudv \\
+			\tilde{\textbf{F}}(\bar{k}) &= \sum_{\bar{\kappa}}\tilde{\textbf{D}}(\bar{k} - \bar{\kappa})
+		\end{split}
+	\end{equation}
+	
+	Where $\tilde{\textbf{F}}(\bar{k})$, $\tilde{\textbf{I}}(\bar{k})$ and 
+	$\tilde{\textbf{D}}(\bar{k})$ are the Fourier transforms of $F(\bar{r})$, 
+	$I(\bar{r})$ and $D(\bar{r})$, the $\bar{\kappa}$ frequencies are the 
+	locations of interference pattern beams described above. By convolving 
+	the sample structure with multiple $\delta$-functions, multiple copies 
+	of the sample spatial frequency information are created and regions of 
+	the system OTF left unfilled by sample structure anisotropies are 
+	filled, leading to improved sampling of the system OTF particularly
+	at high spatial frequencies close to $w$ and greater aberration
+	sensitivity.\cite{vzurauskas2019isosense}
+	
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth, scale=0.5]{./images/isosense_visualisation_real.png}
+			\caption{}
+			\label{fig:isosense_visualisation_real}
+		\end{subfigure}
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth, scale=0.5]{./images/isosense_visualisation_ft.png}
+			\caption{}
+			\label{fig:isosense_visualisation_ft}
+		\end{subfigure}
+		\caption{(a) A simulated IsoSense pattern created with a 4-beam interference. A pattern similar to this is applied to the SLM (b) A diagram of a 4 beam interference pattern in Fourier space. The diagonal axis and the horizontal/vertical axis have $\frac{1}{2}$ and $\frac{1}{4}$ of the intensity of the central beam respectively.}
+		\label{fig:isosense_visualisation}
+	\end{figure}
 
 \section{Biological Exemplar}
 \label{sec:SIM_biology}
