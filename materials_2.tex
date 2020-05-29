@@ -92,12 +92,47 @@
 	$l$-th, $k$-th spatial frequency where $l$ \& $k$ are the coordinates 
 	where $\mu_{n,m} = 0$, $P_{noise}$ is the total number of pixels 
 	outside the OTF lowpass limit and $\alpha$ is a user defined 
-	amplification factor. 
+	amplification factor. In essence, the threashold is the mean of the
+	power of the spatial frequencies consisting entirely of noise signals,
+	scaled by $\alpha$.	The value of $\alpha$ must be chosen to threshold
+	the spatial frequencies dominated by noise without losing the sensitivity
+	to true, albeit low amplitude, spatial frequencies. Emperically, an 
+	$\alpha = 1.125$ offers a reasonable compromise between these traits.
 	
-	\begin{itemize}
-		\item Talk about Fourir Power metric and why it's good for SIM image correction
-	\end{itemize}
-
+	Finally, the bulk of the improvement in spatial frequency content will
+	occur in the mid to high frequencies (relative to $w$). As such there is 
+	a desire for increased sensitivity to the power fluxuations in these 
+	spatial frequencies. A modulation mask, $\omega$, is constructied and 
+	defined as:
+	
+	\begin{equation}\label{eq:attenuation_mask_norm_and_scaled}
+	\omega_{n,m} = \beta \vline (1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{w}-1}) (n'^{2} + m'^{2}) \vline
+	\end{equation}
+	
+	Where $w$, $n'$ and $m'$ are defined as before, $\vline\textbf{x} \vline$ 
+	is $\textbf{x}$ normalised to $[0,1]$, and $\beta$ is a user defined 
+	normalisation factor. In effect, this modulation mask amplifies the mid 
+	to high spatial frequencies while attenuating the low spatial frequencies 
+	and the high spatial frequency noise close to $w$.
+	
+	Applying these modifaction to Equation~\ref{eq:fourier_power_spectrum} 
+	yields the image quality metric:
+	
+	\begin{equation}\label{eq:Fourier_power_metric}
+	S = \sum\limits_{n,m}{\mu_{n,m}\tau_{n,m}\omega_{n,m}\vline \tilde{\textbf{D}}_{n,m} \vline^2}
+	\end{equation}
+	
+	Where $\mu_{n,m}$, $\tau_{n,m}$ and $\omega_{n,m}$ are defined as in
+	Equations~\ref{eq:circular_mask},~\ref{eq:noise_threshold_mask} and
+	\ref{eq:attenuation_mask_norm_and_scaled} respectively and 
+	$\tilde{\textbf{D}}_{n,m}$ is defined as before. In practice, $S$
+	measures the total power of the sample spatial frequencies, with 
+	increased sensitivity to mid to high spatial frequency changes. As
+	such, this image quality metric is called the Fourier Power metric.
+	Since SIM imaging depends on high quality spatial frequency 
+	information, this image quality metric is particularly well suited 
+	to correcting aberrations for SIM data.
+	
 	\subsection{IsoSense}
 	\label{subsec:isosense}
 	
