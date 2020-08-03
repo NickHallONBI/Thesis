@@ -1,88 +1,5 @@
-\chapter{Methods and Implementations}
-
-\section{DeepSIM}
-\label{sec:DeepSIM}
-
-3D structured illumination microscopy (3D-SIM) is a super-resolution microscopy technique which is well suited to imaging live biological samples due to the relatively few images required to reconstruct a super-resolution image, millisecond temporal resolution, medium energy load, true multi-colour imaging and fast volume acquisition.\cite{schermelleh2010guide,schermelleh2019super} 
-However, to date this application has not been extensively exploited for all live sample preparations, namely those requiring discection and bathing, and those requiring dynamic sample manipulation such as electrophysiology experiments. This is for two principle reasons. Firstly, these biological samples have to be suspended in usually aqueous  media to sustain them, which necessitates an upright configuration. To date, no upright 3D-SIM system exists. The aqueous nature of the suspension media also precludes the use of oil objectives, reducing the avalible NA and hence resolution. Secondly, imaging a depths $>20\mu m$ remains a challenge for traditional 3D-SIM methods due to limited background rejection and optical aberrations degrading the stripe contrast necessary for successful SIM imaging.\cite{wu2018faster} Aberrations pose a larger issue in live sample imaging compared to fixed sample imaging, not least of all because live samples cannot be cleared of the extraneous biological structures. Therefore most 3D-SIM imaging has been limited to thin specimens. DeepSIM is a bespoke microscope designed to address these issues, being an open and flexible upright microscope platform optimised for rapid 3D SIM image stacks deep in large samples by implementing adaptive optics. 
-
-\subsection{DeepSIM Optical Set-up}
-\label{subsec:DeepSIM_optics}
-
-Figure~\ref{fig:DeepSIM_complete_beam_paths} shows the complete optical schematic of the DeepSIM microscope. There are multiple possible beam paths which can be altered by raising/lowering certain optics and/or pairs of mirrors. The solid green path denotes the primary 3D-SIM excitation path. The laser beams are combined at a single exit port, magnified and then reflected onto the spatial light modulator (SLM) at a shallow angle ($<10^{\circ}$). The SLM acts as a programable phase grating imposing the structure to the illumination pattern required for SIM imaging. The beam is then magnified and reimaged onto the Alpao 69-actuator deformable mirror (DM). The beam is then magnified further and directed to the $60\times$ water dipping objective. The emission beam path follows the same path in reverse up until the DM. At this point the emission beam path is redirected by a dichroic mirror (Chroma Technology ZT405/488/561/640rpc), magnified and then reimaged onto the Andor iXon Ultra EMCCD cameras. There is a secondary dichroic (Chroma Technology ZT561rdc-xr) which separates the "red" colour channel (562nm-800nm) from the "green" colour channel (390nm-562nm). Since the DM is in both the excitation and emission paths it is able to correct for aberrations in both paths.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{images/DeepSIM_complete_beam_paths.jpg}
-	\caption{Complete beam path layout for DeepSIM. DeepSIM has multiple paths that can be selected by flipping the numbered pairs/individual mirrors. The green paths denotes the excitation beam paths. The solid green path shows the structured illumination (SI) beam path. The dashed green path shows the widefield beam path. This is changed to the interference beam path by flipping up the lens and pellicle pair. The dot-dashed green path shows the excitation path which bypasses the deformable mirror. The dot-dot-dashed green path shows the excitation path going through the $10\times$ air objective for low magnificantion sample mapping. The orange path denotes the emission beam path.}
-\label{fig:DeepSIM_complete_beam_paths}
-\end{figure}
-
-Raising the \circled{1} pair of flip mirrors bypasses the SLM and changes the excitation beam path to a widefield configuration. Raising the \circled{2} pair of flip mirrors bypasses the DM. This is a useful configuration when the DM has not yet been calibrated since the neutral position of the DM actuators have a worse flatness profile than that of a plane mirror. Without calibration, the DM surface cannot be flattened and may contribute to the aberrations present in the imaging system. Raising the \circled{3} flip mirror directs the excitation beam path through the $10 \times$ air objective. This beam path is used for large field of view (FOV) mapping.
-
-Raising both the \circled{1} pair of flip mirrors and the \circled{4} flip mounted pellicle beamsplitter and lens changes both the excitation and emission beam paths to create an interferometer. Half of the excitation beam is picked off by the 50:50 beamsplitter and directed straight into the Ximea XiQ camera. This is the interferometer reference arm. The sample beam arm proceeds through the regular excitation beam path. Placing a mirror in the focal plane of the $60\times$ objective reflects the beam back through the emission beam path until it is reflected by the pellicle into the Ximea XiQ camera. The interference pattern produce by the two beams can interrogated to yield an image of the wavefront phase. Since the DM is in the sample arm, varying the shape of the DM surface will change the shape of the phase wavefront. Measuring how the movement of the DM's actuators influences the shape of the phase wavefront allows the DM to be calibrated and subsiquentlty used to correct for aberrations in the optical system or sample. 
-
-\subsection{Optical Alignment}
-\label{subsec:alignment}
-
-Being a bespoke microscopy system, DeepSIM was assembled from individual components and aligned by hand. This alignment process is critical for ensuring the microscopy system itself introduces the smallest possible aberrations. Aberrations in the imaging system disrupt image formation and degrade image quality.\cite{wyant1992basic} This affects both the excitation and emission paths of any fluorescent microscope. For a SIM microscope such as DeepSIM the most noticable effect in the excitation path is the degradation of the structured illumination pattern, particularly the high frequency components.\cite{debarre2008adaptive,booth2015aberrations} In the emission path, these aberrations prevent correct image formation on the cameras sensors. Whilst DeepSIM incorporates a DM for performing aberration correction, every DM has a limited stroke length and the actuator response is often non linear at the limits of this stroke length. Correcting for relatively large system aberrations due to a poorly aligned system is likely to lead to insufficient remaining stroke length to correct for sample induced aberrations. Therefore, having a well aligned system is still critical even for AO-enabled microscopy systems such as DeepSIM.
-
-Firstly the upright bridge to hold the objectives and the stage in their upright configuration was constructed and installed on the optical table. One of the lasers was then installed and the beam paths shown in Figure~\ref{fig:DeepSIM_complete_beam_paths} was constructed without the lenses. The beam was kept either parallel or perpendicular to the optical table where appropriate and passing through the centre of the objective aperture. The beam was kept parallel to the table by positioning an iris at the beam height at the laser and 'walking' this iris down the beam path, ensuring that after each reflection the beam remains at the same height. Once this beam path was established, the lenses were added sequentially and aligned. Finally, the other lasers are coaligned to this beam path. The result is the complete optical setup shown in Figure~\ref{fig:DeepSIM_physical_optics}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{images/DeepSIM_SIM_path_annotated_bright.jpg}
-	\caption{The aligned DeepSIM optical set-up. The 3D-SIM excitation (green) and emission (red) beam paths are annotated.}
-	\label{fig:DeepSIM_physical_optics}
-\end{figure}
-
-The alignment of the lenses and the coalignment of the lasers is typically done by eye. The quality of the alignment done in this manner is highly subjective and dependant on a number of factors that affect the quality of the operators judgement that two beams are in the same position on an pinhole/iris. BeamDelta was used to align the optical components of DeepSIM as it offers a more accurate, less hazardous and faster approach to optical element alignment.\cite{dobbie2019beamdelta}
-
-\subsection{\textit{Python Microscope}}
-\label{subsec:microscope}
-
-There is a requirement for control over all the hardware elements of DeepSIM. This can pose a problem since each hardware component has its own low level software libraries and the physical hardware is connected to several diffrent computers. Additionally, in order to ensure rapid imaging of 3D-SIM Z-data stacks there is a requirement for precise timing control of the electronic hardware, such as laser, cameras, etc, which must act in concert. To solve these challenges, the DeepSIM's hardware is controlled via Python Microscope, an open source Python package which allows the various elements to be synchronised with hardware triggers. For this, DeepSIM utilises a digital signal processor (DSP).
-
-\subsection{\textit{Microscope-Cockpit}}
-\label{subsec:cockpit}
-
-DeepSIM requires a bespoke graphical user interface (GUI) which is accessible to users. For this purpose DeepSIM implemented Cockpit, highly flexible and adaptable open source Python-base GUI environment. Figure~\ref{fig:Cockpit_UI} shows the GUI used to control DeepSIM. In the main window, Figure~\ref{fig:DeepSIM_control_software_main_window}, a user can enable and disable the various hardware elements. They can also swap between the various beam paths shown in Figure~\ref{fig:DeepSIM_complete_beam_paths}. A user also has access to the automated AO methods, the specifics of which will be discussed later. Figure~\ref{fig:DeepSIM_control_software_stage_control} shows the window which can be used to control the XY stage, and the coarse mechanical and fine piezo Z stages as well as display the location of each. The step control and step size for each of these are assigned to keyboard shortcuts. 
-
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{0.575\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_main_window.png}
-		\caption{}
-		\label{fig:DeepSIM_control_software_main_window}
-	\end{subfigure}
-	\begin{subfigure}{0.365\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_camera.png}
-		\caption{}
-		\label{fig:DeepSIM_control_software_camera}
-	\end{subfigure}
-	
-	\begin{subfigure}{0.51\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_stage_control.png}
-		\caption{}
-		\label{fig:DeepSIM_control_software_stage_control}
-	\end{subfigure}
-	\begin{subfigure}{0.45\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/DeepSIM_control_software_mosaic.png}
-		\caption{}
-		\label{fig:DeepSIM_control_software_mosaic}
-	\end{subfigure}
-	\caption{Cockpit GUI for controlling DeepSIM (a) Cockpit main window. Contains buttons to enable all the hardware, set laser powers and change beam paths (b) Camera view window. Shows the most recent readout from all the enabled cameras (c) Stage control window. Allows the user to control the position of the XY piezo-stage, coarse mechanical Z stage and fine Z piezo-stage (d) Mosaic window. Used by the user to scan the field of view for structures of interest and mark them.}
-	\label{fig:Cockpit_UI}
-\end{figure}
-
-Unlike commercial microscopes, DeepSIM does not have any eye-pieces. Ordinarily this would present a problem for simply locating the sample, let alone locating a specific region or structure of interest within the sample. To overcome this limitation, Cockpit implements a Mosaic window shown in Figure~\ref{fig:DeepSIM_control_software_mosaic}. When the mosaic is run, Cockpit moves the stage in a anti-clockwise spiral pattern and takes an image at each position. These images are stored on the main machine's graphics card to enable real-time navigation and site-of-interest marking. Since the images are stored, a user can revisit and investigate areas of the sample which have alreay been imaged without re-imaging them, decreasing thelight exposure and limiting photodamage. The user is able to take an initial mosaic using the $10\times$ objective to find the sample, create a specimen guide map and identify regions of interest. They then swap to the $60\times$ objective for a more detailed mosaic in the previously identified regions, locate specific sites of interest which they can then mark. These sites can then be visited by the user individually and have data collected manually using the "Single-site experiment" option or each site can be visited and data collected in an automated fashion using the "Multi-site experiment option". In this way DeepSIM can function well without eye-pieces and is easily controlled by a potential user.
-
-\section{Adaptive Optics Control Software}
-\label{sec:AOtools}
+\chapter{Adaptive Optics Control Software}
+\label{chpt:ao_tools}
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this callibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
@@ -119,8 +36,8 @@ Microscope-AOtools provides such an implementation, utilising Python-Microscope 
 	\label{fig:DeepSIM_control_software}
 \end{figure}
 
-\subsection{Set-up Methods}
-\label{subsec:set_up_methods}
+\section{Set-up Methods}
+\label{sec:set_up_methods}
 
 As previously described, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beampath is used for calibrating the deformable mirror. An image is formed by the interference between the reference beam arm and the system beam arm. The size of the reference beam is larger than that of the system beam to ensure easy alignment between the two arms. It is therefore necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Cockpit implements such a method as the functionality of the "Select ROI" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the interferometric ROI. This coordinates of this ROI are saved to the microscope's configuration files with the "Save ROI" button.
 
@@ -142,8 +59,8 @@ As previously described, DeepSIM has multiple beam paths; interferometric, widef
 	\label{fig:ROI_selectors}
 \end{figure}
 
-\subsubsection{Direct wavefront sensing}
-\label{subsubsec:direct_wavefront_sensing}
+\subsection{Direct wavefront sensing}
+\label{subsec:direct_wavefront_sensing}
 
 The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within DeepSIM and Microscope-AOtools are calibration and system aberration correction. These are both situation where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proven more challenging  to automate than from Shack-Hartmann sensor data. Interferometric data can be defined as:
 
@@ -302,8 +219,8 @@ This phase extraction technique is used as part of other methods, but it is also
 	\label{fig:phase_viewer}
 \end{figure}
 
-\subsubsection{Calibration}
-\label{subsubsec:calibration}
+\subsection{Calibration}
+\label{subsec:calibration}
 
 For aberration correction, one could attempt to measure the overall aberration of the optical wavefront and apply the opposite shape to the DM. For direct wavefront sensing, this would appear as simple as measuring the phase distortion and shaping the DM to cancel this distortion. However, for continuous membrane DMs (which the majority of commercially available DMs are) the response of mirror shape to the actuators which control the mirror shape is generally non-linear, due to the membrane's mechanical elasticity, electrostatic forces and the coupling between actuators.\cite{Zhu:99} For indirect wavefront sensing this presents an even greater problem since any minimisation of the wavefront aberration would involve \textit{N} degrees of freedom, where \textit{N} is the number of actuators. Assuming that the overall mirror shape is the linear 
 superposition of all the individual actuator deflections, we can 
@@ -396,8 +313,8 @@ Fitting linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \
 
 In general, $\boldsymbol{B}$ is singular and therefore has no true inverse and so we must use a pseudo-inverse, calculated using single value decomposition (SVD). However, some values of $\boldsymbol{B}$ may be small since the physical position of certain actuators will mean they have limited influence on creating certain Zernike modes. A control matrix calculated without thresholding out these small values will quickly lead to a saturation of the DM actuators (i.e. all actuators at their maximum stroke length) when corrections are calculated.\cite{booth2005methods} Therefore the calibration method incorporates a threshold by default and the exact threshold can be varied by experienced users. The calibration routine is initiated by pressing the "Calibrate" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
-\subsubsection{Characterisation}
-\label{subsubsec:characterisation}
+\subsection{Characterisation}
+\label{subsec:characterisation}
 
 Feedback on the quality of the calibration process is essential. Ideally, once the deformable mirror is calibrated we have a linear map which allows known quantities of Zernike modes to be applied exactly. This linear map is never exact in practice due to issues; the fact that some parameters, such as the number of steps used to calibrate each actuator and the threshold used in the SVD pseudo-inversion, are chosen empirically, the approximate nature of the pseudo-inverse, discretisation errors (due to discrete sampling of a continuous functions) in the measuring of Zernike modes. etc It is therefore necessary to have some measure of how well the adaptive element is able to recreate desired Zernike modes. This process is called characterisation. The process involves applying a fixed amplitude of single Zernike modes to the adaptive element, measuring the Zernike modes present and comparing the amplitude to that supposedly applied. An automated implementation of this process is present in Microscope-AOtools with the results returned to the user for interrogation. Figure~\ref{fig:characterisation_workflow} shows a flowchart of this method in Microscope-AOtools. 
 
@@ -448,8 +365,8 @@ computational errors and the physical characteristics of the adaptive element. M
 
 The characterisation routine relies on the same generalised phase acquisition method used in the calibration workflow. Recall that this is a user selected method from a suite of phase acquisition methods. The number of Zernike modes assessed, $N$, is the number of modes that have been measured in the calibration step by default, but this can be varied by the user. Once again this preserves generalisability and allows the characterisation method to be used on any arbitrary adaptive element, calibrated for any number of modes and utilising any desired wavefront sensing technique.
 
-\subsubsection{System Aberration Correction}
-\label{subsubsec:system_correction}
+\subsection{System Aberration Correction}
+\label{subsec:system_correction}
 
 The applications for aberration correction using direct wavefront sensing have been well documented. The wavefront is measured via interferometry, Shack-Hartmann wavefront sensor, fluorescent guide star, etc and decomposed into Zernike modes. Correction can then be calculated and applied for both system and sample induced aberrations. Microscope-AOtools implements a correction method for situations where the wavefront is directly observed. The workflow is shown in Figure~\ref{fig:direct_wavefront_flattening_workflow}. The wavefront is obtained through whatever direct wavefront sensing method has been implemented and selected, a number of Zernike modes determined by the user are fitted to the wavefront, an equal and opposite magnitude of these modes are applied to the DM. The RMS wavefront error is then calculated. This process repeats until $N$ iterations have been performed or the RMS wavefront error is below a user defined error threshold, $\delta$.
 
@@ -495,11 +412,11 @@ For system aberration corrections it may be preferable to set a minimum wavefron
 
 The characterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
-\subsection{Sample Correction Methods}
-\label{subsec:sample_correction_methods}
+\section{Sample Correction Methods}
+\label{sec:sample_correction_methods}
 
-\subsubsection{Sensorless Correction}
-\label{subsubsec:sensorless_correction}
+\subsection{Sensorless Correction}
+\label{subsec:sensorless_correction}
 
 In many biological applications, direct wavefront sensing is not possible and so we rely on sensorless techniques to determine the best correction to apply. The generalised methodology for this is shown in Figure~\ref{fig:sensorless_correction_method}. Some metric, $S$, which gives a useful measure of the image quality is chosen. This metric should be a numerical value and should 
 increase to a global maximum as the aberrations present decrease. Often these metrics are related to common measures of image quality, such as sharpness or contrast. For each Zernike mode, $Z_{i}$, a number of amplitudes of that mode, $a_{j}$, are applied and an image of the sample obtained. The quality of each image, $S_{j}$ is calculated. Assuming that $S$ is a function of the Zernike mode amplitude applied,	fitting a Gaussian function to the $S_{j}$ values yields a Zernike mode amplitude, $a_{max}$, which theoretically yields the best image quality, $S_{max}$. The complexity of sensorless AO correction lies in selecting the most appropriate image quality metric. There 
@@ -528,3 +445,141 @@ Clearly, this sensorless routine has multiple parameters and there is a limited 
 The values for $j_{min}$ and $j_{max}$ should ideally be chosen to scan a sufficient range of aberration amplitudes to ensure $j_{min} \le a_{max} \le j_{max}$. At the least $a_{max}$ should be sufficiently close to $j_{min}$ or $j_{max}$ so that there is a clear increase in image quality as the aberration amplitude applied approaches one of these bounds. This range should not be too large otherwise a user risks either having sparse image quality data which only captures extreme aberrations and prevents an adequate fitting, or taking a sufficient number of measurements but introducing considerable photodamage. Like the image quality metrics, the $[j_{min},j_{max}]$ range will vary with sample type and so some prelimary work is required before data collection proper to ascertain the correct range as well as the correct number of measurements and iterations, $N$ and $T$, for a given sample type. 
 
 As previously mentioned, the $[j_{min},j_{max}]$ range should ideally contain $a_{max}$ or $a_{max}$ should be close to one of these bounds. Allowing the Gaussian function to be fitted to the image quality metric values with no bounds (i.e. allowing $a_{max}$ to take any value) becomes problematic when the image quality metric values remainly largely constant over all the amplitudes applied. This phenomenon can occur for a number of reasons; $a_{max}$ is found far outside the range of amplitudes scanned, the amplitudes sampled were suffeniently sparse that the central region of the Gaussian lies between two amplitudes, the aberration being sampled does not have a strong impact on the image quality measured, another, more significant aberration mode has not been corrected and the effect of this other mode is masking the effect of the current mode, etc. Whatever the reason, an unbounded fitting to a relatively flat profile of image quality metric measurements will lead to a large value of $a_{max}$ which is unreliable and often results in an applying an aberration amplitude which severly damages the image quality. To ensure that the Gaussian fitting to find $a_{max}$ yields a reasonable value, the fitting has bounds defined as $(j_{max}-j_{min}) \pm 0.25(j_{max}-j_{min})$.
+
+\subsection{Image Quality Metric: Fourier Power}
+\label{subsec:fourier_power_metric}
+
+As mentioned in Section~\ref{subsec:sensorless_correction}, 
+sensorless AO correction requires an image quality metric which
+is well suited to both the imaging modality and the desired 
+sample. Microscope-AOtools implements a suite of image quality
+metrics to choose from. Both the DeepSIM and the Aurox
+Clarity systems can be considered structured illumination
+system. Although the Aurox Clarity system is clearly not a 
+Gustafsson-style SIM system, the illumination pattern imposed by
+the spinning disk. If follow that the image quality of both systems is
+contingent on high quality Fourier information. Therefore, 
+a sensible starting point for the image quality metric, $S$, 
+is the total power of the Fourier spectrum:
+
+\begin{equation}\label{eq:fourier_power_spectrum}
+S = \sum\limits_{n,m}{\left\| \tilde{\textbf{D}}_{n,m} \right\|^2}
+\end{equation}
+
+Where $\tilde{\textbf{D}}$ is the 2D discrete Fourier transform of 
+the fluorescent signal (i.e. the camera image) and $n$ and 
+$m$ are the pixel coordinates with ranges $[0, N-1]$ and $[0, M-1]$ 
+respectively, where $N$ and $M$ are the number of pixels along each 
+dimension of the image. From Parseval's Theorem, $\sum\limits_{n,m}
+\left\| \tilde{\textbf{D}}_{n,m} \right\|^2$ is the power of the 
+observed signal. However, the Fourier spectrum obtained is not 
+entirely composed of sample information. The fluorescent signal is the 
+convolution of the distribution of fluorescent emission and the system 
+PSF:
+
+\begin{equation}\label{eq:fluorescent_image}
+\begin{split}
+F(\bar{x}) &= (E \circledast H)(\bar{x})\\
+F(\bar{x}) &= [D(\bar{x})I(\bar{x})] \circledast H(\bar{x})\\
+\end{split}
+\end{equation}
+
+Where $D(\bar{x})$ is the sample fluorescence distribution,
+$I(\bar{x})$ is the illumination pattern, $E(\bar{x})$ is the 
+resultant emission signal and $H(\bar{x})$ is the system point
+spread function (PSF). For a widefield image, $I(\bar{x}) = 1$. 
+Applying this substitution and a Fourier transfrom yields:
+
+
+\begin{equation}\label{eq:fluor_signal_fourier}
+\begin{split}
+\mathcal{F}[\textbf{F}(\bar{x})] &= \mathcal{F}[\textbf{D}(\bar{x}) \circledast \textbf{H}(\bar{x})]\\
+\tilde{\textbf{F}}(\bar{k}) &= \tilde{\textbf{D}}(\bar{k}) \tilde{\textbf{H}}(\bar{k})\\
+&= \tilde{\textbf{D}}(\bar{k}) \textbf{O}(\bar{k})		
+\end{split}
+\end{equation}
+
+Where the tilde ($\sim$) represent the Fourier transform of the corresponding 
+real-space functions and $\textbf{O}(\bar{k})$ is the system optical transfer 
+function (OTF).\cite{gustafsson2008three} The OTF both attenuates the sample 
+fluorescence distribution spatial frequencies and acts as a lowpass filter. 
+Since $\tilde{\textbf{D}}_{n,m}$ is the 2D discrete Fourier transform of 
+the observed data, this lowpass filter, $\mu_{n,m}$, is defined as:
+
+\begin{equation}\label{eq:circular_mask}
+\mu_{n,m} = 
+\begin{cases}
+1, & \sqrt{n'^{2} + m'^{2}} \le w\\
+0, & \sqrt{n'^{2} + m'^{2}} > w\\ 
+\end{cases}
+\end{equation}
+
+Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $w$ a radius 
+defined as the size of the field of view of the image divided by the Abbe
+diffraction limit for the system, $\frac{1.22\lambda}{2NA}$.\cite{abbe1873beitrage} 
+
+Within the OTF lowpass limit, certain spatial frequencies will be dominated
+by noise contributions. As such, when attempting to quantify the power 
+contribution from the fluorescent it is desirable to ignore the noise
+contributions. A thresholding mask, $\tau_{n,m}$ is created and defined as:
+
+\begin{equation}\label{eq:noise_threshold_mask}
+\tau_{n,m} = 
+\begin{cases}
+0, & \left\| \tilde{\textbf{D}}_{n,m} \right\|^2 < \delta\\
+1, & \left\| \tilde{\textbf{D}}_{n,m} \right\|^2 \ge \delta\\ 
+\end{cases}
+\end{equation}
+
+Where $\delta$ is a noise threshold defined as:
+
+\begin{equation}\label{eq:noise_threshold}
+\delta = \frac{\alpha}{P_{noise}}\sum\limits_{l,k}{\left\| \tilde{\textbf{D}}_{l,k} \right\|^2}
+\end{equation}
+
+Where $\left\| \tilde{\textbf{D}}_{l,k} \right\|^2$ is the power in the 
+$l$-th, $k$-th spatial frequency where $l$ \& $k$ are the coordinates 
+where $\mu_{n,m} = 0$, $P_{noise}$ is the total number of pixels 
+outside the OTF lowpass limit and $\alpha$ is a user defined 
+amplification factor. In essence, the threshold is the mean of the
+power of the spatial frequencies consisting entirely of noise signals,
+scaled by $\alpha$.	The value of $\alpha$ must be chosen to threshold
+the spatial frequencies dominated by noise without losing the sensitivity
+to true, albeit low amplitude, spatial frequencies. Empirically, an 
+$\alpha = 1.125$ offers a reasonable compromise between these traits.
+
+Finally, the bulk of the improvement in spatial frequency content will
+occur in the mid to high frequencies (relative to $w$). As such there is 
+a desire for increased sensitivity to the power fluctuations in these 
+spatial frequencies. A modulation mask, $\omega$, is constructed and 
+defined as:
+
+\begin{equation}\label{eq:attenuation_mask_norm_and_scaled}
+\omega_{n,m} = \beta \left| \left(1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{w}-1}\right) \left(n'^{2} + m'^{2}\right) \right|
+\end{equation}
+
+Where $w$, $n'$ and $m'$ are defined as before, $\left| \textbf{x} \right|$ 
+is $\textbf{x}$ normalised to $[0,1]$, and $\beta$ is a user defined 
+normalisation factor. In effect, this modulation mask amplifies the mid 
+to high spatial frequencies while attenuating the low spatial frequencies 
+and the high spatial frequency noise close to $w$.
+
+Applying these modification to Equation~\ref{eq:fourier_power_spectrum} 
+yields the image quality metric:
+
+\begin{equation}\label{eq:Fourier_power_metric}
+S = \sum\limits_{n,m}{\mu_{n,m}\tau_{n,m}\omega_{n,m}\left\| \tilde{\textbf{D}}_{n,m} \right\|^2}
+\end{equation}
+
+Where $\mu_{n,m}$, $\tau_{n,m}$ and $\omega_{n,m}$ are defined as in
+Equations~\ref{eq:circular_mask},~\ref{eq:noise_threshold_mask} and
+\ref{eq:attenuation_mask_norm_and_scaled} respectively and 
+$\tilde{\textbf{D}}_{n,m}$ is defined as before. In practice, $S$
+measures the total power of the sample spatial frequencies, with 
+increased sensitivity to mid to high spatial frequency changes. As
+such, this image quality metric is called the Fourier Power metric.
+As previously mentioned, SIM imaging depends on high quality spatial 
+frequency information.\cite{debarre2008adaptive,thomas2015enhanced} 
+Since the Fourier Power imaging metric maximises the intensity of 
+the mid-high spatial frequency content, this image quality metric 
+is particularly well suited to correcting aberrations for SIM data.
