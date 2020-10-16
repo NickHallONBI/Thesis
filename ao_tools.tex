@@ -1,7 +1,7 @@
 \chapter{Adaptive Optics Control Software}
 \label{chpt:ao_tools}
 
-Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirror (DM) present in the DeepSIM optical path. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this callibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
+Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirrors (DMs) present in the Aurox Clarity system and DeepSIM optical paths. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this callibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
 Microscope-AOtools provides such an implementation, utilising Python-Microscope to control the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
 
@@ -83,7 +83,7 @@ Where $c^{*}(x,y)$ is the complex conjugate of $c^{*}(x,y)$. Applying the 2-D Fo
 Where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  $\boldsymbol{C}^{*}(u,v)$ are the Fourier transforms of $I(u,v)$, $a(u,v)$, $c(u,v)$ and $c^{*}(u,v)$ respectively. Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{I}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ to leave only $\boldsymbol{C}(u,v)$.\cite{lewis1993absolute} Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
 
 \begin{equation}\label{eq:phase}
-\phi(x,y) = \arctan \frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}
+\phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right)
 \end{equation}
 
 In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
@@ -230,7 +230,7 @@ define the overall mirror shape, $S(x,y)$ as:
 S(x,y) = \sum_{h=1}^{N} d_{h}\phi_{h}(x,y)
 \end{equation}
 
-Where $S(x,y)$ is the change in the deformable mirror shape from its original position, $d_h$ is the $h$-th actuator control signal (an arbitrary value related to applied voltage which determines the position the $h$-th actuator in its overall movement range) and $\phi_{h}(x,y)$ is the $h$-th influence function. These are called the influence functions of the AO device since they describe how the elements of the device influence the phase wavefront. We can change this set of basis functions for a different basis set. An obvious alternative basis set is the Zernike polynomials since they are defined on the unit circle, orthogonal and the wavefront distortion can be well approximated by the linear addition of Zernike polynomials\cite{von1934beugungstheorie,noll1976zernike}. Describing $\phi_{h}(x,y)$ in terms of Zernike polynomials we obtain:
+Where $S(x,y)$ is the change in the deformable mirror shape from its original position, $d_h$ is the $h$-th actuator control signal (an arbitrary value related to applied voltage which determines the position the $h$-th actuator in its overall movement range) and $\phi_{h}(x,y)$ is the $h$-th influence function. These are called the influence functions of the AO device since they describe how the elements of the device influence the phase wavefront. We can change this set of basis functions for a different basis set. An obvious alternative basis set is the Zernike polynomials since they are defined on the unit circle, orthogonal and the wavefront distortion can be well approximated by the linear addition of Zernike polynomials\cite{von1934beugungstheorie,noll1976zernike,mahajan1994zernike}. Describing $\phi_{h}(x,y)$ in terms of Zernike polynomials we obtain:
 
 \begin{equation}\label{eq:influence_to_zernike}
 \phi_{h}(x,y) = \sum_{g=1}^{M} b_{g,h}z_{g}(x,y)
@@ -385,20 +385,21 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.35\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth, scale=2]{./images/system_wavefront_before_correction_adv.png}
 		\caption{}
 		\label{fig:aberrated_wavefront_defocus_ptt_rmv_crop_phase_only}
 	\end{subfigure}
-	\begin{subfigure}{0.425\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth, scale=2]{./images/system_wavefront_after_correction_best_20it_adv_edit.jpg}
+		\vspace{-.25cm}
+		\includegraphics[width=1\linewidth, scale=2]{./images/system_wavefront_after_correction_best_20it_adv.png}
 		\caption{}
 		\label{fig:flattened_wavefront_20it}
 	\end{subfigure}
 	
-	\begin{subfigure}{0.75\textwidth}
+	\begin{subfigure}{0.55\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth, scale=1]{./images/Zernike_modes_before_after_correction_only_corrected.png}
 		\caption{}
@@ -475,32 +476,32 @@ dimension of the image. From Parseval's Theorem, $\sum\limits_{n,m}
 observed signal. However, the Fourier spectrum obtained is not 
 entirely composed of sample information. The fluorescent signal is the 
 convolution of the distribution of fluorescent emission and the system 
-PSF:
+point spread function (PSF):
 
 \begin{equation}\label{eq:fluorescent_image}
 \begin{split}
-F(\bar{x}) &= (E \circledast H)(\bar{x})\\
-F(\bar{x}) &= [D(\bar{x})I(\bar{x})] \circledast H(\bar{x})\\
+F(\textbf{x}) &= (E \circledast H)(\textbf{x})\\
+F(\textbf{x}) &= [D(\textbf{x})I(\textbf{x})] \circledast H(\textbf{x})\\
 \end{split}
 \end{equation}
 
-Where $D(\bar{x})$ is the sample fluorescence distribution,
-$I(\bar{x})$ is the illumination pattern, $E(\bar{x})$ is the 
-resultant emission signal and $H(\bar{x})$ is the system point
-spread function (PSF). For a widefield image, $I(\bar{x}) = 1$. 
-Applying this substitution and a Fourier transform yields:
+Where $D(\textbf{x})$ is the sample fluorescence distribution,
+$I(\textbf{x})$ is the illumination pattern, $E(\textbf{x})$ is the 
+resultant emission signal and $H(\textbf{x})$ is the system PSF. 
+For a widefield image, $I(\textbf{x}) = 1$. Applying this 
+substitution and a Fourier transform yields:
 
 
 \begin{equation}\label{eq:fluor_signal_fourier}
 \begin{split}
-\mathcal{F}[\textbf{F}(\bar{x})] &= \mathcal{F}[\textbf{D}(\bar{x}) \circledast \textbf{H}(\bar{x})]\\
-\tilde{\textbf{F}}(\bar{k}) &= \tilde{\textbf{D}}(\bar{k}) \tilde{\textbf{H}}(\bar{k})\\
-&= \tilde{\textbf{D}}(\bar{k}) \textbf{O}(\bar{k})		
+\mathcal{F}[\textbf{F}(\textbf{x})] &= \mathcal{F}[\textbf{D}(\textbf{x}) \circledast \textbf{H}(\textbf{x})]\\
+\tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \tilde{\textbf{H}}(\textbf{k})\\
+&= \tilde{\textbf{D}}(\textbf{k}) \textbf{O}(\textbf{k})		
 \end{split}
 \end{equation}
 
 Where the tilde ($\sim$) represent the Fourier transform of the corresponding 
-real-space functions and $\textbf{O}(\bar{k})$ is the system optical transfer 
+real-space functions and $\textbf{O}(\textbf{k})$ is the system optical transfer 
 function (OTF).\cite{gustafsson2008three} The OTF both attenuates the sample 
 fluorescence distribution spatial frequencies and acts as a lowpass filter. 
 Since $\tilde{\textbf{D}}_{n,m}$ is the 2D discrete Fourier transform of 
