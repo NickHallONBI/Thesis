@@ -147,7 +147,7 @@ A useful quantity, and one often cited by microscope objective manufacturers,
 is the numerical aperture, $NA = n\sin(\alpha)$. The Rayleigh criterion 
 determines that the limit at which two point objects can be meaningfully 
 separated is when the central maxima of one diffraction pattern lies in the
-first minimal of the other\cite{rayleigh1874xii}. For a first order Bessel 
+first minimal of the other\cite{rayleigh1874xii,rayleigh1880investigations}. For a first order Bessel 
 function, this occurs at $v \approx 1.22\pi$. Therefore the lateral resolution 
 limit, $r_l$ is often quoted as:
 
@@ -155,12 +155,20 @@ limit, $r_l$ is often quoted as:
 r_l \approx \frac{1.22\lambda}{2NA}
 \end{equation}
 
-otherwise known as the Abbe diffraction limit\cite{abbe1873beitrage}. 
+otherwise known as the Abbe diffraction limit\cite{abbe1873beitrage}. Through
+a similar process and considering the field intensity along the $z'$ axis, the
+axial resolution, $r_a$, is given as\cite{pawley2006handbook}:
+
+\begin{equation}\label{eq:axial_res}
+	r_a \approx \frac{2\lambda n}{NA^{2}}
+\end{equation}
+
 Figure~\ref{fig:Airy_ring_2_object_seperation} shows two 
-diffraction-limited point objects at variable separations. For separations less 
-than $r_{l}$ the field intensities resemble a single point source in the image
-plane. For seperations at or above $r_{l}$ the intensity contributions from 
-the two objects are distinguishable as separate.
+diffraction-limited point objects at variable lateral separations. For 
+lateral separations less than $r_{l}$ the field intensities resemble a single 
+point source in the image plane. For lateral seperations at or above $r_{l}$ 
+the intensity contributions from the two objects are distinguishable as 
+separate.
 
 \begin{figure}[h]
 	\centering
@@ -193,10 +201,37 @@ the two objects are distinguishable as separate.
 		intensity distributions of both of the two diffraction limited point 
 		objects. For two point objects separated by $< r_{l}$, \textbf{(a)} \& 
 		\textbf{(b)}, they are not separable as individual objects. At a 
-		separation $\ge r_{l}$, \textbf{(c)} \& \textbf{(d)} the two point 
+		separation $\ge r_{l}$, \textbf{(c)} \& \textbf{(d)}, the two point 
 		objects are separable.}
 	\label{fig:Airy_ring_2_object_seperation}
 \end{figure}
+
+Several approximations had to be made to obtain Equations~\ref{eq:lateral_res}
+and~\ref{eq:axial_res}. Firstly, the Fraunhofer and paraxial approximations are
+assumed to hold\cite{goodman2005introduction}. Obviously the microscope system
+has been greatly simplified to essentially just the entrance and exit pupils. 
+More complex but accurate models for modern microscopy set-ups have been 
+demonstrated\cite{torok2007optical, foreman2011computational}. Finally, this
+idealised system only considers the shape of the apertures - i.e. the entrance
+and exit pupils - and the wavelength of light. If one were to observe objects 
+such as these, with these field distributions corresponding to well-specified
+models, there would be no resolution limit at all\cite{den1997resolution}. In 
+practice, the field distributions of objects are not precisely known, therefore
+determining the location of the first minima is not as simple as it has been 
+presented here. The first minima may not even be radially symmetric. 
+
+Furthermore, the `true' resolution achievable by a microscopy system is affected 
+by other factors such as the signal-to-noise ratio of an image, coherence 
+conditions of illumination, apodization, descretisation errors for digital 
+cameras, the to name a few\cite{den1997resolution}. There have been attempts to 
+develop alternative resolution measurements for point objects\cite{ram2006beyond}. 
+Unfortunately, the actual resolution acheived in biological samples varies 
+across the image plane, determined by factors such as the labelling density of 
+the underlying biological specimen\cite{culley2017nanoj}. The `true' resolution 
+of a system for a given sample is therefore a quantity which is impossible to 
+determine analytically. The ideal lateral and axial resolutions in 
+Equations~\ref{eq:lateral_res} and~\ref{eq:axial_res} are nonetheless useful
+quantities as the theoretical, ideal resolution limit of a microscopy system.
 
 \section{Super-resolution Microscopy}
 \label{sec:super_res}
