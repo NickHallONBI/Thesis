@@ -276,45 +276,53 @@ structured excitation light, for the duration of this thesis the term
 `structured illumination microscopy' or SIM refers to the form of 
 interference-based microscopy pioneered by Mats 
 Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}.
+This implementation of SIM is best understood through the Moir\'{e} effect.
+Two patterns, such as those shown in Figure~\ref{fig:fringes_1} and 
+\ref{fig:fringes_1}, which are multiplicitatively superimposed on one another
+will produce a beat pattern - Moir\'{e} fringes - such as those shown in
+Figure~\ref{fig:fringes_moire}. Using the convolution theorem, the Fourier
+transform if this superposition is equivalent to the convolution of the 
+Fourier transforms of the two original patterns\cite{mcgillem1991continuous},
+as shown in Figures~\ref{fig:fringes_1_ft}-\ref{fig:fringes_moire_ft}. 
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_1_kx_25_ky_0.png}
+		\includegraphics[width=\linewidth]{images/fringes_1_kx_16_ky_0.png}
 		\caption{}
-		\label{fig:fringes_1_kx_40_ky_0}
+		\label{fig:fringes_1}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_2_kx_5_ky_10.png}
+		\includegraphics[width=\linewidth]{images/fringes_2_kx_12_ky_12.png}
 		\caption{}
-		\label{fig:fringes_2_kx_5_ky_10}
+		\label{fig:fringes_2}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_moire_kx_25_and_5_ky_0_and_10.png}
+		\includegraphics[width=\linewidth]{images/fringes_moire_kx_16_and_12_ky_0_and_12.png}
 		\caption{}
-		\label{fig:fringes_moire_kx_25_and_5_ky_0_and_10}
+		\label{fig:fringes_moire}
 	\end{subfigure}
 
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_1_ft_kx_25_ky_0.png}
+		\includegraphics[width=\linewidth]{images/fringes_1_ft_kx_16_ky_0.png}
 		\caption{}
-		\label{fig:fringes_moire_ft_kx_40_ky_0}
+		\label{fig:fringes_1_ft}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_2_ft_kx_5_ky_10.png}
+		\includegraphics[width=\linewidth]{images/fringes_2_ft_kx_12_ky_12.png}
 		\caption{}
-		\label{fig:fringes_moire_ft_kx_5_ky_10}
+		\label{fig:fringes_2_ft}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/fringes_moire_ft_kx_25_and_5_ky_0_and_10.png}
+		\includegraphics[width=\linewidth]{images/fringes_moire_ft_kx_16_and_12_ky_0_and_12.png}
 		\caption{}
-		\label{fig:fringes_moire_ft_kx_40_and_5_ky_0_and_10}
+		\label{fig:fringes_moire_ft}
 	\end{subfigure}
 	\caption[Visualisation of Moir\'{e} fringes]{Visualisation of Moir\'{e} 
 		fringes. \textbf{(a)}-\textbf{(b)} shows two spatially structured images. 
@@ -324,6 +332,18 @@ Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008th
 		Note the \textbf{(f)} is a convolution of \textbf{(d)} and \textbf{(e)}}
 	\label{fig:moire_visualisation}
 \end{figure}
+
+For SIM, one of the patterns is the underlying biological structure - or more 
+specifically the spatial distribution of fluorophores - and the other is the 
+spatially structured excitation illuminaiton. The Moir\'{e} fringes arising 
+from the superposition of these two structures can be coarser than either of 
+the original patterns, meaning that Moir\'{e} fringes arising from the 
+superposition of biological structures beyond the resolution limit of the 
+microscope and a known illumination pattern can be observed. These Moir\'{e} 
+fringes contain information about these super-resolution structures and the
+super-resolution information can be extracted from the Moir\'{e} fringes, 
+effectively extending the observable region of a microscope beyond the 
+diffraction limit\cite{gustafsson2000surpassing}.
 
 \begin{figure}[h]
 	\centering
