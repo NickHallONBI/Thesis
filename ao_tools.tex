@@ -263,7 +263,7 @@ Converting Equation~\ref{eq:new_z_coef} to a matrix form yields:
 
 Where $\bar{d}$ is a length $N$ vector of the actuator control signals, $\bar{a}$ is the length $M$ vector of the Zernike polynomial amplitudes and $\boldsymbol{B}$ is the $M \times N$ matrix representing the response characteristics of the deformable mirror. However, we actually want its inverse, $\boldsymbol{B}^{-1} =\boldsymbol{C}$, otherwise called the control matrix in order to convert from Zernike polynomial amplitudes to actuator control signals.
 
-Microscope-AOtools implements an automated calibration routine to obtain $\boldsymbol{C}$. Each actuator is moved through a number, $p$, of set positions and a wavefront is extracted. Then $M$ Zernike modes, modelled with a Python package, are then fitted to the wavefront\cite{townson2019aotools}. A row vector $\boldsymbol{z}$ is obtained:
+Microscope-AOtools implements an automated calibration routine to obtain $\boldsymbol{C}$. Each actuator is moved through $p$ set positions and a wavefront is extracted. Figure~\ref{fig:observed_wavefront} shows an observed wavefront during the calibration routine. The wavefront is then decomposed into $M$ Zernike modes\cite{townson2019aotools}. A row vector $\boldsymbol{z}$ is obtained for each actuator position containing the computed Zernike mode amplitudes:
 
 \begin{equation}\label{eq:zernike_amp}
 \boldsymbol{z} = 
@@ -272,10 +272,26 @@ z_{1} & z_{2} & \cdots & z_{m}
 \end{bmatrix}
 \end{equation}
 
-Where the $g$-th element is the amplitude of the $g$-th Zernike mode. By collecting the row vectors of each position for each $h$-th actuator we can obtain:
+Where the $g$-th element is the amplitude of the $g$-th
+Zernike mode. Figure~\ref{fig:measured_zernike_modes} shows
+a plot of the row vector containing the amplitudes of the 
+$M$ Zernike modes measured for Figure~\ref{fig:observed_wavefront}.
+Figure~\ref{fig:simulated_wavefront} show a simulated wavefront 
+constructed using these Zernike mode amplitudes. As previously 
+mentioned, a phase wavefront can be constructed from an 
+infinite linear combination of Zernike modes\cite{noll1976zernike}. 
+However, using a finite number of Zernike modes produces only an 
+approximation of the original wavefront. 
+Figure~\ref{fig:observed_simulated_wavefront_diff} show the
+difference between the two and a ``ringing'' analogous to the 
+Gibbs phenomena for recreating periodic signals using a
+truncated Fourier series is present.
+
+By collecting the row vectors of each position
+for the $h$-th actuator we can obtain:
 
 \begin{equation}\label{eq:zernike_amp_actuator}
-A_l = 
+A_h = 
 \begin{bmatrix}
 \boldsymbol{z_{1}}\\
 \boldsymbol{z_{2}}\\
@@ -291,7 +307,50 @@ z_{p,1} & z_{p,2} & \cdots & z_{p,m}
 \end{bmatrix}
 \end{equation}
 
-Fitting linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics between the $h$-th actuator's position and the $g$-th Zernike mode, $b_{g,h}$. In this way, we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. Figure~\ref{fig:calibration_workflow} shows a flowchart representing this process as implemented in Microscope-AOtools.
+Linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics between the $h$-th actuator's position and the $g$-th Zernike mode, $b_{g,h}$. Figure~\ref{fig:influence_function_11} shows the influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator. The gradient of the slope is, in this case, $b_{11,26}$. This gradient is acquired for each actuator, for each Zernike mode. In this way, we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. Figure~\ref{fig:calibration_workflow} shows a flowchart of this process as implemented in Microscope-AOtools.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.285\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/observed_wavefront.png}
+		%\caption{Observed wavefront}
+		\caption{}
+		\label{fig:observed_wavefront}
+	\end{subfigure}
+	\begin{subfigure}{0.285\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/simulated_wavefront.png}
+		%\caption{Simulated wavefront}
+		\caption{}
+		\label{fig:simulated_wavefront}
+	\end{subfigure}
+	\begin{subfigure}{0.345\textwidth}
+		\vspace{-0.2cm}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/observed_simulated_wavefront_diff.png}
+		%\caption{Difference between observed and simulated wavefront}
+		\caption{}
+		\label{fig:observed_simulated_wavefront_diff}
+	\end{subfigure}
+	
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/measured_zernike_modes.png}
+		%\caption{Zernike mode amplitudes measured in the observed wavefront}
+		\caption{}
+		\label{fig:measured_zernike_modes}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth, scale=0.5]{images/influence_function_11.png}
+		%\caption{Influence function fitting}
+		\caption{}		
+		\label{fig:influence_function_11}
+	\end{subfigure}
+	\caption{(a) An example observed wavefront obtained during the calibration process for an Alpao-69 actuator deformable mirror. The $26^{th}$ actuator is at the first of the 5 positions. (b) A simulated wavefront created from the 69 Zernike mode amplitudes measured in the observed wavefront. (c) The difference in the observed and simulated wavefronts. (d) The 69 Zernike mode amplitudes measured for the observed wavefront (e) The influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator}
+	\label{fig:wavefront_decomposition}
+\end{figure}
 
 \begin{figure}[h]
 	\centering
