@@ -32,7 +32,7 @@ Microscope-AOtools provides such an implementation, utilising Python-Microscope 
 		\caption{}
 		\label{fig:DM_sensorless_ao_parameters}
 	\end{subfigure}
-	\caption{(a) Deformable mirror specific functions on the Cockpit UI (b) Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods (c) Options window for varying the parameters used in the system aberration routing correction routing. Spawned by the "Set System Flat Calculation Parameters" button (d) Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
+	\caption[Cockpit GUI DM specific functionality]{Cockpit GUI DM specific functionality. \textbf{(a)} Deformable mirror specific functions on the Cockpit UI \textbf{(b)} Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods \textbf{(c)} Options window for varying the parameters used in the system aberration routing correction routing. Spawned by the "Set System Flat Calculation Parameters" button \textbf{(d)} Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
 	\label{fig:DeepSIM_control_software}
 \end{figure}
 
@@ -55,7 +55,7 @@ As previously described, DeepSIM has multiple beam paths; interferometric, widef
 		\caption{}
 		\label{fig:ROI_selector}
 	\end{subfigure}
-	\caption{User interface for selecting the interferometric region of interest (a) The ROI selecter UI when it is first initialised (b) UI with the ROI selected}
+	\caption[User interface for selecting the interferometric region of interest]{User interface for selecting the interferometric region of interest \textbf{(a)} The ROI selecter UI when it is first initialised \textbf{(b)} UI with the ROI selected}
 	\label{fig:ROI_selectors}
 \end{figure}
 
@@ -189,7 +189,7 @@ In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow
 		\caption{}
 		\label{fig:puw_unwrapped_phase}
 	\end{subfigure}
-	\caption{A visualisation of the stages of the phase acquisition workflow. (a) Captured interferogram (b) Interferogram cropped to region of interest (ROI) (c) Circular mask (d) ROI isolated (e) ROI quadrant shifted (ROI-qs) (f) 2-D tukey window mask (g) ROI-qs with tukey mask applied (h) Fast Fourier transform (FFT) of (g), log scaled (i) Fourier transform with the central spatial frequencies masked, log scaled (j) 2-D sine squared mask centred on the position of spatial frequencies encoding the phase information (k) The original Fourier transform, (h), with the sine squared mask applied (l) Phase encoding spatial frequencies rolled to the central position (m) Inverse FFT of the phase encoding spatial frequencies (n) Inverse FFT transformed into a phase map (o) Phase map masked to isolate ROI (p) Phase map unwrapped to remove 2$\pi$ discontinuities}
+	\caption[Visualisation of the stages of the phase acquisition workflow.]{Visualisation of the stages of the phase acquisition workflow. \textbf{(a)} Captured interferogram \textbf{(b)} Interferogram cropped to region of interest (ROI) \textbf{(c)} Circular mask \textbf{(d)} ROI isolated \textbf{(e)} ROI quadrant shifted (ROI-qs) \textbf{(f)} 2-D tukey window mask \textbf{(g)} ROI-qs with tukey mask applied \textbf{(h)} Fast Fourier transform (FFT) of \textbf{(g)}, log scaled \textbf{(i)} Fourier transform with the central spatial frequencies masked, log scaled \textbf{(j)} 2-D sine squared mask centred on the position of spatial frequencies encoding the phase information \textbf{(k)} The original Fourier transform, \textbf{(h)}, with the sine squared mask applied \textbf{(l)} Phase encoding spatial frequencies rolled to the central position \textbf{(m)} Inverse FFT of the phase encoding spatial frequencies \textbf{(n)} Inverse FFT transformed into a phase map \textbf{(o)} Phase map masked to isolate ROI \textbf{(p)} Phase map unwrapped to remove 2$\pi$ discontinuities}
 	\label{fig:phase_unwrap_workflow}
 \end{figure*}
 
@@ -215,7 +215,7 @@ This phase extraction technique is used as part of other methods, but it is also
 		\caption{}
 		\label{fig:phase_viewer_ft}
 	\end{subfigure}
-	\caption{(a) Phase viewer window showing the unwrapped phase acquired from the interferogram (b) Phase viewer window showing the power spectrum of the interferogram. }
+	\caption[User interface for viewing the phase wavefront]{User interface for viewing the phase wavefront \textbf{(a)} Phase viewer window showing the unwrapped phase acquired from the interferogram \textbf{(b)} Phase viewer window showing the power spectrum of the interferogram. }
 	\label{fig:phase_viewer}
 \end{figure}
 
@@ -348,7 +348,7 @@ Linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & 
 		\caption{}		
 		\label{fig:influence_function_11}
 	\end{subfigure}
-	\caption{(a) An example observed wavefront obtained during the calibration process for an Alpao-69 actuator deformable mirror. The $26^{th}$ actuator is at the first of the 5 positions. (b) A simulated wavefront created from the 69 Zernike mode amplitudes measured in the observed wavefront. (c) The difference in the observed and simulated wavefronts. (d) The 69 Zernike mode amplitudes measured for the observed wavefront (e) The influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator}
+	\caption[Visualisation of the influence function fitting stage of the calibration routine]{Visualisation of the influence function fitting stage of the calibration routine \textbf{(a)} An example observed wavefront obtained during the calibration process for an Alpao-69 actuator deformable mirror. The $26^{th}$ actuator is at the first of the 5 positions. \textbf{(b)} A simulated wavefront created from the 69 Zernike mode amplitudes measured in the observed wavefront. \textbf{(c)} The difference in the observed and simulated wavefronts. \textbf{(d)} The 69 Zernike mode amplitudes measured for the observed wavefront \textbf{(e)} The influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator}
 	\label{fig:wavefront_decomposition}
 \end{figure}
 
@@ -366,7 +366,7 @@ Linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & 
 		\caption{}
 		\label{fig:Ith_actuator_calibration_workflow_blue_border}
 	\end{subfigure}
-	\caption{(a) Flowchart depicting the generalised calibration routine implemented in Mircoscope-AOtools (b)Flowchart depicting the the process for calibrating the $h$-th actuator of the deformable mirror, the dashed blue process in (a). The influence functions returned are $b_{g,h}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
+	\caption[Calibration routine workflow]{\textbf{(a)} Flowchart depicting the generalised calibration routine implemented in Mircoscope-AOtools \textbf{(b)} Flowchart depicting the the process for calibrating the $h$-th actuator of the deformable mirror, the dashed blue process in \textbf{(a)}. The influence functions returned are $b_{g,h}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
 	\label{fig:calibration_workflow}
 \end{figure}
 
@@ -380,7 +380,7 @@ Feedback on the quality of the calibration process is essential. Ideally, once t
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\textwidth, scale=0.5]{./images/characterisation_workflow.jpg}
-	\caption{Flowchart depicting the process for characterising a deformable mirror as implemented in Microscope-AOtools}
+	\caption[Characterisation routine workflow]{Flowchart depicting the process for characterising a deformable mirror as implemented in Microscope-AOtools}
 	\label{fig:characterisation_workflow}
 \end{figure}
 
@@ -415,7 +415,7 @@ Where $Z_{i}$ is the applied Zernike mode amplitude, $Z'_{i}$ and $Z'_{j}$ are t
 		\caption{}
 		\label{fig:real_characterisation_assay_plot_metric_errorbar}
 	\end{subfigure}
-	\caption{(a) An ideal characterisation assay, measuring the recreation accuracy of 68 Zernike modes with applied amplitude of 1 for each (b) A realistic characterisation assay obtained from a calibrated Alpao-69 actuator deformable mirror, measuring the recreation accuracy of 68 Zernike modes with applied amplitude of 1 for each (c) Plot of the recreation accuracy metric for the real characterisation assay shown in (b). The threshold (red dashed line) is set at 0.75}
+	\caption[Example characterisation routine results]{Example characterisation routine results \textbf{(a)} An ideal characterisation assay, measuring the recreation accuracy of 68 Zernike modes with applied amplitude of 1 for each \textbf{(b)} A realistic characterisation assay obtained from a calibrated Alpao-69 actuator deformable mirror, measuring the recreation accuracy of 68 Zernike modes with applied amplitude of 1 for each \textbf{(c)} Plot of the recreation accuracy metric for the real characterisation assay shown in \textbf{(b)}. The threshold (red dashed line) is set at 0.75}
 	\label{fig:characterisation_assay_results}
 \end{figure}
 
@@ -432,7 +432,7 @@ The applications for aberration correction using direct wavefront sensing have b
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.55\textwidth, scale=0.5]{./images/direct_wavefront_flattening_workflow.jpg}
-	\caption{Flowchart depicting the process for flattening directly measured wavefront as implemented in Microscope-AOtools}
+	\caption[Direct wavefront correction workflow]{Flowchart depicting the process for flattening directly measured wavefront as implemented in Microscope-AOtools}
 	\label{fig:direct_wavefront_flattening_workflow}
 \end{figure}
 
@@ -464,7 +464,7 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 		\caption{}
 		\label{fig:zernike_modes_to_show_flattening}
 	\end{subfigure}
-	\caption{(a) An aberrated wavefront (b) A wavefront after 20 iterations of correction (c) The Zernike mode amplitudes measured in the aberrated (red) and corrected (blue) wavefronts (a) - (b) are all presented on the same colorscale (in radians of 543nm HeNe laser) and were obtains via interferometry}
+	\caption[Example direct wavefront correction results]{Example direct wavefront correction results \textbf{(a)} An aberrated wavefront \textbf{(b)} A wavefront after 20 iterations of correction \textbf{(c)} The Zernike mode amplitudes measured in the aberrated (red) and corrected (blue) wavefronts \textbf{(a)} - \textbf{(b)} are all presented on the same colorscale (in radians of 543nm HeNe laser) and were obtains via interferometry}
 	\label{fig:direct_wavefront_correction}
 \end{figure}
 
@@ -485,7 +485,7 @@ have been numerous metrics developed which have been shown to be effective on ce
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth,scale=0.5]{./images/sensorless_aberration_fitting_w_images.png}
-	\caption{Principle of sensorless adaptive optics correction. For each Zernike mode, $Z_i$, images of the sample with different amplitudes of the $i$-th Zernike mode are obtained. A value of the image quality metric, $S$, is obtained for each (blue dots). A Gaussian function is then fitted to these image quality metric values and the amplitude, $a$ corresponding to the maximum image quality, $S_{max}$, is obtained (green dot). The inset images are Drosophila Neuro-muscular Junction with various amplitudes of spherical aberration present.}
+	\caption[Principle of sensorless adaptive optics correction.]{Principle of sensorless adaptive optics correction. For each Zernike mode, $Z_i$, images of the sample with different amplitudes of the $i$-th Zernike mode are obtained. A value of the image quality metric, $S$, is obtained for each (blue dots). A Gaussian function is then fitted to these image quality metric values and the amplitude, $a$ corresponding to the maximum image quality, $S_{max}$, is obtained (green dot). The inset images are Drosophila Neuro-muscular Junction with various amplitudes of spherical aberration present.}
 	\label{fig:sensorless_correction_method}
 \end{figure}
 
@@ -496,7 +496,7 @@ Unlike the calibration, characterisation and direct wavefront sensing techniques
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.65]{./images/sensorless_correction_workflow_DeepSIM.jpg}
-	\caption{Flowchart depicting the sensorless correction routine implemented on DeepSIM. All $M$ images are taken, then the quality metric is obtained for all $M$ images, the best Zernike amplitude is found and applied }
+	\caption[Sensorless adaptive optics correction workflow]{Flowchart depicting the sensorless correction routine implemented on DeepSIM. All $M$ images are taken, then the quality metric is obtained for all $M$ images, the best Zernike amplitude is found and applied }
 	\label{fig:sensorless_correction_workflow_DeepSIM}
 \end{figure}
 
