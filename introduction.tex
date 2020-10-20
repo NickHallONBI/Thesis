@@ -71,7 +71,8 @@ with SpekCheck\cite{phillips2018spekcheck}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/GFP_emission_absorption_spectra.jpg}
-	\caption{Example excitation (blue) and emission (green) spectra for Green Fluorescent Protein. Generated with SpekCheck\cite{phillips2018spekcheck}}
+	\caption[Example excitation and emission spectra]{Example excitation (blue) 
+		and emission (green) spectra for Green Fluorescent Protein. Generated with SpekCheck\cite{phillips2018spekcheck}}
 	\label{fig:GFP_emission_absorption_spectra}
 \end{figure}
 
@@ -108,7 +109,8 @@ of this simplified system.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/simplified_microscope_layout.jpg}
-	\caption{A simplified schematic of a light microscopy imaging system. A specimen 
+	\caption[A simplified schematic of a light microscopy imaging system.]{A simplified 
+		schematic of a light microscopy imaging system. A specimen 
 		is placed at the sample plane, $\textbf{O}$, in refractive index, $n$. Light 
 		rays emerging from $\textbf{O}$ are collected by the entrance pupil. These 
 		rays process through the microscope system before emerging at the exit pupil 
@@ -127,11 +129,11 @@ infinitely fine diffraction grating and $\alpha$ determines the highest
 diffraction order which the entrance pupil - i.e. the microscope
 objective aperture - can collect\cite{davidson2002optical}. Considering this 
 and, more generally, the diffraction of light through a circular aperture 
-it is possible to obtain that the field intensity at \textbf{O'}, $I(v)$, is 
+it is possible to obtain that the field intensity at \textbf{O'}, $H(v)$, is 
 proportional to\cite{goodman2005introduction,born2013principles,antonello2014optimisation}:
 
 \begin{equation}\label{eq:image_field_insentity}
-I(v) \propto \left|\frac{2J_{1}(v)}{v}\right|^2,
+H(v) \propto \left|\frac{2J_{1}(v)}{v}\right|^2,
 \end{equation}
 
 where $J_{1}(v))$ is the first-order Bessel function of the first kind of
@@ -196,7 +198,8 @@ separate.
 		\caption{Object separation = $1.23\text{r}_{\text{l}}$}
 		\label{fig:Airy_ring_2_object_seperation_1_5}
 	\end{subfigure}
-	\caption{Illustration of the resolution limit as determined by the Rayleigh 
+	\caption[Illustration of the resolution limit as determined by the Rayleigh
+		criterion]{Illustration of the resolution limit as determined by the Rayleigh 
 		criterion. Each subfigure shows a line profile and 2D plot of the field 
 		intensity distributions of both of the two diffraction limited point 
 		objects. For two point objects separated by $< r_{l}$, \textbf{(a)} \& 
@@ -236,16 +239,222 @@ quantities as the theoretical, ideal resolution limit of a microscopy system.
 \section{Super-resolution Microscopy}
 \label{sec:super_res}
 
-\begin{itemize}
-	\item Introduction to the fact that there are methods for overcoming the resolution limit and different techniques with different pros/cons
-\end{itemize}
+For a some time the diffraction limit representing a kind of practical 
+resolution asymptote - a point to be approached by never reached. Two
+`gold standard' techniques for optical bioimaging emerged thanks to their
+ease of implementation and how close they were able to get to the diffraction
+limit; deconvolution\cite{agard1983three, wallace2001workingperson} and
+confocal laser scanning microscopy\cite{sheppard1981theory,minsky1988memoir}. 
+Nonetheless, the instant one defines a limit it is pracitcally human nature 
+to attempt to surpass it. Therefore, a number of `super-resolution' techniques
+have emerged capable of surpassing even the ideal diffraction limit. These
+can be broadly divided into two categories; near-field and far-field methods.
+Near-field methods, whilst capable of achieving resolutions of $\sim 20 nm$,
+are only suitable for surface structure imagin\cite{schermelleh2010guide}. 
+Far-field techniques fall into 4 broad techniques; structured illumination
+microscopy (SIM), stimulated emission depletion (STED) microscopy, 
+single-molecule localisation microscopy (SMLM) and interferometric-based 
+techniques. There are some implementations which combine several 
+techniques. Each super-resolution technique has benefits and drawbacks which 
+need to be considered when employing them including; the resolution 
+(laterally and axially) required and the resolution achievable with each 
+technique, acquisition speed, photodamage incurred, depth of imaging and 
+multi-colour capability\cite{hell20152015,schermelleh2019super} Although it 
+has a modest resolution improvement, SIM is is the most widely accepted 
+super-resolution technique for biology thanks to its multi-colour capability,
+high temporal resolution and low photodamage impact\cite{leung2011review}.
 
 \subsection{Structured Illumination Microscopy}
 \label{subsec:SIM}
 
-\begin{itemize}
-	\item General overview of SIM, particularly Gustafsson-style SIM.
-\end{itemize}
+There are a number of microscopy techniques which fall under the structured
+illumination microscopy umbrella; Re-scan\cite{de2013re}, 
+Airyscan\cite{huff2015airyscan}, iSIM\cite{york2013instant,curd2015construction},
+and SIMFlux\cite{cnossen2020localization} to name a few. Whilst all these can be 
+considered `structured illumination' techniques since they do rely on spatially 
+structured excitation light, for the duration of this thesis the term 
+`structured illumination microscopy' or SIM refers to the form of 
+interference-based microscopy pioneered by Mats 
+Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_1_kx_25_ky_0.png}
+		\caption{}
+		\label{fig:fringes_1_kx_40_ky_0}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_2_kx_5_ky_10.png}
+		\caption{}
+		\label{fig:fringes_2_kx_5_ky_10}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_moire_kx_25_and_5_ky_0_and_10.png}
+		\caption{}
+		\label{fig:fringes_moire_kx_25_and_5_ky_0_and_10}
+	\end{subfigure}
+
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_1_ft_kx_25_ky_0.png}
+		\caption{}
+		\label{fig:fringes_moire_ft_kx_40_ky_0}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_2_ft_kx_5_ky_10.png}
+		\caption{}
+		\label{fig:fringes_moire_ft_kx_5_ky_10}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/fringes_moire_ft_kx_25_and_5_ky_0_and_10.png}
+		\caption{}
+		\label{fig:fringes_moire_ft_kx_40_and_5_ky_0_and_10}
+	\end{subfigure}
+	\caption[Visualisation of Moir\'{e} fringes]{Visualisation of Moir\'{e} 
+		fringes. \textbf{(a)}-\textbf{(b)} shows two spatially structured images. 
+		\textbf{(c)} shows the resultant Moir\'{e} fringes arising from the 
+		interference of \textbf{(a)} and \textbf{(b)}. \textbf{(d)}-\textbf{(f)} 
+		shows the respective Fourier transforms of \textbf{(a)}-\textbf{(c)}. 
+		Note the \textbf{(f)} is a convolution of \textbf{(d)} and \textbf{(e)}}
+	\label{fig:moire_visualisation}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle.png}
+		\caption{}
+		\label{fig:3D_SIM_OTF_no_angle}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xy.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_no_angle_2D_plot_xy}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.435\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xz.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_no_angle_2D_plot_xz}
+	\end{subfigure}
+	\caption[Widefield optical transfer function visualisation]{Widefield 
+		optical transfer function visualisation. \textbf{(a)} The OTF support
+		for a conventional widefield microscope in reciprocal space. 
+		\textbf{(b)} The projection of the observable region onto the 
+		$k_{x}k_{y}$ plane. \textbf{(c)} The projection of the observable 
+		region onto the $k_{x}k_{z}$ plane}
+	\label{fig:widefield_OTF_visualisation}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/amplitude_wave_vectors_2D.jpg}
+		\caption{}
+		\label{fig:amplitude_wave_vectors_2D}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.265\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_stripe_angles.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_stripe_angles}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/2D_SIM_OTF_beam_pos_w_vectors.jpg}
+		\caption{}
+		\label{fig:2D_SIM_OTF_beam_pos_w_vectors}
+	\end{subfigure}
+	
+	\begin{subfigure}[t]{0.35\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_1_angle.png}
+		\caption{}
+		\label{fig:3D_SIM_OTF_1_angle}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.6\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/2D_SIM_OTF_1_angle_plot_xz.jpg}
+		\caption{}
+		\label{fig:2D_SIM_OTF_1_angle_plot_xz}
+	\end{subfigure}
+
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/2D_SIM_OTF_all_2D_angles.png}
+		\caption{}
+		\label{fig:2D_SIM_OTF_all_2D_angles}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_xy_expansion_w_double_rad_filled.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}
+	\end{subfigure}
+	\caption[Resolution enhancement with 2D SIM imaging]{Resolution enhancement 
+		with 2D SIM imaging. \textbf{(a)} The amplitude wave vectors 
+		corresponding to the 2 illumination beams. Both vectors have the 
+		same magnitude, $\frac{1}{\lambda}$ \textbf{(b)} The projection of the 
+		observable region onto the $k_{x}k_{y}$ plane with the stripe angles 
+		shown \textbf{(c)} The projection of the observable region onto the 
+		$k_{x}k_{z}$ plane with the spatial frequency component locations for
+		two-beam interference pattern shown. \textbf{(d)} The OTF support
+		extension for one angle in reciprocal space. \textbf{(e)} The projection 
+		of the extended observable region in \textbf{(d)} onto the $k_{x}k_{z}$ 
+		plane. \textbf{(f)} The OTF support	extension for all three angles in 
+		reciprocal space. \textbf{(g)} The projection of the extended observable 
+		region in \textbf{(f)} onto the $k_{x}k_{y}$ plane. The shaded grey area
+		shows the reciprocal components for isotropic observable region doubling.}
+	\label{fig:2D_SIM_visualisation}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.35\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/amplitude_wave_vectors.jpg}
+		\caption{}
+		\label{fig:amplitude_wave_vectors}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.6\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_beam_pos_w_vectors.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_beam_pos_w_vectors}
+	\end{subfigure}
+	
+	\begin{subfigure}[t]{0.35\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_all_angles.png}
+		\caption{}
+		\label{fig:3D_SIM_OTF_all_angles}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.625\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_1_angle_2D_plot.jpg}
+		\caption{}
+		\label{fig:3D_SIM_OTF_1_angle_2D_plot}
+	\end{subfigure}	
+	\caption[Resolution enhancement with 3D SIM imaging]{Resolution enhancement 
+		with 3D SIM imaging. \textbf{(a)} The amplitude wave vectors 
+		corresponding to the 3 illumination beams. All vectors have the 
+		same magnitude, $\frac{1}{\lambda}$ \textbf{(b)} The projection of the 
+		observable region onto the $k_{x}k_{z}$ plane with the spatial frequency 
+		component locations for three-beam interference patterns shown. 
+		\textbf{(c)} The OTF support extension for all three angles in reciprocal 
+		space. \textbf{(d)} The projection of the extended observable region in 
+		\textbf{(c)} onto the $k_{x}k_{z}$ plane.}
+	\label{fig:3D_SIM_visualisation}
+\end{figure}
 
 \section{Optical Aberrations}
 \label{sec:aberrations}
@@ -267,5 +476,5 @@ quantities as the theoretical, ideal resolution limit of a microscopy system.
 
 \begin{itemize}
 	\item Here is where you should really hammer home that current implementations are a) not generalised and b) not accessible to biologists.
-	\item Present the story of the thesis: "I have created a robust, generalised accessible adaptive optics implementation. It solves a range of common biology problems and works across multiple sample types and imaging modality. It's generalised so it can be transferred between systems." That’s the novel contribution.
+	\item Present the story of the thesis: "I have created a robust, generalised accessible adaptive optics implementation. It solves a range of common biology problems and works across multiple sample types and imaging modality. It's generalised so it can be transferred between systems." That's the novel contribution.
 \end{itemize}
