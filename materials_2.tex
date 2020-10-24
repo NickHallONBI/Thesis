@@ -19,23 +19,23 @@ illumination pattern. Multiple images with varying angle
 and phase shifts to the illumination pattern are acquired. 
 These images are then used to reconstruct a single 
 super-resolved image.\cite{gustafsson2000surpassing,gustafsson2008three}
-Recall a single fluorescent image, $F(\bar{x})$, is 
+Recall a single fluorescent image, $F(\textbf{r})$, is 
 defined by:
 
-\begin{equation}\label{eq:SIM_fluorescent_image}
+\begin{equation}
 \begin{split}
-	F(\bar{x}) &= (E \circledast H)(\bar{x})\\
-	F(\bar{x}) &= [D(\bar{x})I(\bar{x})] \circledast H(\bar{x})\\
-\end{split}
+F(\textbf{r}) &= (E \circledast H)(\textbf{r})\\
+F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r}),\\
+\end{split}\tag{\ref{eq:fluorescent_image}}
 \end{equation}
 
-Where $D(\bar{x})$ is the sample fluorescence distribution,
-$I(\bar{x})$ is the illumination pattern, $E(\bar{x})$ is the 
-resultant emission signal and $H(\bar{x})$ is the system point
-spread function (PSF). Section~\ref{sec:aberrations} has already
+Where $D(\textbf{r})$ is the sample fluorescence distribution, 
+$I(\textbf{r})$ is the illumination pattern, $E(\bar{x})$ is
+the resultant emission signal and $H(\textbf{r})$ is the system 
+point spread function (PSF). Section~\ref{sec:aberrations} has already
 discussed the effect aberrations have on distorting the system
-PSF, $H(\bar{x})$. However, in SIM imaging the illumination 
-pattern, $I(\bar{x})$, is also formed in the same imaging path
+PSF, $H(\textbf{r})$. However, in SIM imaging the illumination 
+pattern, $I(\textbf{r})$, is also formed in the same imaging path
 and is therefore the illumination pattern formation is also 
 affected by the system aberrations.
 
@@ -43,32 +43,32 @@ Consider the illumination pattern function. Fully coherent
 illumination conditions yeild optimum imaging performance and
 are therefore chosen. In practice, only partially coherent 
 conditions are achieveable. Utilising the fully coherent 
-approximation, $I(\bar{x})$ can be expressed as:
+approximation, $I(\textbf{r})$ can be expressed as:
 
 \begin{equation}\label{eq:SIM_illumination}
-	I(\bar{x}) = \left\| \frac{1}{2}[1 + \cos(\bar{x}\bullet\bar{p} + \phi)]\circledast H_{amp}(\bar{x}) \right\|^{2}
+	I(\textbf{r}) = \left\| \frac{1}{2}[1 + \cos(\textbf{r}\bullet\\textbf{p} + \phi)]\circledast H_{amp}(\textbf{r}) \right\|^{2}
 \end{equation}
 
-Where $\bar{p}$ and $\phi$ define the orientation and phase of
-the illumination pattern respectively. $H_{amp}(\bar{x})$ is the
-amplitude PSF, as opposed to $H(\bar{x})$ which is the intensity
+Where $\textbf{p}$ and $\phi$ define the orientation and phase of
+the illumination pattern respectively. $H_{amp}(\textbf{r})$ is the
+amplitude PSF, as opposed to $H(\textbf{r})$ which is the intensity
 PSF and is defined as:
 
 \begin{equation}\label{eq:amplitude_PSF}
-	H_{amp}(\bar{x}) = \mathcal{F}[P(\bar{r})]
+	H_{amp}(\textbf{r}) = \mathcal{F}[P(\textbf{r}')]
 \end{equation}
 
-Where $P$ is the pupil function, $\bar{r}$ is the coordinate
+Where $P$ is the pupil function, $\textbf{r}'$ is the coordinate
 vector in the pupil plane and $\mathcal{F}$ is the Fourier
 transform operation. Utiliting the Fourier convolution 
 theorem, Equation~\ref{eq:SIM_illumination} becomes:
 
 \begin{equation}\label{eq:SIM_illumination_invFT}
-I(\bar{x}) = \left\| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\bar{r}) + \frac{\exp^{-i\theta}}{2}\delta(\bar{r}-\bar{p}) + \frac{\exp^{i\theta}}{2}\delta(\bar{r}+\bar{p})\right]P(\bar{r})\right\} \right\|^{2}
+I(\textbf{r}) = \left\| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\textbf{r}') + \frac{\exp^{-i\theta}}{2}\delta(\textbf{r}'-\textbf{p}) + \frac{\exp^{i\theta}}{2}\delta(\textbf{r}'+\textbf{p})\right]P(\textbf{r}')\right\} \right\|^{2}
 \end{equation}
 
-Where value of $\bar{p}$ positions the delta functions in the
-pupil plane. $\bar{p}$ is chosen to have a value of or close
+Where value of $\textbf{p}$ positions the delta functions in the
+pupil plane. $\textbf{p}$ is chosen to have a value of or close
 to 1, to maximise the resolution increase. 
 Equation~\ref{eq:SIM_illumination_invFT} there is clearly only
 illumination at three points in the pupil plane, at the centre 
@@ -128,41 +128,44 @@ and the location of the beams in Fourier space. The illumination
 pattern shown in Figure~\ref{fig:isosense_visualisation_real} is
 the inverse Fourier transform of the 4-beam interference pattern 
 in Figure~\ref{fig:isosense_visualisation_ft}. The location 
-of these beams, $\bar{\kappa}$, are: 
-$(0,0)$, $(0,\gamma w)$, $(0,-\gamma w)$, $(\gamma w, 0)$, 
-$(-\gamma w, 0)$, $(\frac{\gamma w}{2}, \frac{\gamma w}{2})$, 
-$(-\frac{\gamma w}{2}, \frac{\gamma w}{2})$, $(\frac{\gamma w}{2},
--\frac{\gamma w}{2})$, $(-\frac{\gamma w}{2}, 
--\frac{\gamma w}{2})$. $u,v$ are the spatial frequency 
-analogues of the $x,y$ axes. $w$ is the Abbe diffraction limit and 
-$\gamma$ is a user defined fill fraction. This fill
-fraction controls the positions of the beams in the interference
-pattern and hence the region of the Fourier spectrum which will 
-be enhanced over normal illumination. The resultant emission image 
-obtained, $E(\bar{x})$, can be described as:
+of these beams, $\kappa$, are: 
+$(0,0)$, $(0,\gamma \omega_{l})$, $(0,-\gamma \omega_{l})$, 
+$(\gamma \omega_{l}, 0)$, $(-\gamma \omega_{l}, 0)$, 
+$(\frac{\gamma \omega_{l}}{2}, \frac{\gamma \omega_{l}}{2})$, 
+$(-\frac{\gamma \omega_{l}}{2}, \frac{\gamma \omega_{l}}{2})$, 
+$(\frac{\gamma \omega_{l}}{2}, -\frac{\gamma \omega_{l}}{2})$, 
+$(-\frac{\gamma \omega_{l}}{2}, -\frac{\gamma \omega_{l}}{2})$. 
+$u,v$ are the spatial frequency analogues of the $x,y$ axes. 
+$\omega_{l}$ is the lateral diffraction limit in reciprocal space 
+as per Equation~\ref{eq:lateral_spatial_freq_res} and $\gamma$ is 
+a user defined fill fraction. This fill fraction controls the 
+positions of the beams in the interference pattern and hence the 
+region of the Fourier spectrum which will be enhanced over normal 
+illumination. The resultant emission image  obtained, $E(\textbf{r})$, 
+can be described as:
 
 \begin{equation}\label{eq:isosense_real}
-E(\bar{x}) = D(\bar{x}) \times I(\bar{x})
+E(\textbf{r}) = D(\textbf{r}) \times I(\textbf{r})
 \end{equation}	
 
-Where $I(\bar{x})$ is the interference pattern, similar to that shown in 
-Figure\ref{fig:isosense_visualisation_real}, $D(\bar{x})$ is the sample 
-fluorescence distribution as before and $\bar{x}$ is the spatial 
+Where $I(\textbf{r})$ is the interference pattern, similar to that shown in 
+Figure\ref{fig:isosense_visualisation_real}, $D(\textbf{r})$ is the sample 
+fluorescence distribution as before and $\textbf{r}$ is the spatial 
 coordinate vector. Applying a Fourier transform yields:
 
 \begin{equation}\label{eq:isosense_ft}
 \begin{split}
-\mathcal{F}[F(\bar{x})] &= \mathcal{F}[D(\bar{x})\times I(\bar{x})] \\
-\tilde{\textbf{F}}(\bar{k}) &= \tilde{\textbf{D}}(\bar{k}) \circledast \tilde{\textbf{I}}(\bar{k}) \\
-\tilde{\textbf{F}}(\bar{k}) &= \sum_{\bar{\kappa}}\iint\tilde{\textbf{D}}(\bar{k})\delta(\bar{k} - \bar{\kappa})dudv \\
-\tilde{\textbf{F}}(\bar{k}) &= \sum_{\bar{\kappa}}\tilde{\textbf{D}}(\bar{k} - \bar{\kappa})
+\mathcal{F}[F(\textbf{r})] &= \mathcal{F}[D(\textbf{r})\times I(\textbf{r})] \\
+\tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \circledast \tilde{\textbf{I}}(\textbf{k}) \\
+\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\iint\tilde{\textbf{D}}(\textbf{k})\delta(\textbf{k} - \kappa)dudv \\
+\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\tilde{\textbf{D}}(\textbf{k} - \kappa)
 \end{split}
 \end{equation}
 
-Where $\tilde{\textbf{F}}(\bar{k})$, $\tilde{\textbf{I}}(\bar{k})$ and 
-$\tilde{\textbf{D}}(\bar{k})$ are the Fourier transforms of $F(\bar{x})$, 
-$I(\bar{x})$ and $D(\bar{x})$, the $\bar{\kappa}$ frequencies are the 
-locations of interference pattern beams described above and $\bar{k}$ is 
+Where $\tilde{\textbf{F}}(\textbf{k})$, $\tilde{\textbf{I}}(\textbf{k})$ and 
+$\tilde{\textbf{D}}(\textbf{k})$ are the Fourier transforms of $F(\textbf{k})$, 
+$I(\textbf{k})$ and $D(\textbf{k})$, the $\kappa$ frequencies are the 
+locations of interference pattern beams described above and $\textbf{k}$ is 
 the spatial frequency vector. By convolving the sample fluorescence 
 distribution with  multiple $\delta$-functions, multiple copies of the 
 sample spatial frequency information are created and regions of the 

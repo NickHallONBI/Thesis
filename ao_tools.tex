@@ -533,27 +533,27 @@ respectively, where $N$ and $M$ are the number of pixels along each
 dimension of the image. From Parseval's Theorem, $\sum\limits_{n,m}
 \left\| \tilde{\textbf{D}}_{n,m} \right\|^2$ is the power of the 
 observed signal. However, the Fourier spectrum obtained is not 
-entirely composed of sample information. The fluorescent signal is the 
-convolution of the distribution of fluorescent emission and the system 
-point spread function (PSF):
+entirely composed of sample information. Recall that the fluorescent 
+signal for a single image is the convolution of the distribution of 
+fluorescent emission and the system point spread function (PSF):
 
-\begin{equation}\label{eq:fluorescent_image}
+\begin{equation}
 \begin{split}
-F(\textbf{x}) &= (E \circledast H)(\textbf{x})\\
-F(\textbf{x}) &= [D(\textbf{x})I(\textbf{x})] \circledast H(\textbf{x})\\
-\end{split}
+F(\textbf{r}) &= (E \circledast H)(\textbf{r})\\
+F(\textbf{r}) &= [D(\bar{x})I(\textbf{r})] \circledast H(\textbf{r}),\\
+\end{split}\tag{\ref{eq:fluorescent_image}}
 \end{equation}
 
-Where $D(\textbf{x})$ is the sample fluorescence distribution,
-$I(\textbf{x})$ is the illumination pattern, $E(\textbf{x})$ is the 
-resultant emission signal and $H(\textbf{x})$ is the system PSF. 
-For a widefield image, $I(\textbf{x}) = 1$. Applying this 
-substitution and a Fourier transform yields:
-
+Where $D(\textbf{r})$ is the sample fluorescence distribution, 
+$I(\textbf{r})$ is the illumination pattern, $E(\bar{x})$ is
+the resultant emission signal and $H(\textbf{r})$ is the system 
+point spread function (PSF). For a widefield image, 
+$I(\textbf{r}) = 1$. Applying this substitution and a Fourier 
+transform yields:
 
 \begin{equation}\label{eq:fluor_signal_fourier}
 \begin{split}
-\mathcal{F}[\textbf{F}(\textbf{x})] &= \mathcal{F}[\textbf{D}(\textbf{x}) \circledast \textbf{H}(\textbf{x})]\\
+\mathcal{F}[\textbf{F}(\textbf{r})] &= \mathcal{F}[\textbf{D}(\textbf{r}) \circledast \textbf{H}(\textbf{r})]\\
 \tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \tilde{\textbf{H}}(\textbf{k})\\
 &= \tilde{\textbf{D}}(\textbf{k}) \textbf{O}(\textbf{k})		
 \end{split}
@@ -569,14 +569,14 @@ the observed data, this lowpass filter, $\mu_{n,m}$, is defined as:
 \begin{equation}\label{eq:circular_mask}
 \mu_{n,m} = 
 \begin{cases}
-1, & \sqrt{n'^{2} + m'^{2}} \le w\\
-0, & \sqrt{n'^{2} + m'^{2}} > w\\ 
+1, & \sqrt{n'^{2} + m'^{2}} \le \omega_{l}\\
+0, & \sqrt{n'^{2} + m'^{2}} > \omega_{l}\\ 
 \end{cases}
 \end{equation}
 
-Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $w$ a radius 
-defined as the size of the field of view of the image divided by the Abbe
-diffraction limit for the system, $\frac{1.22\lambda}{2NA}$.\cite{abbe1873beitrage} 
+Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $\omega_{l}$ 
+is the lateral diffraction limit in reciprocal space as per
+ Equation~\ref{eq:lateral_spatial_freq_res} 
 
 Within the OTF lowpass limit, certain spatial frequencies will be dominated
 by noise contributions. As such, when attempting to quantify the power 
@@ -609,20 +609,20 @@ to true, albeit low amplitude, spatial frequencies. Empirically, an
 $\alpha = 1.125$ offers a reasonable compromise between these traits.
 
 Finally, the bulk of the improvement in spatial frequency content will
-occur in the mid to high frequencies (relative to $w$). As such there is 
+occur in the mid to high frequencies (relative to $\omega_{l}$). As such there is 
 a desire for increased sensitivity to the power fluctuations in these 
 spatial frequencies. A modulation mask, $\omega$, is constructed and 
 defined as:
 
 \begin{equation}\label{eq:attenuation_mask_norm_and_scaled}
-\omega_{n,m} = \beta \left| \left(1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{w}-1}\right) \left(n'^{2} + m'^{2}\right) \right|
+\omega_{n,m} = \beta \left| \left(1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{\omega_{l}}-1}\right) \left(n'^{2} + m'^{2}\right) \right|
 \end{equation}
 
-Where $w$, $n'$ and $m'$ are defined as before, $\left| \textbf{x} \right|$ 
-is $\textbf{x}$ normalised to $[0,1]$, and $\beta$ is a user defined 
+Where $\omega_{l}$, $n'$ and $m'$ are defined as before, $\left|...\right|$ 
+is $...$ normalised to $[0,1]$, and $\beta$ is a user defined 
 normalisation factor. In effect, this modulation mask amplifies the mid 
 to high spatial frequencies while attenuating the low spatial frequencies 
-and the high spatial frequency noise close to $w$.
+and the high spatial frequency noise close to $\omega_{l}$.
 
 Applying these modification to Equation~\ref{eq:fourier_power_spectrum} 
 yields the image quality metric:
