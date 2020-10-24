@@ -125,7 +125,7 @@ Consider a point source located at $\textbf{O}$ isotopically emitting
 monochromatic light of wavelength $\lambda$. Every ray forms an angle, 
 $\theta$, with the optical axis $\textbf{OO'}$. The highest angle collected
 by the entrance pupil is $\alpha$. A point source can be considered an 
-infinitely fine diffraction grating and $\alpha$ determines the highest 
+infinitely narrow aperture and $\alpha$ determines the highest 
 diffraction order which the entrance pupil - i.e. the microscope
 objective aperture - can collect\cite{davidson2002optical}. Considering this 
 and, more generally, the diffraction of light through a circular aperture 
@@ -236,6 +236,94 @@ determine analytically. The ideal lateral and axial resolutions in
 Equations~\ref{eq:lateral_res} and~\ref{eq:axial_res} are nonetheless useful
 quantities as the theoretical, ideal resolution limit of a microscopy system.
 
+Returning to the concept of a point object as an infinitely narrow aperture allows 
+for a more complete understanding of the resolution limit. A spatially structured 
+object can be described by a superposition of spatial frequencies in the same 
+manner in which a temporally structured object can be described by a superposition 
+of temporal frequencies, which is the basis for Fourier 
+optics\cite{goodman2005introduction}. A point object can be described as a Dirac
+delta function, the Fourier transform of which is a uniform distribution across all
+spatial frequencies. The addition of an aperture, such as a microscope objective, 
+effectively imposes a low-pass filter on the spatial frequency domain. 
+Figure~\ref{fig:WF_OTF} shows the projection of the observable region onto the 
+lateral spatial freqency plane $k_{x}k_{y}$ i.e. the low-pass filter. The radius of
+this low-pass filter is: 
+
+\begin{equation}\label{eq:lateral_spatial_freq_res}
+	\omega_{l} = \frac{1}{r_{l}},
+\end{equation}
+
+where $r_{l}$ is the lateral resolution limit. The bounds of the observable region 
+in $k_{z}$ differs since the intensity spectrum - the power spectrum of the 
+field intensity - in $k_{z}$ is independent of the object nature and the point
+spread function\cite{frieden1967optical}. The bounds of the observable region in
+$k_{z}$ can be shown to be:
+
+\begin{equation}\label{eq:observable_region_kz}
+k_{z} = \pm\frac{\left\|\textbf{k}_{xy}\right\|}{2\lambda_{k}}(\omega_{l} - \left\|\textbf{k}_{xy}\right\|),
+\end{equation}
+
+for $\left\|\textbf{k}_{xy}\right\| \le \omega_{l}$ where 
+$\left\|\textbf{k}_{xy}\right\|$ is the length of the vector denoting the 
+lateral spatial frequencies, $(k_{x},k_{y})$ and $\lambda_{k} = 
+\frac{2\pi}{\lambda}$\cite{frieden1967optical}. Figure~\ref{fig:WF_OTF_xz} shows 
+the projection of the observable region onto the axial spatial freqency plane 
+$k_{x}k_{z}$. The maximum extension of this observable region, $k_{a}$, is given 
+by:
+
+\begin{equation}\label{eq:axial_observable_max_k}
+\omega_{a} = \frac{\omega_{l}^{2}}{8\lambda_{k}},
+\end{equation}
+
+From Equation~\ref{eq:observable_region_kz}, the observable
+region in $k_{z}$ is bandpass limited at both high and low spatial frequencies.
+This results in the ``missing cone'' phenomenon which limits the axial spatial 
+freqencies which are able to be collected, in turn limiting the axial 
+resolution\cite{behan2009three,arnison20023d}. This, coupled with the fact that
+for all practical cases $k_{a} \ll k_{l}$, explains why the axial resolution is
+always worse than the lateral resolution of a system. Figure~\ref{fig:WF_OTF} 
+shows the complete 3D observable region, obtained by rotating 
+Figure~\ref{fig:WF_OTF_xz} around the $k_{z}$ axis. Only spatial frequencies
+within this observable region contribute to the observed sample structure.
+The observable region can be described as:
+
+\begin{equation}\label{eq:observable region}
+O_{0}(\textbf{k}) = 
+\begin{cases}
+1, & if~ \left\|\textbf{k}_{xy}\right\| < \omega_{l} ~and~ \left\|k_{z}\right\| < \frac{\left\|\textbf{k}_{xy}\right\|}{2\lambda_{k}}(\omega_{l} - \left\|\textbf{k}_{xy}\right\|)\\
+0, & otherwise\\
+\end{cases}
+\end{equation}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xy_k_l.jpg}
+		\caption{}
+		\label{fig:WF_OTF_xy}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.435\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xz_k_a.jpg}
+		\caption{}
+		\label{fig:WF_OTF_xz}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle.png}
+		\caption{}
+		\label{fig:WF_OTF}
+	\end{subfigure}
+	\caption[Widefield observable region visualisation]{Widefield observable 
+		region visualisation. \textbf{(a)} The projection of the observable 
+		region onto the $k_{x}k_{y}$ plane. \textbf{(b)} The projection of 
+		the observable region onto the $k_{x}k_{z}$ plane. \textbf{(c)} The 
+		full observable region for a conventional widefield microscope in 
+		reciprocal space.}
+	\label{fig:widefield_OTF_visualisation}
+\end{figure}
+
 \section{Super-resolution Microscopy}
 \label{sec:super_res}
 
@@ -260,7 +348,7 @@ need to be considered when employing them including; the resolution
 (laterally and axially) required and the resolution achievable with each 
 technique, acquisition speed, photodamage incurred, depth of imaging and 
 multi-colour capability\cite{hell20152015,schermelleh2019super} Although it 
-has a modest resolution improvement, SIM is is the most widely accepted 
+has a modest resolution improvement, SIM is the most widely accepted 
 super-resolution technique for biology thanks to its multi-colour capability,
 high temporal resolution and low photodamage impact\cite{leung2011review}.
 
@@ -329,7 +417,7 @@ as shown in Figures~\ref{fig:fringes_1_ft}-\ref{fig:fringes_moire_ft}.
 		\textbf{(c)} shows the resultant Moir\'{e} fringes arising from the 
 		interference of \textbf{(a)} and \textbf{(b)}. \textbf{(d)}-\textbf{(f)} 
 		shows the respective Fourier transforms of \textbf{(a)}-\textbf{(c)}. 
-		Note the \textbf{(f)} is a convolution of \textbf{(d)} and \textbf{(e)}}
+		Note that \textbf{(f)} is a convolution of \textbf{(d)} and \textbf{(e)}}
 	\label{fig:moire_visualisation}
 \end{figure}
 
@@ -345,36 +433,173 @@ super-resolution information can be extracted from the Moir\'{e} fringes,
 effectively extending the observable region of a microscope beyond the 
 diffraction limit\cite{gustafsson2000surpassing}.
 
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}[t]{0.25\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle.png}
-		\caption{}
-		\label{fig:3D_SIM_OTF_no_angle}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.25\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xy.jpg}
-		\caption{}
-		\label{fig:3D_SIM_OTF_no_angle_2D_plot_xy}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.435\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_no_angle_2D_plot_xz.jpg}
-		\caption{}
-		\label{fig:3D_SIM_OTF_no_angle_2D_plot_xz}
-	\end{subfigure}
-	\caption[Widefield optical transfer function visualisation]{Widefield 
-		optical transfer function visualisation. \textbf{(a)} The OTF support
-		for a conventional widefield microscope in reciprocal space. 
-		\textbf{(b)} The projection of the observable region onto the 
-		$k_{x}k_{y}$ plane. \textbf{(c)} The projection of the observable 
-		region onto the $k_{x}k_{z}$ plane}
-	\label{fig:widefield_OTF_visualisation}
-\end{figure}
+A single fluorescent image, $F(\textbf{r})$, is defined by:
 
-\begin{figure}[h]
+\begin{equation}\label{eq:fluorescent_image}
+\begin{split}
+F(\textbf{r}) &= (E \circledast H)(\textbf{r})\\
+F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r}),\\
+\end{split}
+\end{equation}
+
+Where $D(\textbf{r})$ is the sample fluorescence distribution, $I(\textbf{r})$ 
+is the illumination pattern, $E(\textbf{r})$ is the resultant emission signal 
+and $H(\textbf{r})$ is the system point spread function (PSF). Applying the 
+convolution theorem an a Fourier transform yeild:
+
+\begin{equation}\label{eq:SIM_fluorescent_image_fourier}
+\begin{split}
+\mathcal{F}\left[F(\textbf{r})\right] &= \mathcal{F}\left[\left[D(\textbf{r})I(\textbf{r})\right] \circledast H(\textbf{r})\right]\\
+\tilde{F}(\textbf{k}) &= \left[\tilde{D}(\textbf{k})\circledast \tilde{I}(\textbf{k})\right] \tilde{H}(\textbf{k})\\
+\tilde{F}(\textbf{k}) &= \left[\tilde{D}(\textbf{k})\circledast \tilde{I}(\textbf{k})\right] O(\textbf{k}),\\
+\end{split}
+\end{equation}
+
+Where $\sim$ indicated the Fourier transform of the respective real-space
+functions. $O(\textbf{k}) = \tilde{H}(\textbf{k})$ is the optical transfer
+function (OTF) of the imaging system. The complex values of $O(\textbf{k})$
+describe the attention of the spatial frequencies within the observable region
+described by Equation~\ref{eq:observable region}. For uniform illumination -
+i.e. widefield imaging - $\tilde{I}(\textbf{k} = \delta(0)$ where $\delta$ is
+the Dirac delta function, and therefore only the spatial frequencies within the
+observable region contribute to the image formation as previously noted. 
+However, if $I(\textbf{r})$ is spatially structured then the convolution
+$\tilde{D}(\textbf{k})\circledast \tilde{I}(\textbf{k})$ is non-local and the 
+data within the observable region contains contributions from spatial 
+frequencies which are normally outside the observable region.
+
+For a general illumination pattern, extracting these super-resolution 
+contributions from the diffraction limited contributions is non-trivial.
+However, imposing some conditions on the illumination structure simplifies
+this process\cite{gustafsson2008three}. Firstly, the illumination pattern 
+should consist of the sum of a finite number, $m$, of components and these
+components should be seperable into axial and lateral components. The 
+illumination pattern, $I(\textbf{r}_{xy},z)$, is therefore:
+
+\begin{equation}\label{eq:illumination_components}
+	I(\textbf{r}_{xy},z) = \sum\limits_{m}{I_{m}(z)J_{m}(\textbf{r}_{xy})},
+\end{equation}
+
+where $\textbf{r}_{xy}$ the vector denoting the lateral coordinates, $(x,y)$.
+Secondly, the lateral functions, $J_{m}(\textbf{r}_{xy})$, should be purely
+harmonic functions meaning they contain only one spatial frequency. Finally, 
+the axial functions, $I_{m}(z)$, should either: 
+
+\begin{enumerate}
+	\item also be purely harmoic functions.
+	\item in instances where 3D data is acquired as a series of 2D images with 
+	different focus - as in microscopy - the illumination pattern is maintained 
+	fixed relative to the focal plane of the microscope and not relative to the
+	objecting being imaged.
+\end{enumerate}
+
+The first and third conditions allow Equation~\ref{eq:fluorescent_image} to be
+written as:
+
+\begin{equation}\label{eq:fluorescent_image_conditions}
+\begin{split}
+	F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r})\\
+	F(\textbf{r}) &= \sum\limits_{m}{\int H(\textbf{r}-\textbf{r}'))I_{m}(z - z')D(\textbf{r}')J_{m}(\textbf{r}'_{xy})}d\textbf{r}'\\
+	F(\textbf{r}) &= \sum\limits_{m}{\left[HI_{m}\circledast DJ_{m}\right](\textbf{r})}\\,
+\end{split}
+\end{equation}
+
+where $\textbf{r}'$ denotes the sample reference from, $\textbf{r}$ denotes
+the data-set reference frame and $\textbf{r} - \textbf{r}'$ denotes the 
+reference frame of the objective. Taking the Fourier transform of the 
+$m$-th term, $F_{m}(\textbf{r})$, yeilds:
+
+\begin{equation}\label{eq:fluorescent_image_mth_ft}
+\tilde{F}_{m}(\textbf{k}) = \tilde{O}_{m}\left[\tilde{D}(\textbf{k}) \circledast \tilde{J}_{m}(\textbf{k}_{xy})\right],
+\end{equation}
+
+where $\tilde{O}_{m} = O \circledast \tilde{I}_{m} = \mathcal{F}[HI_{m}]$.
+Here the second condition of the lateral functions being purely harmonic allows
+$J_{m}(\textbf{r}_{xy})$ to be written as:
+
+\begin{equation}\label{eq:lateral_illumination}
+	J_{m}(\textbf{r}_{xy}) = e^{i\left(2\pi\textbf{p}_m\cdot\textbf{r}_{xy} + \phi_{m}\right)},
+\end{equation}
+
+\begin{equation}\label{eq:lateral_illumination_ft}
+\Rightarrow \tilde{J}_{m}(\textbf{k}_{xy}) = \delta\left(\textbf{k}_{xy} - \textbf{p}_m\right)e^{i\phi_{m}},
+\end{equation}
+
+Substituting Equation~\ref{eq:lateral_illumination_ft} into 
+Equation~\ref{eq:fluorescent_image_mth_ft} and summing over all $m$ components,
+the observed data can be written as:
+
+\begin{equation}\label{eq:single_SIM_image}
+\tilde{F}(\textbf{k}) = \sum\limits_{m}{\tilde{O}_{m}(\textbf{k})e^{i\phi_{m}}\tilde{D}\left(\textbf{k} - \textbf{p}_m\right)}.
+\end{equation}
+
+Therefore, each image is a sum of a finite number, $N$, copies of the object 
+information, $\tilde{D}$, each shifted laterally in reciprocal space by 
+$\textbf{p}_{m}$, filtered by the OTF, $O$, and phase shifted by $\phi_{m}$.
+Acquiring $N$ images with different values of $\phi_{m}$ gives a system of 
+linear equations with as many equations as unknowns. The frequency components
+can therefore be seperated by applying an $N\times N$ seperation matrix. The 
+values of $\phi_{m}$ are generally chosen to be evenly spaced between 
+$[0,2\pi]$ to ensure a well-conditioned seperation 
+matrix\cite{gustafsson2008three}.
+
+Considering the practical implications further simplifies the situation. 
+Firstly, the intensity distribution of light is a real-valued function and
+therefore the exponentials in Equation~\ref{eq:lateral_illumination_ft} must
+occur in pairs with $\pm\textbf{p}_{m}$. Since the Fourier transform of a 
+real valued function has the symmetry property $\tilde{a}(-\textbf{k}) = 
+\bar{\tilde{a}}(\textbf{k})$ only one component need be calculated and the
+other can be determined by symmetry. Secondly, if the $\textbf{p}_{m}$ are
+chosen such that they are all either the fundamental frequency or higher 
+harmonics of the same frequency then $\textbf{p}_{m} = m\textbf{p}$ where
+$\textbf{p}$ is the fundamental frequency. Furthermore, if the phases are 
+chosen such that $\phi_{m} = m\phi$. Taking these effects into account, 
+Equation~\ref{eq:single_SIM_image} becomes:
+
+\begin{equation}\label{eq:single_SIM_image_simple}
+\tilde{F}(\textbf{k}) = \sum\limits_{m}{\tilde{O}_{m}(\textbf{k})e^{im\phi}\tilde{D}\left(\textbf{k} - m\textbf{p}\right)}.
+\end{equation}
+
+Since $O_{m}$ and $\textbf{p}_{m}$ are known, the information components
+can be seperated and moved by $\textbf{p}_{m}$ back to their correct 
+position in reciprocal space, combined to a single extended resolution
+spatial frequency dataset, and finally Fourier transformed back into a 
+single super-resolution image.  From Equation~\ref{eq:single_SIM_image} 
+it is clear that this image is equivalent to an image taken with an 
+obserable region equal to the convolution of the original system OTF, 
+$O$, and the illumination structure Fourier transform, $\tilde{I}$. 
+
+Consider an illumination pattern formed by the interference of two beams 
+of light such that $I(\textbf{r}) \propto 1 + \cos(\textbf{r}\cdot
+\textbf{p} + \phi)$. Figure~\ref{fig:amplitude_wave_vectors_2D} shows 
+the amplitude wave vectors for these beams, both with the same length 
+$\frac{1}{\lambda_{ex}}$ where $\lambda_{ex}$ is the wavelength of the 
+excitation illumination light. The angle between the two beams determines 
+the position of $\textbf{p}$. If $\textbf{p}$ is chosen to be close to 
+$k_{l}$ then the spatial frequency components are close to the bounds 
+of the observable region, as shown in 
+Figure~\ref{fig:2D_SIM_OTF_beam_pos_w_vectors}. The convolution of this 
+illumination pattern with the system OTF is shown in 
+Figure~\ref{fig:2D_SIM_OTF_1_angle}. The projection of this extended 
+observable region on the $k_{x}k_{z}$ plane is shown in 
+Figure~\ref{fig:2D_SIM_OTF_1_angle_plot_xz}. The observable region
+is laterally extended by a factor, $\alpha_{l}$, given by:
+
+\begin{equation}\label{eq:lateral_res_extension_factor}
+	\alpha_{l} = \frac{\left(\frac{1}{\lambda_{ex}} + \frac{1}{\lambda_{em}}\right)}{\frac{1}{\lambda_{em}}} = 1 + \frac{\lambda_{ex}}{\lambda_{em}},
+\end{equation}
+
+where $\lambda_{ex}$ and $\lambda_{em}$ are the excitation and emission
+wavelengths respectively.  However, this extension factor only applied in 
+the direction $\overrightarrow{\textbf{p}}$. To achieve isotropic 
+resolution enhancement, a number of pattern directions are required. 
+Rotating the illumination pattern through the three stripe angles shown 
+in Figure~\ref{fig:3D_SIM_OTF_stripe_angles} yeilds the extended 
+observable region in Figure~\ref{fig:2D_SIM_OTF_all_2D_angles}, the 
+projection of which in the $k_{x}k_{y}$ plane is shown in
+Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}. 
+
+\begin{figure*}
 	\centering
 	\begin{subfigure}[t]{0.25\textwidth}
 		\centering
@@ -399,7 +624,7 @@ diffraction limit\cite{gustafsson2000surpassing}.
 		\centering
 		\includegraphics[width=\linewidth]{images/3D_SIM_OTF_1_angle.png}
 		\caption{}
-		\label{fig:3D_SIM_OTF_1_angle}
+		\label{fig:2D_SIM_OTF_1_angle}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.6\textwidth}
 		\centering
@@ -427,17 +652,63 @@ diffraction limit\cite{gustafsson2000surpassing}.
 		observable region onto the $k_{x}k_{y}$ plane with the stripe angles 
 		shown \textbf{(c)} The projection of the observable region onto the 
 		$k_{x}k_{z}$ plane with the spatial frequency component locations for
-		two-beam interference pattern shown. \textbf{(d)} The OTF support
+		two-beam interference pattern shown. \textbf{(d)} The full observable region 
 		extension for one angle in reciprocal space. \textbf{(e)} The projection 
 		of the extended observable region in \textbf{(d)} onto the $k_{x}k_{z}$ 
-		plane. \textbf{(f)} The OTF support	extension for all three angles in 
+		plane. \textbf{(f)} The full observable region extension for all three angles in 
 		reciprocal space. \textbf{(g)} The projection of the extended observable 
 		region in \textbf{(f)} onto the $k_{x}k_{y}$ plane. The shaded grey area
-		shows the reciprocal components for isotropic observable region doubling.}
+		shows the reciprocal components missing for an isotropic observable region
+		extension factor $\alpha_{l}$.}
 	\label{fig:2D_SIM_visualisation}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[h]
+Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled} shows
+that whilst there is an expansion of the observable region in all
+directions in the $k_{x}k_{y}$ plane, it is not a lateral isotropic 
+extension by $\alpha_{l}$. Nonetheless, it is still suffienct to yeild 
+a doubling of the lateral resolution\cite{gustafsson2000surpassing}.
+This choice of illumination structure still suffers from the missing
+cone problem noted in Section~\ref{subsec:resolution}, meaning there
+is no improvement in axial resolution.
+
+Now consider an illumination pattern formed by three light beams with
+wave vectors, $\textbf{k}_{j}$, such as those shown in 
+Figure~\ref{fig:amplitude_wave_vectors}. The 3D interference pattern, 
+$I(\textbf{r})$ generated by the superposition of these waves is:
+
+\begin{equation}\label{eq:3_beam_interference}
+	\begin{split}
+		I(\textbf{r}) \propto \left|\sum\limits_{j}{\textbf{E}_{j}e^{i\textbf{k}_j\cdot\textbf{r}}}\right|^{2} &= \left(\sum\limits_{j}{\textbf{E}^{*}_{j}e^{-i\textbf{k}_{j}\cdot\textbf{r}}}\right)
+		\left(\sum\limits_{q}{\textbf{E}_{q}e^{i\textbf{k}_{q}\cdot\textbf{r}}}\right)\\
+		&= \sum\limits_{j,q}{\textbf{E}^{*}_{j}\cdot\textbf{E}_{q}e^{-i\left(\textbf{k}_{q}-\textbf{k}_{j}\right)\cdot\textbf{r}}},
+	\end{split}
+\end{equation}
+
+therefore has 7 Fourier components located at each of the pairwise
+difference vectors, $\left(\textbf{k}_{q}-\textbf{k}_{j}\right)$, 
+between the any two of the beam wave vectors. The location of these 
+Fourier components is shown in 
+Figure~\ref{fig:3D_SIM_OTF_beam_pos_w_vectors}. The convolution of 
+this interference pattern, rotated through the stripe angles shown
+in Figure~\ref{fig:3D_SIM_OTF_stripe_angles}, yeilds the extended
+observable region shown in Figure~\ref{fig:3D_SIM_OTF_all_angles}.
+The projection of the extended observable region for one of these 
+stripe angles onto the $k_{x}k{z}$ plane is shown in 
+Figure~\ref{fig:3D_SIM_OTF_1_angle_2D_plot}. The addition of the
+Fourier component off the $k_{x}$ axis has the effect of filling 
+in the missing cone. From this plot it may appear that there are
+now two missing cones above and below the off-$k_{x}$-axis components.
+However, as Figure~\ref{fig:3D_SIM_OTF_1_angle_2D_plot} shows, 
+since these Fourier components are closer together than the
+on-axis components, much of these missing cones is filled out by 
+the rotation of the interference pattern through several stripe
+angles. Taken together, the extension of the observable region 
+yields a super-resolution image with an isotropic resolution 
+doubling compared to a diffraction limited 
+system\cite{gustafsson2008three}.
+
+\begin{figure*}
 	\centering
 	\begin{subfigure}[t]{0.35\textwidth}
 		\centering
@@ -470,11 +741,33 @@ diffraction limit\cite{gustafsson2000surpassing}.
 		same magnitude, $\frac{1}{\lambda}$ \textbf{(b)} The projection of the 
 		observable region onto the $k_{x}k_{z}$ plane with the spatial frequency 
 		component locations for three-beam interference patterns shown. 
-		\textbf{(c)} The OTF support extension for all three angles in reciprocal 
-		space. \textbf{(d)} The projection of the extended observable region in 
-		\textbf{(c)} onto the $k_{x}k_{z}$ plane.}
+		\textbf{(c)} The full observable region extension for all three angles in 
+		reciprocal space. \textbf{(d)} The projection of the extended observable 
+		region for one stripe angle onto the $k_{x}k_{z}$ plane.}
 	\label{fig:3D_SIM_visualisation}
-\end{figure}
+\end{figure*}
+
+As previously mentioned, SIM is the most widely accepted 
+super-resolution technique for biology for a number of reasons. The 
+number of images required in order to reconstruct a super-resolution 
+SIM image, are determined by the number of lateral Fourier components 
+in the illumination pattern - 3 for 2D SIM and 5 for 3D SIM - and the
+number of stripe angles used to rotate the illumation pattern through
+- typically 3. Therefore, only 9 or 15 images are required to 
+reconstruct a 2D or 3D super-resolution SIM image respectively. This
+has a number of benefits. Firstly, the temporal resolution is 
+considerably higher for SIM than for point-scanning super-resolution
+techniques such as STED or SMLM techniques which require 100s to 1000s
+of images per reconstruction\cite{leung2011review,schermelleh2019super}.
+Secondly, each of these images is fundamentally still a widefield-style
+image and therefore has a lower light-dosage than per image than STED 
+or SMLM techniques. The lower light-dosage per image combined with fewer
+total images required per reconstruction contributes to a low 
+photodamage impact. Finally, SIM is easily expandable to multi-colour 
+imaging, even using the same optical 
+setup\cite{leung2011review,allen2014structured}. Overall, SIM is a 
+super-resolution technique well suited to biological imaging, 
+particularly imaging dynamic biological processed.
 
 \section{Optical Aberrations}
 \label{sec:aberrations}
