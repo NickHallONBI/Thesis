@@ -129,11 +129,11 @@ infinitely narrow aperture and $\alpha$ determines the highest
 diffraction order which the entrance pupil - i.e. the microscope
 objective aperture - can collect\cite{davidson2002optical}. Considering this 
 and, more generally, the diffraction of light through a circular aperture 
-it is possible to obtain that the field intensity at \textbf{O'}, $H(v)$, is 
-proportional to\cite{goodman2005introduction,born2013principles,antonello2014optimisation}:
+it is possible to obtain that the field intensity at \textbf{O'} is 
+proportional to\cite{goodman2005introduction,born2013principles}:
 
 \begin{equation}\label{eq:image_field_insentity}
-H(v) \propto \left|\frac{2J_{1}(v)}{v}\right|^2,
+\mathcal{I}_{w}(v) = \left|\frac{2J_{1}(v)}{v}\right|^2,
 \end{equation}
 
 where $J_{1}(v))$ is the first-order Bessel function of the first kind of
@@ -547,7 +547,7 @@ Considering the practical implications further simplifies the situation.
 Firstly, the intensity distribution of light is a real-valued function and
 therefore the exponentials in Equation~\ref{eq:lateral_illumination_ft} must
 occur in pairs with $\pm\textbf{p}_{m}$. Since the Fourier transform of a 
-real valued function has the symmetry property $\tilde{a}(-\textbf{k}) = 
+real-valued function has the symmetry property $\tilde{a}(-\textbf{k}) = 
 \bar{\tilde{a}}(\textbf{k})$ only one component need be calculated and the
 other can be determined by symmetry. Secondly, if the $\textbf{p}_{m}$ are
 chosen such that they are all either the fundamental frequency or higher 
@@ -765,16 +765,210 @@ or SMLM techniques. The lower light-dosage per image combined with fewer
 total images required per reconstruction contributes to a low 
 photodamage impact. Finally, SIM is easily expandable to multi-colour 
 imaging, even using the same optical 
-setup\cite{leung2011review,allen2014structured}. Overall, SIM is a 
+setup\cite{wu2018faster,allen2014structured}. Overall, SIM is a 
 super-resolution technique well suited to biological imaging, 
 particularly imaging dynamic biological processed.
 
 \section{Optical Aberrations}
 \label{sec:aberrations}
 
-\begin{itemize}
-	\item Talk about the effect optical aberration have on PSF quality and therefore image quality/resolution. Also, worth talking about optical aberrations and ``non-optical'' aberrations i.e. piston, tip and tilt.
-\end{itemize}
+One factor preventing microscopes from achieving the ideal diffraction
+limited resolution is the presence of optical 
+aberrations\cite{goodman2005introduction,wyant1992basic,wolf1951diffraction}.
+These aberrations describe the deviation of the light wavefront
+from the ideal Gaussian surface. They have numerous sources, but the most
+common are those arising from system imperfections - i.e. manufacturing errors
+in components, placement of lenses off the optical axis, etc - and those
+arising spatio-temporal refractive index variances across the 
+wavefront\cite{kubby2013adaptive,booth2007adaptive}. In biological samples, 
+these variances arise from sample heterogeneties since different biological
+structures possess varied refractive 
+indicies\cite{bashkatov2011optical, jacques2013optical, kim2010measurement, sandell2011review}.
+These refractive index variances introduce path differences between 
+different section of the light wavefront. A generalised pupil function 
+(GPF) defined as\cite{antonello2014optimisation}:
+
+\begin{equation}\label{eq:GPF}
+	P\left(\textbf{r}_{xy}\right) = A\left(\textbf{r}_{xy}\right)e^{i\Phi\left(\textbf{r}_{xy}\right)},
+\end{equation}
+
+is a complex-valued function. Defining the GPF on the normalised system 
+pupil and assuming the pupil is circular simplifies the following analysis
+and is generally more intuative. In such a system, the GPF has the form:
+
+\begin{equation}\label{eq:GPF_polar}
+P\left(\rho,\theta\right) = A\left(\rho,\theta\right)e^{i\Phi\left(\rho,\theta\right)}.
+\end{equation}
+
+The real-valued function $A\left(p,\theta\right)$ accounts for amplitude
+aberrations and the real-valued function $\Phi\left(p,\theta\right)$ 
+accounts for the phase aberrations. Revisiting the simplified optical
+system in Figure~\ref{fig:simplified_microscope_layout}, assuming a point
+source a $\textbf{O}$ and that the exit pupil of the system is the unit 
+disk, the field intensity at the $x'y'$ plane is proportional 
+to\cite{goodman2005introduction,born2013principles}:
+
+\begin{equation}\label{eq:image_field_insentity_GPF}
+	\mathcal{I}(v,\phi) = \frac{1}{\pi}\left|\int^{1}_{0}\int^{2\pi}_{0}P\left(\rho,\theta\right)e^{iv\rho\cos(\theta-\phi)}\rho d\rho d\theta\right|^{2}
+\end{equation}
+
+For an aberration free system, $A\left(\rho,\theta\right) = 1$ and 
+$\Phi\left(\rho,\theta\right) = 0$ which makes the integral in 
+Equation~\ref{eq:image_field_insentity_GPF} analytically computable. From 
+this it is possible to recover $\mathcal{I}(v,\phi) = \mathcal{I}_{w}(v)$
+from Equation~\ref{eq:image_field_insentity}.
+
+\subsection{Zernike Polynomials}
+\label{subsec:zernike}
+
+Whilst the phase distortions can be treated in their native form, it is 
+useful for a number of reasons to represent them as an expansion in
+othonogonal functions, and Zernike polynomials are typically chosen for 
+this expasion\cite{zernike1934diffraction,noll1976zernike,mahajan1994zernike}.
+Zernike modes are not suitable to represent phase distortions arising 
+from all sources, such as air turbulance or fabrication errors in the 
+single-point diamond turning process\cite{wyant1992basic}. However, the 
+sources of phase distortions for which a Zernike representation is not
+appropriate do not generally arise. Additionally, the Zernike modes have 
+a number of useful mathemetical properties, and low order Zernike modes 
+correspond to well-known optical aberrations e.g. defocus, astigmatism, 
+coma, spherical 
+aberration\cite{born2013principles,booth2007adaptive,zernike1934diffraction}.
+Using the Zernike polynomials, the phase distortions, $\Phi\left(\rho,\theta\right)$
+can be written as:
+
+\begin{equation}\label{eq:phase_zernike_expansion}
+	\Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),
+\end{equation}
+
+where indices $n \in \mathbb{N}_{0}$ and $m \in \mathbb{Z}$ denote the radial order 
+and azimuthal frequency respectively of the Zernike polynomial, 
+$\mathcal{Z}^{m}_{n}$, and are such that $n - \left|m\right| \ge 0$ and even. The
+coefficients of each Zernike polynomial are represented by $\alpha^{m}_{n} \in 
+\mathbb{R}$. Each Zernike polynomial is the product of a radial polynomial,
+$R^{m}_{n}(\rho)$, and an azimuthal polynomial, $\Theta^{m}_{n}(\theta)$:
+
+\begin{equation}\label{eq:zernike_polynomial}
+\mathcal{Z}^{m}_{n}\left(\rho,\theta\right) = c^{m}_{n}R^{m}_{n}(\rho)\Theta^{m}_{n}(\theta),
+\end{equation}
+
+where $c^{m}_{n}$, $R^{m}_{n}(\rho)$, and $\Theta^{m}_{n}(\theta)$ have the following definitions:
+
+\begin{equation}\label{eq:zernike_polynomial_c}
+c^{m}_{n} = 
+\begin{cases}
+\sqrt{n + 1} & m = 0\\
+\sqrt{2(n + 1)} & m \ne 0\\
+\end{cases},
+\end{equation}
+
+\begin{equation}\label{eq:zernike_polynomial_R}
+R^{m}_{n}(\rho) = \sum_{s=0}^{\frac{n-m}{2}}{\frac{(-1)^{s}(n-s)!}{s!\left(\frac{n+m}{2}-s\right)\left(\frac{n-m}{2}-s\right)}},
+\end{equation}
+
+\begin{equation}\label{eq:zernike_polynomial_Theta}
+\Theta^{m}_{n}(\theta) =
+\begin{cases}
+\cos(m\theta) & m \ge 0\\
+-\sin(m\theta) & m < 0\\
+\end{cases}.
+\end{equation}
+
+This formulation of Zernike modes are normalised and ordered according
+to the Noll indexing convention, although other ording conventions do 
+exist\cite{noll1976zernike,thibos2002standards,loomis1978computer}. 
+
+It is useful to be able to compare phase distortions to one another to
+measure their severity. In order to do so, scalar indicators are required.
+Typically, the root mean squared (rms) and variance of $\Phi\left(\rho,\theta\right)$
+are used:
+
+\begin{align}\label{eq:scalar_indicators}
+rms(\Phi) = \left(E_{2}\left[\Phi\right]\right)^{\frac{1}{2}} && 
+var(\Phi) = E_{2}\left[\Phi\right] - \left(E_{1}\left[\Phi\right]\right)^{2},
+\end{align}
+
+where $E_{k}\left[\Phi\right]$ are the 
+functionals\cite{antonello2014optimisation,mahajan1994zernike}:
+
+\begin{equation}\label{eq:E_functionals}
+	E_{k}\left[\Phi\right] = \frac{1}{\pi} \int_{0}^{1}\int_{0}^{2\pi} \Phi\left(\rho,\theta\right)^{k}\rho d\rho d\theta.
+\end{equation}
+
+Using the normalisation factors, $c_{n}^{m}$, and the orthogonality
+properties of the Zernike modes, it is apparent that $E_{1}\left[\Phi\right] 
+= \alpha_{0}^{0}$ and $E_{2}\left[\Phi\right] = 
+\sum\limits_{n,m}{\left({\alpha_{n}^{m}}\right)^{2}}$. Substituting 
+these values back into Equations~\ref{eq:scalar_indicators} yields:
+
+\begin{align}\label{eq:scalar_indicators_new}
+rms(\Phi) = \left(\sum\limits_{n,m}{\left({\alpha_{n}^{m}}\right)^{2}}\right)^{\frac{1}{2}} && 
+var(\Phi) = \sum\limits_{n\ne 0,m\ne 0}{\left({\alpha_{n}^{m}}\right)^{2}},
+\end{align}
+
+Since $\mathcal{Z}_{n}^{m}$ - i.e. piston - does not affect image 
+formation, often its corresponding amplitude $\alpha_{0}^{0}$ is
+arbitrarily set to $0$. In this case, $rms(\Phi) = \sqrt{var(\Phi)}$
+
+\subsection{Aberrations and Resolution}
+\label{subsec:aberrations_and_resolution}
+
+Not all Zernike modes affect the resolution of the system. 
+Figures~\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_1}-
+\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_3}
+show the effect of the first 3 Zernike modes, $\mathcal{Z}_{0}^{0}$, 
+$\mathcal{Z}_{1}^{-1}$, and $\mathcal{Z}_{1}^{1}$ - i.e. piston, tip and 
+tilt - on two point objects seperated by the diffraction limit determined
+by the Rayleigh criterion, $r_{l}$. Clearly piston has no effect on the 
+image intensity or resolving power. Additionally, assuming an incoherent, 
+shift invariant imaging system, the only effect of the tip and tilt 
+aberrations is a lateral shift in the $x$ and $y$ axis respectively. The
+overall image intensity and resolving power remains unaffects. For this 
+reason piston (and often tip and tilt) are considered ``non-optical'' 
+aberrations. 
+Figure~\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_rms_1}
+shows the same two point objects aberrated with phase deformations of 
+$rms(\Phi) = 1$. The image intensity is severly degraded and the resolving
+power is significantly less than the diffraction limited case. Evidently, 
+the presence of phase distortions is a limiting factor to imaging systems 
+from achieving the ideal diffraction limited 
+resolution\cite{antonello2014optimisation,booth2014adaptive}.
+
+\begin{figure*}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_1.png}
+		\caption{$rms(\Phi) = 1, \alpha_{0}^{0} = 1$}
+		\label{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_1}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_2.png}
+		\caption{$rms(\Phi) = 1, \alpha_{1}^{-1} = 1$}
+		\label{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_2}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_3.png}
+		\caption{$rms(\Phi) = 1, \alpha_{1}^{1} = 1$}
+		\label{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_3}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/Airy_ring_2D_2_object_seperation_aberration_comparison_rms_1.png}
+		\caption{$rms(\Phi) = 1$}
+		\label{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_rms_1}
+	\end{subfigure}
+	\caption[A visualisation of the effect of optical aberrations on image 
+	resolution]{A visualisation of the effect of optical aberrations on 
+	image resolution \textbf{(a)-(c)} Ideal diffraction limited point 
+	sources at seperation $r_{l}$ aberrated with $rms(\Phi) = 1$ of purely 
+	piston, tip and tilt respectively. \textbf{(d)} Ideal diffraction 
+	limited point sources at seperation $r_{l}$ aberrated with a random 
+	phase distortion with $rms(\Phi) = 1$}
+	\label{fig:aberrations_res}
+\end{figure*}
 
 \section{Adaptive Optics}
 \label{sec:AO}
