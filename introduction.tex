@@ -875,8 +875,9 @@ R^{m}_{n}(\rho) = \sum_{s=0}^{\frac{n-m}{2}}{\frac{(-1)^{s}(n-s)!}{s!\left(\frac
 \end{equation}
 
 This formulation of Zernike modes are normalised and ordered according
-to the Noll indexing convention, although other ording conventions do 
-exist\cite{noll1976zernike,thibos2002standards,loomis1978computer}. 
+to the Noll indexing convention, although modal bases and ording 
+conventions do exist\cite{noll1976zernike,thibos2002standards,
+loomis1978computer,soloviev2017optimal,burton1984effects}. 
 
 It is useful to be able to compare phase distortions to one another to
 measure their severity. In order to do so, scalar indicators are required.
@@ -973,10 +974,120 @@ resolution\cite{antonello2014optimisation,booth2014adaptive}.
 \section{Adaptive Optics}
 \label{sec:AO}
 
-\begin{itemize}
-	\item Here we introduce adaptive optics and their already proven usefulness in correcting for aberrations in microscopy.
-	\item Raise but don't address the non-generalised nature of current implementations
-\end{itemize}
+As previously mentioned, phase aberrations arise in microscopy primarily
+due to heterogeneties in the structure of the biological sample being 
+imaged. Consider the objective lens of a microscope. In the absence of
+optical aberrations, as in Figure~\ref{fig:wavefront_focus_ideal}, a flat
+wavefront is focused to a single diffraction limited spot. Introducing
+a heterogeneous media distorts the phase wavefront and leads to an 
+extended, non-diffraction limited focal spot as seen in 
+Figure~\ref{fig:wavefront_focus_aberrated}. However, if, as in 
+Figure~\ref{fig:wavefront_focus_corrected} the wavefront is not flat when 
+it enters the microscope objective but instead shaped to compensate for 
+the phase distortion, then a ideal, diffraction limited focal spot is 
+recovered. Since the phase distortions encounterd are not only sample
+dependent, but spatially and (for live samples) temporally dependent an
+adaptive method for pre-shaping the optical wavefront is 
+required\cite{schwertner2004characterizing,wang2014multiplexed,girkin2009adaptive}.
+The branch of technologies and methods for doing this is referred to as
+adaptie optics (AO).
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/wavefront_focus_ideal.jpg}
+		\caption{}
+		\label{fig:wavefront_focus_ideal}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/wavefront_focus_aberrated.jpg}
+		\caption{}
+		\label{fig:wavefront_focus_aberrated}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/wavefront_focus_corrected.jpg}
+		\caption{}
+		\label{fig:wavefront_focus_corrected}
+	\end{subfigure}
+	\caption[Illustration of aberrations affecting a microscope objective focus.]{Illustration of aberrations affecting a microscope objective focus. \textbf{(a)} The microscope objective and surrouding media have the same refractive index, $n_{1}$ and the microscope objective forms a diffraction limited focal spot. \textbf{(b)} the media the wavefront passes through is heterogeneous. This causes a phase distortion in the wavefront and leads to an expanded focal spot. \textbf{(c)} Prior to the objective aperature, the wavefront is preshaped to the opposite shape to the expected distortion. Once the wavefront passes though the heterogeneous media, an ideal wavefront is recovered and thus the focal spot is diffraction limited again.}
+	\label{fig:wavefront_focus}
+\end{figure}
+
+Similar to how the telescope and microscope have a shared historical origin,
+the concept of using AO to correct for optical aberrations has it's 
+origin in correcting for phase distortions in astronomical data\cite{babcock1990adaptive}.
+The principle of an AO system for microscopy is shown in 
+Figure~\ref{fig:ao_system_schematic_simple}. Here, only the emission path 
+is considered. A distorted wavefront $\Phi_{I}$, arrives at the aperature 
+of the microscope. The wavefront is then imaged onto an adaptive element 
+capable of applying a variable phase distortion, $\Phi_{AO}$. Once the 
+wavefront has interacted with the adaptive element, there is a residual 
+phase aberration $\Phi_{R} = \Phi_{I} - \Phi_{AO}$. 
+Figure~\ref{fig:ao_system_schematic_simple} has the wavefront passing through
+a beamsplitter and both being focused onto an imaging device and being 
+directed to a wavefront sensor. In the latter case, $\Phi_{R}$ is 
+calculated directly while in the former case $\Phi_{R}$ is inferred through 
+some indirect measurement. Typically only one of these options is employed. 
+The calculation of $\Phi_{R}$ is then passed to a controller which adjusts 
+$\Phi_{AO}$ in order to minimise $rms(\Phi_{R})$. 
+Figure~\ref{fig:ao_system_schematic_simple} assumes a reflective adaptive 
+element such as a deformable mirror (DM) or a spatial light modulator (SLM), 
+but the principles also apply for a transmissive adaptive element placed 
+in the beam path, such as an opto-acoustic lens.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/ao_system_schematic_simple.jpg}
+	\caption[Schematic of the emission path of an adaptive optics system.]{Schematic of the emission path of an adaptive optics system. The emitted wavefront of a fluorescent sample, $\Phi_{I}$, arrives at the aperature of the microscope. It is reimaged onto the adaptive element with some phase, $\Phi_{AO}$. The light then passed through a beamsplitter and is focused onto an imaging device. The residual phase aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either calculated directly by the wavefront sensor or inferred indirectly from the data acquired by the imaging device. This information is passed to a controller which applies the a phase aberration to the adaptive element, $\Phi_{AO}$, in order to minimise $rms(\Phi_{R})$.}
+	\label{fig:ao_system_schematic_simple}
+\end{figure}
+
+Implementing AO in microscopy has already been shown to be highly 
+effective at reducing optical aberrations and yielding significant 
+improvements to image 
+quality\cite{booth2014adaptive,girkin2009adaptive,fraisier2015adaptive,jesacher2011sensorless,
+jian2014wavefront}. Designing an AO enabled system follows a predicable 
+workflow outlined in Figure~\ref{fig:ao_system_setup_workflow} 
+consisting of four phases:
+
+\begin{enumerate}
+	\item \textit{System Design Phase}: A potential user should consider 
+	the needs of their imaging modality, system constraints, desired 
+	sample types before deciding on the appropriate AO element to 
+	implement.
+	\item \textit{Installation Phase}: The user installs the chosen AO 
+	element into their beam path.
+	\item \textit{Set-up Phase}: The AO element is calibrated to correct 
+	for optical aberrations. This calibration is checked and the system 
+	aberrations are corrected.
+	\item \textit{Sample Correction Phase}: The sample correction routine 
+	is designed. This will typically fall into one of two categories; 
+	sensorless AO or direct wavefront sensing.
+\end{enumerate}  
+
+However, there are a number of adaptive elements\cite{olivier2002advanced}, 
+a plethora of direct wavefront sensing techniques\cite{antonello2014optimisation,trumper2016instantaneous,
+schwertner2004measurement}, and wide array of 
+sensorless correaction methodologies\cite{burke2015adaptive,booth2002adaptive,
+fienup2003aberration,antonello2020multi,debarre2007image,murray2005wavefront}. 
+Considering AO within super-resolution imaging techniques further complicates
+the sitution\cite{debarre2008adaptive,booth2015aberrations,thomas2015enhanced}.
+Since there is no univerally agreed upon AO implementation, each 
+implementation has to go through the entire design process from scratch, 
+creating a bespoke but brittle implementation which is not easily transferable
+to any other system, imaging modality, sample type, etc. There is a need for a
+robust, accurate, easy-to-use, general implementation of adaptive optics for 
+microscopy\cite{ji2017adaptive,rodriguez2018adaptive}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth, scale=0.5]{./images/ao_system_setup_workflow_new.jpg}
+	\caption{Flowchart depicting the general process for building a system utilising AO. \textbf{a)} \textit{System Design Phase}. User decides whether the system needs AO and, if so, what type. \textbf{b)} \textit{Installation Phase}. The chosen AO elements are added to the system. \textbf{c)} \textit{Set-up Phase}. The chosen AO element is calibrated. Typically this involves mapping the variable elements of the AO element (e.g. deformable mirror actuators) to a useful set of basis functions which represent optical aberrations. \textbf{d)} \textit{Sample Correction Phase} Here the user designs the methods to be used for correcting their desired sample.}
+	\label{fig:ao_system_setup_workflow}
+\end{figure}
 
 \section{Overview and Aims of the Thesis}
 \label{sec:overview}
