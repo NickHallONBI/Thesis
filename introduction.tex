@@ -25,8 +25,8 @@ and inventor of the first microscope is not known, but the invention
 did occur at around the same time and the term was coined by Giovanni 
 Faber in 1625\cite{bardell2004invention}. It is interesting to note 
 that the invention of microscopes and telescopes are so closely linked, 
-especially in light of the origin of adaptive optics technology which 
-we will address shortly. The true power microscopes to yield novel 
+and that both astronomy and microscopy continued enjoy a mutually 
+beneficial relationship. The true power microscopes to yield novel 
 biological understanding was first popularised by Robert Hooke and then
 later by Antonie van 
 Leeuwenhoek\cite{hooke1665micrographia, chung2017pioneers}. Since then, 
@@ -83,12 +83,12 @@ which allowed for, among other things, localisation of viral particles in
 biological 
 cultures\cite{coons1942demonstration,coons1951fluorescent,weller1954fluorescent}.
 The second, and arguably more profound, iteration was the discovery and 
-cloning of \textit{Aequorea victoria} GFP, and the development of chromatic
+cloning of \textit{Aequorea Victoria} GFP, and the development of chromatic
 variants\cite{prasher1992primary,heim1996engineering}. This allowed for 
 specific proteins of interest to be individually labelled and for biologists 
 to monitor gene-expression\cite{chalfie1994green}. Since then, additional 
 properties of fluorescent proteins, such as their conformational changes 
-in response to binding events, environmental changes or enzymatic activity, 
+in response to binding events, environmental changes, or enzymatic activity, 
 have been utilised to great effect\cite{toseland2013fluorescent}. 
 Fluorescence microscopy has allowed biologists to visualise dynamic biological
 processes in real time.
@@ -162,13 +162,13 @@ a similar process and considering the field intensity along the $z'$ axis, the
 axial resolution, $r_a$, is given as\cite{pawley2006handbook}:
 
 \begin{equation}\label{eq:axial_res}
-	r_a \approx \frac{2\lambda n}{NA^{2}}
+r_a \approx \frac{2\lambda n}{NA^{2}}
 \end{equation}
 
 Figure~\ref{fig:Airy_ring_2_object_seperation} shows two 
 diffraction-limited point objects at variable lateral separations. For 
 lateral separations less than $r_{l}$ the field intensities resemble a single 
-point source in the image plane. For lateral seperations at or above $r_{l}$ 
+point source in the image plane. For lateral separation at or above $r_{l}$ 
 the intensity contributions from the two objects are distinguishable as 
 separate.
 
@@ -199,7 +199,7 @@ separate.
 		\label{fig:Airy_ring_2_object_seperation_1_5}
 	\end{subfigure}
 	\caption[Illustration of the resolution limit as determined by the Rayleigh
-		criterion]{Illustration of the resolution limit as determined by the Rayleigh 
+	criterion]{Illustration of the resolution limit as determined by the Rayleigh 
 		criterion. Each subfigure shows a line profile and 2D plot of the field 
 		intensity distributions of both of the two diffraction limited point 
 		objects. For two point objects separated by $< r_{l}$, \textbf{(a)} \& 
@@ -225,10 +225,10 @@ presented here. The first minima may not even be radially symmetric.
 
 Furthermore, the `true' resolution achievable by a microscopy system is affected 
 by other factors such as the signal-to-noise ratio of an image, coherence 
-conditions of illumination, apodization, descretisation errors for digital 
+conditions of illumination, apodization, discretisation errors for digital 
 cameras, the to name a few\cite{den1997resolution}. There have been attempts to 
 develop alternative resolution measurements for point objects\cite{ram2006beyond}. 
-Unfortunately, the actual resolution acheived in biological samples varies 
+Unfortunately, the actual resolution achieved in biological samples varies 
 across the image plane, determined by factors such as the labelling density of 
 the underlying biological specimen\cite{culley2017nanoj}. The `true' resolution 
 of a system for a given sample is therefore a quantity which is impossible to 
@@ -246,11 +246,11 @@ delta function, the Fourier transform of which is a uniform distribution across 
 spatial frequencies. The addition of an aperture, such as a microscope objective, 
 effectively imposes a low-pass filter on the spatial frequency domain. 
 Figure~\ref{fig:WF_OTF} shows the projection of the observable region onto the 
-lateral spatial freqency plane $k_{x}k_{y}$ i.e. the low-pass filter. The radius of
+lateral spatial frequency plane $k_{x}k_{y}$ i.e. the low-pass filter. The radius of
 this low-pass filter is: 
 
 \begin{equation}\label{eq:lateral_spatial_freq_res}
-	\omega_{l} = \frac{1}{r_{l}},
+\omega_{l} = \frac{1}{r_{l}},
 \end{equation}
 
 where $r_{l}$ is the lateral resolution limit. The bounds of the observable region 
@@ -267,7 +267,7 @@ for $\left\|\textbf{k}_{xy}\right\| \le \omega_{l}$ where
 $\left\|\textbf{k}_{xy}\right\|$ is the length of the vector denoting the 
 lateral spatial frequencies, $(k_{x},k_{y})$ and $\lambda_{k} = 
 \frac{2\pi}{\lambda}$\cite{frieden1967optical}. Figure~\ref{fig:WF_OTF_xz} shows 
-the projection of the observable region onto the axial spatial freqency plane 
+the projection of the observable region onto the axial spatial frequency plane 
 $k_{x}k_{z}$. The maximum extension of this observable region, $k_{a}$, is given 
 by:
 
@@ -278,7 +278,7 @@ by:
 From Equation~\ref{eq:observable_region_kz}, the observable
 region in $k_{z}$ is bandpass limited at both high and low spatial frequencies.
 This results in the ``missing cone'' phenomenon which limits the axial spatial 
-freqencies which are able to be collected, in turn limiting the axial 
+frequencies which are able to be collected, in turn limiting the axial 
 resolution\cite{behan2009three,arnison20023d}. This, coupled with the fact that
 for all practical cases $k_{a} \ll k_{l}$, explains why the axial resolution is
 always worse than the lateral resolution of a system. Figure~\ref{fig:WF_OTF} 
@@ -333,12 +333,12 @@ resolution asymptote - a point to be approached by never reached. Two
 ease of implementation and how close they were able to get to the diffraction
 limit; deconvolution\cite{agard1983three, wallace2001workingperson} and
 confocal laser scanning microscopy\cite{sheppard1981theory,minsky1988memoir}. 
-Nonetheless, the instant one defines a limit it is pracitcally human nature 
+Nonetheless, the instant one defines a limit it is practically human nature 
 to attempt to surpass it. Therefore, a number of `super-resolution' techniques
 have emerged capable of surpassing even the ideal diffraction limit. These
 can be broadly divided into two categories; near-field and far-field methods.
 Near-field methods, whilst capable of achieving resolutions of $\sim 20 nm$,
-are only suitable for surface structure imagin\cite{schermelleh2010guide}. 
+are only suitable for surface structure imaging\cite{schermelleh2010guide}. 
 Far-field techniques fall into 4 broad techniques; structured illumination
 microscopy (SIM), stimulated emission depletion (STED) microscopy, 
 single-molecule localisation microscopy (SMLM) and interferometric-based 
@@ -366,7 +366,7 @@ interference-based microscopy pioneered by Mats
 Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}.
 This implementation of SIM is best understood through the Moir\'{e} effect.
 Two patterns, such as those shown in Figure~\ref{fig:fringes_1} and 
-\ref{fig:fringes_1}, which are multiplicitatively superimposed on one another
+\ref{fig:fringes_1}, which are multiplicatively superimposed on one another
 will produce a beat pattern - Moir\'{e} fringes - such as those shown in
 Figure~\ref{fig:fringes_moire}. Using the convolution theorem, the Fourier
 transform if this superposition is equivalent to the convolution of the 
@@ -393,7 +393,7 @@ as shown in Figures~\ref{fig:fringes_1_ft}-\ref{fig:fringes_moire_ft}.
 		\caption{}
 		\label{fig:fringes_moire}
 	\end{subfigure}
-
+	
 	\begin{subfigure}[t]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/fringes_1_ft_kx_16_ky_0.png}
@@ -423,7 +423,7 @@ as shown in Figures~\ref{fig:fringes_1_ft}-\ref{fig:fringes_moire_ft}.
 
 For SIM, one of the patterns is the underlying biological structure - or more 
 specifically the spatial distribution of fluorophores - and the other is the 
-spatially structured excitation illuminaiton. The Moir\'{e} fringes arising 
+spatially structured excitation illumination. The Moir\'{e} fringes arising 
 from the superposition of these two structures can be coarser than either of 
 the original patterns, meaning that Moir\'{e} fringes arising from the 
 superposition of biological structures beyond the resolution limit of the 
@@ -445,7 +445,7 @@ F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r}),\\
 Where $D(\textbf{r})$ is the sample fluorescence distribution, $I(\textbf{r})$ 
 is the illumination pattern, $E(\textbf{r})$ is the resultant emission signal 
 and $H(\textbf{r})$ is the system point spread function (PSF). Applying the 
-convolution theorem an a Fourier transform yeild:
+convolution theorem an a Fourier transform yield:
 
 \begin{equation}\label{eq:SIM_fluorescent_image_fourier}
 \begin{split}
@@ -473,11 +473,11 @@ contributions from the diffraction limited contributions is non-trivial.
 However, imposing some conditions on the illumination structure simplifies
 this process\cite{gustafsson2008three}. Firstly, the illumination pattern 
 should consist of the sum of a finite number, $m$, of components and these
-components should be seperable into axial and lateral components. The 
+components should be separable into axial and lateral components. The 
 illumination pattern, $I(\textbf{r}_{xy},z)$, is therefore:
 
 \begin{equation}\label{eq:illumination_components}
-	I(\textbf{r}_{xy},z) = \sum\limits_{m}{I_{m}(z)J_{m}(\textbf{r}_{xy})},
+I(\textbf{r}_{xy},z) = \sum\limits_{m}{I_{m}(z)J_{m}(\textbf{r}_{xy})},
 \end{equation}
 
 where $\textbf{r}_{xy}$ the vector denoting the lateral coordinates, $(x,y)$.
@@ -486,7 +486,7 @@ harmonic functions meaning they contain only one spatial frequency. Finally,
 the axial functions, $I_{m}(z)$, should either: 
 
 \begin{enumerate}
-	\item also be purely harmoic functions.
+	\item also be purely harmonic functions.
 	\item in instances where 3D data is acquired as a series of 2D images with 
 	different focus - as in microscopy - the illumination pattern is maintained 
 	fixed relative to the focal plane of the microscope and not relative to the
@@ -498,16 +498,16 @@ written as:
 
 \begin{equation}\label{eq:fluorescent_image_conditions}
 \begin{split}
-	F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r})\\
-	F(\textbf{r}) &= \sum\limits_{m}{\int H(\textbf{r}-\textbf{r}'))I_{m}(z - z')D(\textbf{r}')J_{m}(\textbf{r}'_{xy})}d\textbf{r}'\\
-	F(\textbf{r}) &= \sum\limits_{m}{\left[HI_{m}\circledast DJ_{m}\right](\textbf{r})}\\,
+F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r})\\
+F(\textbf{r}) &= \sum\limits_{m}{\int H(\textbf{r}-\textbf{r}'))I_{m}(z - z')D(\textbf{r}')J_{m}(\textbf{r}'_{xy})}d\textbf{r}'\\
+F(\textbf{r}) &= \sum\limits_{m}{\left[HI_{m}\circledast DJ_{m}\right](\textbf{r})}\\,
 \end{split}
 \end{equation}
 
 where $\textbf{r}'$ denotes the sample reference from, $\textbf{r}$ denotes
 the data-set reference frame and $\textbf{r} - \textbf{r}'$ denotes the 
 reference frame of the objective. Taking the Fourier transform of the 
-$m$-th term, $F_{m}(\textbf{r})$, yeilds:
+$m$-th term, $F_{m}(\textbf{r})$, yields:
 
 \begin{equation}\label{eq:fluorescent_image_mth_ft}
 \tilde{F}_{m}(\textbf{k}) = \tilde{O}_{m}\left[\tilde{D}(\textbf{k}) \circledast \tilde{J}_{m}(\textbf{k}_{xy})\right],
@@ -518,7 +518,7 @@ Here the second condition of the lateral functions being purely harmonic allows
 $J_{m}(\textbf{r}_{xy})$ to be written as:
 
 \begin{equation}\label{eq:lateral_illumination}
-	J_{m}(\textbf{r}_{xy}) = e^{i\left(2\pi\textbf{p}_m\cdot\textbf{r}_{xy} + \phi_{m}\right)},
+J_{m}(\textbf{r}_{xy}) = e^{i\left(2\pi\textbf{p}_m\cdot\textbf{r}_{xy} + \phi_{m}\right)},
 \end{equation}
 
 \begin{equation}\label{eq:lateral_illumination_ft}
@@ -538,9 +538,9 @@ information, $\tilde{D}$, each shifted laterally in reciprocal space by
 $\textbf{p}_{m}$, filtered by the OTF, $O$, and phase shifted by $\phi_{m}$.
 Acquiring $N$ images with different values of $\phi_{m}$ gives a system of 
 linear equations with as many equations as unknowns. The frequency components
-can therefore be seperated by applying an $N\times N$ seperation matrix. The 
+can therefore be separated by applying an $N\times N$ separation matrix. The 
 values of $\phi_{m}$ are generally chosen to be evenly spaced between 
-$[0,2\pi]$ to ensure a well-conditioned seperation 
+$[0,2\pi]$ to ensure a well-conditioned separation 
 matrix\cite{gustafsson2008three}.
 
 Considering the practical implications further simplifies the situation. 
@@ -561,12 +561,12 @@ Equation~\ref{eq:single_SIM_image} becomes:
 \end{equation}
 
 Since $O_{m}$ and $\textbf{p}_{m}$ are known, the information components
-can be seperated and moved by $\textbf{p}_{m}$ back to their correct 
+can be separated and moved by $\textbf{p}_{m}$ back to their correct 
 position in reciprocal space, combined to a single extended resolution
 spatial frequency dataset, and finally Fourier transformed back into a 
 single super-resolution image.  From Equation~\ref{eq:single_SIM_image} 
 it is clear that this image is equivalent to an image taken with an 
-obserable region equal to the convolution of the original system OTF, 
+observable region equal to the convolution of the original system OTF, 
 $O$, and the illumination structure Fourier transform, $\tilde{I}$. 
 
 Consider an illumination pattern formed by the interference of two beams 
@@ -586,7 +586,7 @@ Figure~\ref{fig:2D_SIM_OTF_1_angle_plot_xz}. The observable region
 is laterally extended by a factor, $\alpha_{l}$, given by:
 
 \begin{equation}\label{eq:lateral_res_extension_factor}
-	\alpha_{l} = \frac{\left(\frac{1}{\lambda_{ex}} + \frac{1}{\lambda_{em}}\right)}{\frac{1}{\lambda_{em}}} = 1 + \frac{\lambda_{ex}}{\lambda_{em}},
+\alpha_{l} = \frac{\left(\frac{1}{\lambda_{ex}} + \frac{1}{\lambda_{em}}\right)}{\frac{1}{\lambda_{em}}} = 1 + \frac{\lambda_{ex}}{\lambda_{em}},
 \end{equation}
 
 where $\lambda_{ex}$ and $\lambda_{em}$ are the excitation and emission
@@ -594,7 +594,7 @@ wavelengths respectively.  However, this extension factor only applied in
 the direction $\overrightarrow{\textbf{p}}$. To achieve isotropic 
 resolution enhancement, a number of pattern directions are required. 
 Rotating the illumination pattern through the three stripe angles shown 
-in Figure~\ref{fig:3D_SIM_OTF_stripe_angles} yeilds the extended 
+in Figure~\ref{fig:3D_SIM_OTF_stripe_angles} yields the extended 
 observable region in Figure~\ref{fig:2D_SIM_OTF_all_2D_angles}, the 
 projection of which in the $k_{x}k_{y}$ plane is shown in
 Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}. 
@@ -632,7 +632,7 @@ Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}.
 		\caption{}
 		\label{fig:2D_SIM_OTF_1_angle_plot_xz}
 	\end{subfigure}
-
+	
 	\begin{subfigure}[t]{0.4\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/2D_SIM_OTF_all_2D_angles.png}
@@ -666,7 +666,7 @@ Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}.
 Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled} shows
 that whilst there is an expansion of the observable region in all
 directions in the $k_{x}k_{y}$ plane, it is not a lateral isotropic 
-extension by $\alpha_{l}$. Nonetheless, it is still suffienct to yeild 
+extension by $\alpha_{l}$. Nonetheless, it is still sufficient to yield 
 a doubling of the lateral resolution\cite{gustafsson2000surpassing}.
 This choice of illumination structure still suffers from the missing
 cone problem noted in Section~\ref{subsec:resolution}, meaning there
@@ -678,11 +678,11 @@ Figure~\ref{fig:amplitude_wave_vectors}. The 3D interference pattern,
 $I(\textbf{r})$ generated by the superposition of these waves is:
 
 \begin{equation}\label{eq:3_beam_interference}
-	\begin{split}
-		I(\textbf{r}) \propto \left|\sum\limits_{j}{\textbf{E}_{j}e^{i\textbf{k}_j\cdot\textbf{r}}}\right|^{2} &= \left(\sum\limits_{j}{\textbf{E}^{*}_{j}e^{-i\textbf{k}_{j}\cdot\textbf{r}}}\right)
-		\left(\sum\limits_{q}{\textbf{E}_{q}e^{i\textbf{k}_{q}\cdot\textbf{r}}}\right)\\
-		&= \sum\limits_{j,q}{\textbf{E}^{*}_{j}\cdot\textbf{E}_{q}e^{-i\left(\textbf{k}_{q}-\textbf{k}_{j}\right)\cdot\textbf{r}}},
-	\end{split}
+\begin{split}
+I(\textbf{r}) \propto \left|\sum\limits_{j}{\textbf{E}_{j}e^{i\textbf{k}_j\cdot\textbf{r}}}\right|^{2} &= \left(\sum\limits_{j}{\textbf{E}^{*}_{j}e^{-i\textbf{k}_{j}\cdot\textbf{r}}}\right)
+\left(\sum\limits_{q}{\textbf{E}_{q}e^{i\textbf{k}_{q}\cdot\textbf{r}}}\right)\\
+&= \sum\limits_{j,q}{\textbf{E}^{*}_{j}\cdot\textbf{E}_{q}e^{-i\left(\textbf{k}_{q}-\textbf{k}_{j}\right)\cdot\textbf{r}}},
+\end{split}
 \end{equation}
 
 therefore has 7 Fourier components located at each of the pairwise
@@ -691,7 +691,7 @@ between the any two of the beam wave vectors. The location of these
 Fourier components is shown in 
 Figure~\ref{fig:3D_SIM_OTF_beam_pos_w_vectors}. The convolution of 
 this interference pattern, rotated through the stripe angles shown
-in Figure~\ref{fig:3D_SIM_OTF_stripe_angles}, yeilds the extended
+in Figure~\ref{fig:3D_SIM_OTF_stripe_angles}, yields the extended
 observable region shown in Figure~\ref{fig:3D_SIM_OTF_all_angles}.
 The projection of the extended observable region for one of these 
 stripe angles onto the $k_{x}k{z}$ plane is shown in 
@@ -752,7 +752,7 @@ super-resolution technique for biology for a number of reasons. The
 number of images required in order to reconstruct a super-resolution 
 SIM image, are determined by the number of lateral Fourier components 
 in the illumination pattern - 3 for 2D SIM and 5 for 3D SIM - and the
-number of stripe angles used to rotate the illumation pattern through
+number of stripe angles used to rotate the illumination pattern through
 - typically 3. Therefore, only 9 or 15 images are required to 
 reconstruct a 2D or 3D super-resolution SIM image respectively. This
 has a number of benefits. Firstly, the temporal resolution is 
@@ -781,20 +781,20 @@ common are those arising from system imperfections - i.e. manufacturing errors
 in components, placement of lenses off the optical axis, etc - and those
 arising spatio-temporal refractive index variances across the 
 wavefront\cite{kubby2013adaptive,booth2007adaptive}. In biological samples, 
-these variances arise from sample heterogeneties since different biological
+these variances arise from sample heterogeneities since different biological
 structures possess varied refractive 
-indicies\cite{bashkatov2011optical, jacques2013optical, kim2010measurement, sandell2011review}.
+indices\cite{bashkatov2011optical, jacques2013optical, kim2010measurement, sandell2011review}.
 These refractive index variances introduce path differences between 
 different section of the light wavefront. A generalised pupil function 
 (GPF) defined as\cite{antonello2014optimisation}:
 
 \begin{equation}\label{eq:GPF}
-	P\left(\textbf{r}_{xy}\right) = A\left(\textbf{r}_{xy}\right)e^{i\Phi\left(\textbf{r}_{xy}\right)},
+P\left(\textbf{r}_{xy}\right) = A\left(\textbf{r}_{xy}\right)e^{i\Phi\left(\textbf{r}_{xy}\right)},
 \end{equation}
 
 is a complex-valued function. Defining the GPF on the normalised system 
 pupil and assuming the pupil is circular simplifies the following analysis
-and is generally more intuative. In such a system, the GPF has the form:
+and is generally more intuitive. In such a system, the GPF has the form:
 
 \begin{equation}\label{eq:GPF_polar}
 P\left(\rho,\theta\right) = A\left(\rho,\theta\right)e^{i\Phi\left(\rho,\theta\right)}.
@@ -809,7 +809,7 @@ disk, the field intensity at the $x'y'$ plane is proportional
 to\cite{goodman2005introduction,born2013principles}:
 
 \begin{equation}\label{eq:image_field_insentity_GPF}
-	\mathcal{I}(v,\phi) = \frac{1}{\pi}\left|\int^{1}_{0}\int^{2\pi}_{0}P\left(\rho,\theta\right)e^{iv\rho\cos(\theta-\phi)}\rho d\rho d\theta\right|^{2}
+\mathcal{I}(v,\phi) = \frac{1}{\pi}\left|\int^{1}_{0}\int^{2\pi}_{0}P\left(\rho,\theta\right)e^{iv\rho\cos(\theta-\phi)}\rho d\rho d\theta\right|^{2}
 \end{equation}
 
 For an aberration free system, $A\left(\rho,\theta\right) = 1$ and 
@@ -823,14 +823,14 @@ from Equation~\ref{eq:image_field_insentity}.
 
 Whilst the phase distortions can be treated in their native form, it is 
 useful for a number of reasons to represent them as an expansion in
-othonogonal functions, and Zernike polynomials are typically chosen for 
+orthogonal functions, and Zernike polynomials are typically chosen for 
 this expasion\cite{zernike1934diffraction,noll1976zernike,mahajan1994zernike}.
 Zernike modes are not suitable to represent phase distortions arising 
-from all sources, such as air turbulance or fabrication errors in the 
+from all sources, such as air turbulence or fabrication errors in the 
 single-point diamond turning process\cite{wyant1992basic}. However, the 
 sources of phase distortions for which a Zernike representation is not
 appropriate do not generally arise. Additionally, the Zernike modes have 
-a number of useful mathemetical properties, and low order Zernike modes 
+a number of useful mathematical properties, and low order Zernike modes 
 correspond to well-known optical aberrations e.g. defocus, astigmatism, 
 coma, spherical 
 aberration\cite{born2013principles,booth2007adaptive,zernike1934diffraction}.
@@ -838,7 +838,7 @@ Using the Zernike polynomials, the phase distortions, $\Phi\left(\rho,\theta\rig
 can be written as:
 
 \begin{equation}\label{eq:phase_zernike_expansion}
-	\Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),
+\Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),
 \end{equation}
 
 where indices $n \in \mathbb{N}_{0}$ and $m \in \mathbb{Z}$ denote the radial order 
@@ -874,10 +874,10 @@ R^{m}_{n}(\rho) = \sum_{s=0}^{\frac{n-m}{2}}{\frac{(-1)^{s}(n-s)!}{s!\left(\frac
 \end{cases}.
 \end{equation}
 
-This formulation of Zernike modes are normalised and ordered according
-to the Noll indexing convention, although modal bases and ording 
+This formulation of Zernike modes is normalised and ordered according
+to the Noll indexing convention, although modal bases and ordering 
 conventions do exist\cite{noll1976zernike,thibos2002standards,
-loomis1978computer,soloviev2017optimal,burton1984effects}. 
+	loomis1978computer,soloviev2017optimal,burton1984effects}. 
 
 It is useful to be able to compare phase distortions to one another to
 measure their severity. In order to do so, scalar indicators are required.
@@ -893,7 +893,7 @@ where $E_{k}\left[\Phi\right]$ are the
 functionals\cite{antonello2014optimisation,mahajan1994zernike}:
 
 \begin{equation}\label{eq:E_functionals}
-	E_{k}\left[\Phi\right] = \frac{1}{\pi} \int_{0}^{1}\int_{0}^{2\pi} \Phi\left(\rho,\theta\right)^{k}\rho d\rho d\theta.
+E_{k}\left[\Phi\right] = \frac{1}{\pi} \int_{0}^{1}\int_{0}^{2\pi} \Phi\left(\rho,\theta\right)^{k}\rho d\rho d\theta.
 \end{equation}
 
 Using the normalisation factors, $c_{n}^{m}$, and the orthogonality
@@ -919,17 +919,17 @@ Figures~\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_1}-
 \ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_Noll_3}
 show the effect of the first 3 Zernike modes, $\mathcal{Z}_{0}^{0}$, 
 $\mathcal{Z}_{1}^{-1}$, and $\mathcal{Z}_{1}^{1}$ - i.e. piston, tip and 
-tilt - on two point objects seperated by the diffraction limit determined
+tilt - on two point objects separated by the diffraction limit determined
 by the Rayleigh criterion, $r_{l}$. Clearly piston has no effect on the 
 image intensity or resolving power. Additionally, assuming an incoherent, 
 shift invariant imaging system, the only effect of the tip and tilt 
 aberrations is a lateral shift in the $x$ and $y$ axis respectively. The
-overall image intensity and resolving power remains unaffects. For this 
+overall image intensity and resolving power remains unaffected. For this 
 reason piston (and often tip and tilt) are considered ``non-optical'' 
 aberrations. 
 Figure~\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_rms_1}
 shows the same two point objects aberrated with phase deformations of 
-$rms(\Phi) = 1$. The image intensity is severly degraded and the resolving
+$rms(\Phi) = 1$. The image intensity is severely degraded and the resolving
 power is significantly less than the diffraction limited case. Evidently, 
 the presence of phase distortions is a limiting factor to imaging systems 
 from achieving the ideal diffraction limited 
@@ -963,11 +963,11 @@ resolution\cite{antonello2014optimisation,booth2014adaptive}.
 	\end{subfigure}
 	\caption[A visualisation of the effect of optical aberrations on image 
 	resolution]{A visualisation of the effect of optical aberrations on 
-	image resolution \textbf{(a)-(c)} Ideal diffraction limited point 
-	sources at seperation $r_{l}$ aberrated with $rms(\Phi) = 1$ of purely 
-	piston, tip and tilt respectively. \textbf{(d)} Ideal diffraction 
-	limited point sources at seperation $r_{l}$ aberrated with a random 
-	phase distortion with $rms(\Phi) = 1$}
+		image resolution \textbf{(a)-(c)} Ideal diffraction limited point 
+		sources at separation $r_{l}$ aberrated with $rms(\Phi) = 1$ of purely 
+		piston, tip, and tilt respectively. \textbf{(d)} Ideal diffraction 
+		limited point sources at separation $r_{l}$ aberrated with a random 
+		phase distortion with $rms(\Phi) = 1$}
 	\label{fig:aberrations_res}
 \end{figure*}
 
@@ -975,7 +975,7 @@ resolution\cite{antonello2014optimisation,booth2014adaptive}.
 \label{sec:AO}
 
 As previously mentioned, phase aberrations arise in microscopy primarily
-due to heterogeneties in the structure of the biological sample being 
+due to heterogeneities in the structure of the biological sample being 
 imaged. Consider the objective lens of a microscope. In the absence of
 optical aberrations, as in Figure~\ref{fig:wavefront_focus_ideal}, a flat
 wavefront is focused to a single diffraction limited spot. Introducing
@@ -984,13 +984,13 @@ extended, non-diffraction limited focal spot as seen in
 Figure~\ref{fig:wavefront_focus_aberrated}. However, if, as in 
 Figure~\ref{fig:wavefront_focus_corrected} the wavefront is not flat when 
 it enters the microscope objective but instead shaped to compensate for 
-the phase distortion, then a ideal, diffraction limited focal spot is 
-recovered. Since the phase distortions encounterd are not only sample
+the phase distortion, then an ideal, diffraction limited focal spot is 
+recovered. Since the phase distortions encountered are not only sample
 dependent, but spatially and (for live samples) temporally dependent an
 adaptive method for pre-shaping the optical wavefront is 
 required\cite{schwertner2004characterizing,wang2014multiplexed,girkin2009adaptive}.
 The branch of technologies and methods for doing this is referred to as
-adaptie optics (AO).
+adaptive optics (AO).
 
 \begin{figure}[h]
 	\centering
@@ -1012,16 +1012,16 @@ adaptie optics (AO).
 		\caption{}
 		\label{fig:wavefront_focus_corrected}
 	\end{subfigure}
-	\caption[Illustration of aberrations affecting a microscope objective focus.]{Illustration of aberrations affecting a microscope objective focus. \textbf{(a)} The microscope objective and surrouding media have the same refractive index, $n_{1}$ and the microscope objective forms a diffraction limited focal spot. \textbf{(b)} the media the wavefront passes through is heterogeneous. This causes a phase distortion in the wavefront and leads to an expanded focal spot. \textbf{(c)} Prior to the objective aperature, the wavefront is preshaped to the opposite shape to the expected distortion. Once the wavefront passes though the heterogeneous media, an ideal wavefront is recovered and thus the focal spot is diffraction limited again.}
+	\caption[Illustration of aberrations affecting a microscope objective focus.]{Illustration of aberrations affecting a microscope objective focus. \textbf{(a)} The microscope objective and surrounding media have the same refractive index, $n_{1}$ and the microscope objective forms a diffraction limited focal spot. \textbf{(b)} the media the wavefront passes through is heterogeneous. This causes a phase distortion in the wavefront and leads to an expanded focal spot. \textbf{(c)} Prior to the objective aperture, the wavefront is pre-shaped to the opposite shape to the expected distortion. Once the wavefront passes though the heterogeneous media, an ideal wavefront is recovered and thus the focal spot is diffraction limited again.}
 	\label{fig:wavefront_focus}
 \end{figure}
 
 Similar to how the telescope and microscope have a shared historical origin,
-the concept of using AO to correct for optical aberrations has it's 
+the concept of using AO to correct for optical aberrations has it is 
 origin in correcting for phase distortions in astronomical data\cite{babcock1990adaptive}.
 The principle of an AO system for microscopy is shown in 
 Figure~\ref{fig:ao_system_schematic_simple}. Here, only the emission path 
-is considered. A distorted wavefront $\Phi_{I}$, arrives at the aperature 
+is considered. A distorted wavefront $\Phi_{I}$, arrives at the aperture 
 of the microscope. The wavefront is then imaged onto an adaptive element 
 capable of applying a variable phase distortion, $\Phi_{AO}$. Once the 
 wavefront has interacted with the adaptive element, there is a residual 
@@ -1041,7 +1041,7 @@ in the beam path, such as an opto-acoustic lens.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/ao_system_schematic_simple.jpg}
-	\caption[Schematic of the emission path of an adaptive optics system.]{Schematic of the emission path of an adaptive optics system. The emitted wavefront of a fluorescent sample, $\Phi_{I}$, arrives at the aperature of the microscope. It is reimaged onto the adaptive element with some phase, $\Phi_{AO}$. The light then passed through a beamsplitter and is focused onto an imaging device. The residual phase aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either calculated directly by the wavefront sensor or inferred indirectly from the data acquired by the imaging device. This information is passed to a controller which applies the a phase aberration to the adaptive element, $\Phi_{AO}$, in order to minimise $rms(\Phi_{R})$.}
+	\caption[Schematic of the emission path of an adaptive optics system.]{Schematic of the emission path of an adaptive optics system. The emitted wavefront of a fluorescent sample, $\Phi_{I}$, arrives at the aperture of the microscope. It is reimaged onto the adaptive element with some phase, $\Phi_{AO}$. The light then passed through a beamsplitter and is focused onto an imaging device. The residual phase aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either calculated directly by the wavefront sensor or inferred indirectly from the data acquired by the imaging device. This information is passed to a controller which applies the a phase aberration to the adaptive element, $\Phi_{AO}$, in order to minimise $rms(\Phi_{R})$.}
 	\label{fig:ao_system_schematic_simple}
 \end{figure}
 
@@ -1049,7 +1049,7 @@ Implementing AO in microscopy has already been shown to be highly
 effective at reducing optical aberrations and yielding significant 
 improvements to image 
 quality\cite{booth2014adaptive,girkin2009adaptive,fraisier2015adaptive,jesacher2011sensorless,
-jian2014wavefront}. Designing an AO enabled system follows a predicable 
+	jian2014wavefront}. Designing an AO enabled system follows a predicable 
 workflow outlined in Figure~\ref{fig:ao_system_setup_workflow} 
 consisting of four phases:
 
@@ -1070,17 +1070,15 @@ consisting of four phases:
 
 However, there are a number of adaptive elements\cite{olivier2002advanced}, 
 a plethora of direct wavefront sensing techniques\cite{antonello2014optimisation,trumper2016instantaneous,
-schwertner2004measurement}, and wide array of 
-sensorless correaction methodologies\cite{burke2015adaptive,booth2002adaptive,
-fienup2003aberration,antonello2020multi,debarre2007image,murray2005wavefront}. 
+	schwertner2004measurement}, and wide array of 
+sensorless correction methodologies\cite{burke2015adaptive,booth2002adaptive,
+	fienup2003aberration,antonello2020multi,debarre2007image,murray2005wavefront}. 
 Considering AO within super-resolution imaging techniques further complicates
 the sitution\cite{debarre2008adaptive,booth2015aberrations,thomas2015enhanced}.
-Since there is no univerally agreed upon AO implementation, each 
+Since there is no universally agreed upon AO implementation, each 
 implementation has to go through the entire design process from scratch, 
 creating a bespoke but brittle implementation which is not easily transferable
-to any other system, imaging modality, sample type, etc. There is a need for a
-robust, accurate, easy-to-use, general implementation of adaptive optics for 
-microscopy\cite{ji2017adaptive,rodriguez2018adaptive}
+to any other system, imaging modality, sample type, etc. 
 
 \begin{figure}[h]
 	\centering
@@ -1092,7 +1090,29 @@ microscopy\cite{ji2017adaptive,rodriguez2018adaptive}
 \section{Overview and Aims of the Thesis}
 \label{sec:overview}
 
+There is a need for a robust, accurate, easy-to-use, general implementation 
+of AO for microscopy\cite{ji2017adaptive,rodriguez2018adaptive}.
+This implementation should be accessible to biologists in order to ensure its
+adoption amongst the microscopy community and therefore the widespread 
+adoption of AO technology. This thesis demonstrates just such an 
+implementation, deployed successfully on two separate systems. The 
+contributions of the thesis are collected into four chapters and is laid out
+as follows:
+
 \begin{itemize}
-	\item Here is where you should really hammer home that current implementations are a) not generalised and b) not accessible to biologists.
-	\item Present the story of the thesis: "I have created a robust, generalised accessible adaptive optics implementation. It solves a range of common biology problems and works across multiple sample types and imaging modality. It's generalised so it can be transferred between systems." That's the novel contribution.
+	\item Chapter 2 
+	\item Chapter 3
+	\item Chapter 4
+	\item Chapter 5
 \end{itemize}
+
+Discussions of existing limitations and areas for further development to the 
+presented AO implementation are presented in Chapter 6. Conclusions are drawn 
+in Chapter 7. The Aurox Clarity system was built by Dr Syed Hussain of the 
+Dynamic Optics and Photonics Group, University of Oxford and Toshiki Kubo
+Department of Applied Physics, Osaka University. The DeepSIM system...
+\textcolor{red}{Unsure how to word this in a way that is honest. Given the 
+	number of times I've taken apart the various components of the system, 
+	replaced them, repositioned them, etc it \textit{feels} like I can say I 
+	primarily built it, but I'm aware Ian, Mantas, Mick, and Antonia(?) made 
+	significant contributions before me. I would appreciate some advice here.}
