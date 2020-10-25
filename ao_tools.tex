@@ -420,7 +420,7 @@ Where $Z_{i}$ is the applied Zernike mode amplitude, $Z'_{i}$ and $Z'_{j}$ are t
 \end{figure}
 
 Clearly not all Zernike modes are recreated equally well and  different modes exhibit varying degrees of mode coupling. As previously mentioned, this arises from mathematical approximations,
-computational errors and the physical characteristics of the adaptive element. Microscope-AOtools provides the tools to assess the accuracy of Zernike mode recreation, which can be used to inform which modes should be included in the aberration correction algorithms.
+computational errors and the physical characteristics of the adaptive element. Microscope-AOtools provides the tools to assess the accuracy of Zernike mode recreation, which can be used to inform which modes should be included in the aberration correction algorithms. In general, correcting up to the third order spherical ($\mathcal{Z}_{8}^{0}$) is sufficient to recover a defraction limited image and so a good reconstruction accuracy is only necessary for the first 29 Zernike modes\cite{antonello2014optimisation}.
 
 The characterisation routine relies on the same generalised phase acquisition method used in the calibration workflow. Recall that this is a user selected method from a suite of phase acquisition methods. The number of Zernike modes assessed, $N$, is the number of modes that have been measured in the calibration step by default, but this can be varied by the user. Once again this preserves generalisability and allows the characterisation method to be used on any arbitrary adaptive element, calibrated for any number of modes and utilising any desired wavefront sensing technique.
 
