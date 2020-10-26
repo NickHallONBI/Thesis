@@ -1092,18 +1092,41 @@ to any other system, imaging modality, sample type, etc.
 
 There is a need for a robust, accurate, easy-to-use, general implementation 
 of AO for microscopy\cite{ji2017adaptive,rodriguez2018adaptive}.
-This implementation should be accessible to biologists in order to ensure its
+This implementation should be accessible to users in order to ensure its
 adoption amongst the microscopy community and therefore the widespread 
 adoption of AO technology. This thesis demonstrates just such an 
-implementation, deployed successfully on two separate systems. The 
-contributions of the thesis are collected into four chapters and is laid out
-as follows:
+implementation - Microscope-AOtools - deployed successfully on two separate 
+systems. The contributions of the thesis are collected into four chapters 
+and is laid out as follows:
 
 \begin{itemize}
-	\item Chapter 2 
-	\item Chapter 3
-	\item Chapter 4
-	\item Chapter 5
+	\item Chapter 2 discusses the two systems which Microscope-AOtools has
+	been deployed on: Aurox Clarity and DeepSIM. It discusses their optical 
+	layout and contains a brief discussion of the optical alignment 
+	proceedure as well as an alignment tool developed during the course of 
+	this thesis; ``Hall, Nicholas J., David Miguel Susano Pinto, and Ian M. 
+	Dobbie. "BeamDelta: simple alignment tool for optical systems." 
+	\textit{Wellcome Open Research} 4.194 (2019): 194.''\cite{dobbie2019beamdelta} 
+	The hardware control software - Python Microscope - used to synchronise 
+	the disparate hardware elements of each microscope setup and the 
+	graphical user interface (GUI) software - Microscope-Cockpit - which 
+	is used to operate the microscopes are also discussed.
+	\item Chapter 3 corresponds to scientific publication: ``Hall, Nicholas, 
+	et al. "Microscope-AOtools: A generalised adaptive optics implementation." 
+	\textit{Optics Express} 28.20 (2020): 28987-29003.''\cite{hall2020microscope}
+	The generalised implentations of all the methods required by the Set-up and 
+	Sample Correction phases detailed in Section~\ref{sec:AO} are discussed.
+	It also contains discussion of the integration of Microscope-AOtools with
+	Microscope-Cockpit in order to enable accessability for users.
+	\item Chapter 4 corresponds to the scientific publication: ``Hussain, 
+	Syed Asad, et al. "Wavefront-sensorless adaptive optics with a laser-free 
+	spinning disk confocal microscope." bioRxiv (2020).''\cite{hussain2020sensorless} 
+	which is currently in review by The Journal of Microscopy and on which 
+	the author is a co-first author. It details the successful implementation 
+	of Microscope-AOtools on the Aurox Clarity system.
+	\item Chapter 5 details the successful implementation of Microscope-AOtools 
+	on the DeepSIM system. The results and implementation presented here will
+	contribute significantly to a future publication of the DeepSIM system.
 \end{itemize}
 
 Discussions of existing limitations and areas for further development to the 
