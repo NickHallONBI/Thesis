@@ -40,13 +40,13 @@ and is therefore the illumination pattern formation is also
 affected by the system aberrations.
 
 Consider the illumination pattern function. Fully coherent
-illumination conditions yeild optimum imaging performance and
+illumination conditions yield optimum imaging performance and
 are therefore chosen. In practice, only partially coherent 
-conditions are achieveable. Utilising the fully coherent 
+conditions are achievable. Utilising the fully coherent 
 approximation, $I(\textbf{r})$ can be expressed as:
 
 \begin{equation}\label{eq:SIM_illumination}
-	I(\textbf{r}) = \left\| \frac{1}{2}[1 + \cos(\textbf{r}\bullet\\textbf{p} + \phi)]\circledast H_{amp}(\textbf{r}) \right\|^{2}
+I(\textbf{r}) = \left\| \frac{1}{2}[1 + \cos(\textbf{r}\bullet\textbf{p} + \phi)]\circledast H_{amp}(\textbf{r}) \right\|^{2}
 \end{equation}
 
 Where $\textbf{p}$ and $\phi$ define the orientation and phase of
@@ -55,12 +55,12 @@ amplitude PSF, as opposed to $H(\textbf{r})$ which is the intensity
 PSF and is defined as:
 
 \begin{equation}\label{eq:amplitude_PSF}
-	H_{amp}(\textbf{r}) = \mathcal{F}[P(\textbf{r}')]
+H_{amp}(\textbf{r}) = \mathcal{F}[P(\textbf{r}')]
 \end{equation}
 
 Where $P$ is the pupil function, $\textbf{r}'$ is the coordinate
 vector in the pupil plane and $\mathcal{F}$ is the Fourier
-transform operation. Utiliting the Fourier convolution 
+transform operation. Utilizing the Fourier convolution 
 theorem, Equation~\ref{eq:SIM_illumination} becomes:
 
 \begin{equation}\label{eq:SIM_illumination_invFT}
@@ -79,12 +79,12 @@ plane, the illumination pattern is only affected by phase
 variations at those points. Therefore, the illumination pattern
 should be immune to aberrations with little phase variation at 
 the edges of the pupil. Secondly, rotationally symmetrical 
-aberrations, such as spherical aberration, have have the main
+aberrations, such as spherical aberration, have the main
 effect of refocusing the illumination pattern.\cite{booth2015aberrations}
 
 It has also been shown that the imaging properties of a SIM
 system and the quality of the reconstructed super-resolution
-images is determined by the system's ability to reliably
+images are determined by the system's ability to reliably
 image the high spatial frequencies.\cite{debarre2008adaptive,thomas2015enhanced}
 The aberrations which affect the strength of high spatial 
 frequency signals can be divided into two categories; 
@@ -92,20 +92,20 @@ isoplanar and anisoplanar aberrations. Single adaptive
 elements, such as the deformable mirror in the DeepSIM 
 setup, can only correct for the isoplanar aberrations.
 Anisoplanar aberrations will still introduce artifacts 
-in the final, resonstructed data. However, provided that
+in the final, reconstructed data. However, provided that
 the anisoplanar aberrations are considerably smaller than
 the isoplanar aberrations, these aberrations will be small
 compared to the SIM image and will not prevent a successful
 reconstruction.\cite{thomas2015enhanced}
 
-The cummulative effects of the optical aberrations is that
+The cumulative effect of the optical aberrations is that
 traditional SIM imaging is limited in its imaging depth to
 approximately $10-20\mu m$.\cite{schermelleh2019super,wu2018faster} However, 
-correcting the optical aberrations present would not yeild
+correcting the optical aberrations present would not yield
 an infinite depth of imaging due to scattering of photons,
 which increases with depth. Nonetheless, by correcting for
 optical aberrations present DeepSIM offers the potential to 
-acquire super-resolution SIM images at an unprecidented depth.
+acquire super-resolution SIM images at an unprecedented depth.
 
 \section{IsoSense}
 \label{sec:isosense}
@@ -188,7 +188,7 @@ sensitivity.\cite{vzurauskas2019isosense}
 		\caption{}
 		\label{fig:isosense_visualisation_ft}
 	\end{subfigure}
-	\caption[IsoSense pattern visualisation.]{IsoSense pattern visualisation. \textbf{(a)} A simulated IsoSense pattern created with a 4-beam interference. A pattern similar to this is applied to the SLM \textbf{(b)} A diagram of a 4 beam interference pattern in Fourier space. The diagonal axis and the horizontal/vertical axis have $\frac{1}{2}$ and $\frac{1}{4}$ of the intensity of the central beam respectively.}
+	\caption[IsoSense pattern visualisation.]{IsoSense pattern visualisation. \textbf{(a)} A simulated IsoSense pattern created with a 4-beam interference. A pattern similar to this is applied to the SLM \textbf{(b)} A diagram of a 4-beam interference pattern in Fourier space. The diagonal axis and the horizontal/vertical axis have $\frac{1}{2}$ and $\frac{1}{4}$ of the intensity of the central beam respectively.}
 	\label{fig:isosense_visualisation}
 \end{figure}
 
@@ -199,12 +199,12 @@ To demonstrate the improvement in image quality adaptive optics
 provides in the DeepSIM system, we utilise the 
 \textit{Drosophila melanogaster} neuro-muscular junction (NMJ) sample.
 
-\subsection{Sample preperation}
+\subsection{Sample preparation}
 \label{subsec:DeepSIM_sample_prep}
 
 The samples were prepared by following the 
 protocol\cite{brent2009drosophila}. 3rd instar \textit{Drosophila 
-melanogaster} larvae (Bruchpilot (Brp)-GFP strain) were dissected in HL3 
+	melanogaster} larvae (Bruchpilot (Brp)-GFP strain) were dissected in HL3 
 buffer with 0.3mM $\text{Ca}^{2+}$ to prepare a so-called larval fillet,
 and the larval brains were removed. After this, larvae were stained for 15 
 minutes with Horseradish Peroxidase (HRP) conjugated to Alexa568 
@@ -234,7 +234,7 @@ Equation~\ref{eq:lateral_res_extension_factor} assumed that the locations
 of the $m=\pm2$ Fourier components of the illumination pattern are placed
 at $\left|\textbf{k}\right| = \frac{1}{\lambda_{ex}}$. This is not 
 necessarily the case. As such, an accurate measure of the theoretical
-resolution extension factor for a practical SIM implmentation is given as:
+resolution extension factor for a practical SIM implementation is given as:
 
 \begin{equation}\label{eq:lateral_res_extension_factor_real}
 \alpha_{l} = \frac{\left(\frac{1}{\lambda_{I}} + \frac{1}{\lambda'_{em}}\right)}{\frac{1}{\lambda'_{em}}} = 1 + \frac{\lambda'_{em}}{\lambda_{I}},
@@ -245,7 +245,7 @@ spectrum and $\lambda_{I}$ is the stripe width of the illumination
 pattern. For DeepSIM, the conventional resolution limit for the 
 green and red channels respectively is $291$nm and $338$nm. The stripe 
 width was $322$nm and $367$nm for $488$nm and $561$nm excitation
-wavelenghts respectively.
+wavelengths respectively.
 
 To verify both that the system is capable of achieving super-resolution
 and that Microscope-AOtools is capable of correcting for optical 
@@ -268,7 +268,7 @@ spherical aberration, which would degrade the image quality and decrease
 resolution in the absence of AO correction.
 
 Figure~\ref{fig:Argolight_slide_both} shows both the maximum intensity 
-projection of $13\mu$m SIM z-stacks and a $xz$ slice at the mid point of 
+projection of $13\mu$m SIM z-stacks and a $xz$ slice at the midpoint of 
 the $y$-axis. In both datasets, the $150$nm separation is resolvable, which 
 is slightly better than the anticipated lateral resolution. This is not 
 entirely surprising as the Argolight sample is a highly fluorescent, 
@@ -281,10 +281,10 @@ in the Argolight slide, a slight over-performance is normal. There are
 significant artifacts present in the dataset without AO correction which 
 makes separations $+150$nm unresolvable in parts. The $z$ length of the 
 structures in the $xz$ slice is also extended and shows significant 
-artifacts, primarily ``echo'' stuctures above the true fluorescent 
+artifacts, primarily ``echo'' structures above the true fluorescent 
 structures. Additionally, the dataset without AO correction has half the 
 intensity of the dataset with AO correction and must be displayed on a 
-reduced dynamic range for visability. Applying the AO correction recovers 
+reduced dynamic range for visibility. Applying the AO correction recovers 
 the fluorescent signal and removes these artifacts. The spherical 
 aberration mismatch measurements obtained from the ImageJ plugin SIMCheck 
 in Figures~\ref{fig:Argolight_spherical_mismatch_woAO} and 
@@ -306,8 +306,8 @@ present\cite{ball2015simcheck}.
 		\caption{}
 		\label{fig:Argolight_slide_AO}
 	\end{subfigure}
-
-
+	
+	
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/Argolight_spherical_mismatch_woAO.jpg}
@@ -321,8 +321,8 @@ present\cite{ball2015simcheck}.
 		\label{fig:Argolight_spherical_mismatch_AO}
 	\end{subfigure}
 	\caption[Argolight slide data]{Argolight slide data. Both \textbf{(a)} without AO correction and \textbf{(b)} with AO correction datasets 
-	are maximum intensity projection of $13\mu$m SIM z-stacks (top) and 
-	a $xz$ slice at the mid point of the $y$-axis (bottom). Without AO correction data is displayed with the maximum intensity level of data with AO correction for clarity. The spherical aberration mismatch from the SIMCheck ImageJ plug-in\cite{ball2015simcheck} is shown \textbf{(c)} without AO correction and \textbf{(d)} with AO correction}
+		are maximum intensity projection of $13\mu$m SIM z-stacks (top) and 
+		a $xz$ slice at the midpoint of the $y$-axis (bottom). Without AO correction data is displayed with the maximum intensity level of data with AO correction for clarity. The spherical aberration mismatch from the SIMCheck ImageJ plug-in\cite{ball2015simcheck} is shown \textbf{(c)} without AO correction and \textbf{(d)} with AO correction}
 	\label{fig:Argolight_slide_both}
 \end{figure}
 
@@ -390,7 +390,7 @@ correction become visible.
 		\caption{Alexa568:HRP}
 		\label{fig:DeepSIM_NMJ_AO_ROI1_Alexa568}
 	\end{subfigure}
-
+	
 	\hspace{-0.1cm}
 	\begin{subfigure}[t]{0.24\textwidth}
 		\centering
@@ -407,11 +407,11 @@ correction become visible.
 	\end{subfigure}
 	\caption[\textit{Drosophila} neuro-muscular junction 
 	data acquired on the DeepSIM imaging system]{Maximum intensity 
-	projections of 12.75$\mu$m $z$-stacks of neuro-muscular junction 
-	samples acquired without (left) and with (right) AO correction. GFP 
-	shown in yellow, HRP shown in magenta. The arrows highlight 
-	particularly notable areas of improvement where fine details, such as 
-	individual punctae, become clearly visible. All images are displayed on the same intensity}
+		projections of 12.75$\mu$m $z$-stacks of neuro-muscular junction 
+		samples acquired without (left) and with (right) AO correction. GFP 
+		shown in yellow, HRP shown in magenta. The arrows highlight 
+		particularly notable areas of improvement where fine details, such as 
+		individual puncta, become clearly visible. All images are displayed on the same intensity}
 	\label{fig:DeepSIM_NMJ_data}
 \end{figure*}
 
@@ -429,7 +429,7 @@ and Alexa568 channels respectively. With AO correction this is $168$nm and
 $188$nm for the GFP and Alexa568 channels respectively. 
 
 Despite the sensorless AO correction being performed on the Alexa568 
-channel, only a modorate resolution improvement is obeserved. Taken 
+channel, only a moderate resolution improvement is observed. Taken 
 together with the results from the Argolight slide and the overall contrast 
 improvement with AO correction, it is reasonable to conclude that the 
 smallest structures in the Alexa568 channel are $\sim165$-$170$nm. A more 
@@ -452,8 +452,8 @@ a significant portion of the aberrations present are achromatic.
 		\caption{With AO, GFP channel}
 		\label{fig:DeepSIM_NMJ_AO_GFP_ft_and_plot}
 	\end{subfigure}
-
-
+	
+	
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{images/DeepSIM_NMJ_woAO_Alexa568_ft_and_plot.jpg}
@@ -468,13 +468,13 @@ a significant portion of the aberrations present are achromatic.
 	\end{subfigure}
 	\caption[Fourier plots of \textit{Drosophila} neuro-muscular junction 
 	data acquired on the DeepSIM imaging system]{Fourier plots of 
-	\textit{Drosophila} neuro-muscular junction data acquired on the 
-	DeepSIM imaging system. Each subplot shows the Fourier Transform 
-	Lateral (FTL) (top) and Fourier	Transform Radial (FTR) (bottom) of the 
-	central $z$-slice from the SIMCheck ImageJ 
-	plug-in\cite{ball2015simcheck} for \textbf{(a)} GFP channel without AO 
-	correction \textbf{(b)} Alexa568 channel without AO correction 
-	\textbf{(c)} GFP channel with AO correction \textbf{(d)} Alexa568 
-	channel with AO correction}
+		\textit{Drosophila} neuro-muscular junction data acquired on the 
+		DeepSIM imaging system. Each subplot shows the Fourier Transform 
+		Lateral (FTL) (top) and Fourier	Transform Radial (FTR) (bottom) of the 
+		central $z$-slice from the SIMCheck ImageJ 
+		plug-in\cite{ball2015simcheck} for \textbf{(a)} GFP channel without AO 
+		correction \textbf{(b)} Alexa568 channel without AO correction 
+		\textbf{(c)} GFP channel with AO correction \textbf{(d)} Alexa568 
+		channel with AO correction}
 	\label{fig:NMJ_ft_data}
 \end{figure*}
