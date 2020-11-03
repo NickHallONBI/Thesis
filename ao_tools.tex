@@ -3,7 +3,12 @@
 
 Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality.\cite{booth2014adaptive,girkin2009adaptive} However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirrors (DMs) present in the Aurox Clarity system and DeepSIM optical paths. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this callibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples.\cite{wang2014rapid,wang2015direct} Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality.\cite{rodriguez2018adaptive} This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality.\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive} So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented.\cite{ji2017adaptive}
 
-Microscope-AOtools provides such an implementation, utilising Python-Microscope to control the physical hardware. It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
+Microscope-AOtools provides such an implementation, utilising 
+Python-Microscope to control the physical hardware. Microscope-AOtools
+has the following Python package dependencies: numpy\cite{walt2011numpy},
+scipy\cite{virtanen2020scipy}, scikit-image\cite{van2014scikit}, 
+sympy\cite{meurer2017sympy}, and AOtools\cite{townson2019aotools}.
+It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
 
 \begin{figure}[H]
 	\centering
@@ -65,25 +70,25 @@ As previously described, DeepSIM has multiple beam paths; interferometric, widef
 The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within DeepSIM and Microscope-AOtools are calibration and system aberration correction. These are both situation where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proven more challenging  to automate than from Shack-Hartmann sensor data. Interferometric data can be defined as:
 
 \begin{equation}\label{eq:I_basic}
-I(x,y,t) = a(x,y) + b(x,y)cos[\phi(x,y) + \Phi_{R}(x,y,t)]
+I(x,y,t) = a(x,y) + b(x,y)cos[\phi(x,y) + \Phi_{R}(x,y,t)],
 \end{equation}
 
 Where $a(x,y)$ describes the variation of the background illumination, $b(x,y)$ describes the noise and contrast variations, $\phi(x,y)$ describes the phase imparted by the DM surface and $\Phi_{R}(x,y,t)$ is the reference phase at time $t$. $\Phi_{R}(x,y,t)$ is an offset in the measured phase position, and any variation in this term shifts the lateral position of the entire interference pattern. The relevant phase information is encoded in the $\phi(x,y)$ term and this term specifies shape and spacing of the interference pattern. $\Phi_{R}(x,y,t)$ can therefore be arbitrarily set to 0, simplifying the cosine term in Equation~\ref{eq:I_basic} to $cos[\phi(x,y)]$. Expanding this simplified cosine term using Euler's formula, as well as the definition that $c(x,y) = \frac{1}{2}b(x,y)e^{i\phi(x,y)}$, leads to:
 
 \begin{equation}\label{eq:I_cos_expand}
-I(x,y) = a(x,y) + c(x,y) + c^{*}(x,y)
+I(x,y) = a(x,y) + c(x,y) + c^{*}(x,y),
 \end{equation}
 
 Where $c^{*}(x,y)$ is the complex conjugate of $c^{*}(x,y)$. Applying the 2-D Fourier transform Equation~\ref{eq:I_cos_expand} becomes:
 
 \begin{equation}\label{eq:I_fourier}
-\boldsymbol{I}(u,v) = \boldsymbol{A}(u,v) + \boldsymbol{C}(u,v) + \boldsymbol{C}^{*}(u,v)
+\boldsymbol{I}(u,v) = \boldsymbol{A}(u,v) + \boldsymbol{C}(u,v) + \boldsymbol{C}^{*}(u,v),
 \end{equation}
 
 Where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  $\boldsymbol{C}^{*}(u,v)$ are the Fourier transforms of $I(u,v)$, $a(u,v)$, $c(u,v)$ and $c^{*}(u,v)$ respectively. Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{I}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ to leave only $\boldsymbol{C}(u,v)$.\cite{lewis1993absolute} Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
 
 \begin{equation}\label{eq:phase}
-\phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right)
+\phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right).
 \end{equation}
 
 In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
@@ -227,49 +232,78 @@ superposition of all the individual actuator deflections, we can
 define the overall mirror shape, $S(x,y)$ as:
 
 \begin{equation}\label{eq:surface_shape}
-S(x,y) = \sum_{h=1}^{N} d_{h}\phi_{h}(x,y)
+S(x,y) = \sum_{h=1}^{N} d_{h}\phi_{h}(x,y),
 \end{equation}
 
-Where $S(x,y)$ is the change in the deformable mirror shape from its original position, $d_h$ is the $h$-th actuator control signal (an arbitrary value related to applied voltage which determines the position the $h$-th actuator in its overall movement range) and $\phi_{h}(x,y)$ is the $h$-th influence function. These are called the influence functions of the AO device since they describe how the elements of the device influence the phase wavefront. We can change this set of basis functions for a different basis set. An obvious alternative basis set is the Zernike polynomials since they are defined on the unit circle, orthogonal and the wavefront distortion can be well approximated by the linear addition of Zernike polynomials\cite{von1934beugungstheorie,noll1976zernike,mahajan1994zernike}. Describing $\phi_{h}(x,y)$ in terms of Zernike polynomials we obtain:
+Where $S(x,y)$ is the change in the deformable mirror shape from its
+original position, $d_h$ is the $h$-th actuator control signal
+(an arbitrary value related to applied voltage which
+determines the position of the $h$-th actuator in its overall
+movement range) and $\phi_{h}(x,y)$ is the $h$-th influence
+function, so called as they describe how the elements 
+of the device influence the phase wavefront. We can convert
+this set of basis functions to a different basis set. An 
+obvious alternative basis set is the Zernike polynomials 
+since they are defined on the unit circle, are orthogonal, and 
+the wavefront distortion can be well approximated by the linear 
+addition of a limited number of Zernike 
+polynomials\cite{von1934beugungstheorie,noll1976zernike}.
+Describing $\phi_{h}(x,y)$ in terms of Zernike polynomials we
+obtain:
 
 \begin{equation}\label{eq:influence_to_zernike}
-\phi_{h}(x,y) = \sum_{g=1}^{M} b_{g,h}z_{g}(x,y)
+\phi_{h}(x,y) = \sum_{g=1}^{M} b_{g,h}z_{g}(x,y),
 \end{equation}
 
-Where $b_{g,h}$ is the coefficient corresponding to the $k$-th Zernike polynomial due to the $d_h$. The change in mirror shape, $\Delta S(x,y)$, can therefore be described as:
+Where $b_{g,h}$ is the coefficient corresponding to the $g$-th
+Zernike polynomial due to $d_h$, the $h$-th actuator control
+signal (i.e. the relationship between how the $h$-th actuator 
+position affects the $g$-th Zernike mode amplitude). This leads to:
 
 \begin{equation}\label{eq:zernike_sub}
 \begin{split}
-\Delta S(x,y) & = \sum_{h=1}^{N} d_{h}\left[\sum_{g=1}^{M} b_{g,h}z_{g}(x,y)\right] \\
+S(x,y) & = \sum_{h=1}^{N} d_{h}\left[\sum_{g=1}^{M} b_{g,h}z_{g}(x,y)\right] \\
 & =\sum_{g=1}^{M} \left(\sum_{h=1}^{N} d_{h} b_{g,h}\right) z_{g}(x,y) \\
-& =\sum_{g=1}^{M} a_{g} z_{g}(x,y)
+& =\sum_{g=1}^{M} a_{g} z_{g}(x,y),
 \end{split}
 \end{equation}
 
-Where the new Zernike coefficients, $a_{g}$, is defined as:
+Where the new Zernike coefficients, $a_{g}$, are defined as:
 
 \begin{equation}\label{eq:new_z_coef}
-a_{g} = \sum_{h=1}^{N} b_{g,h} d_{h} \text{~for~} g=1,2,...,M
+a_{g} = \sum_{h=1}^{N} b_{g,h} d_{h} \text{~for~} g=1,2,...,M.
 \end{equation}
 
-Converting Equation~\ref{eq:new_z_coef} to a matrix form yields:
+Converting this to a matrix form yields:
 
 \begin{equation}\label{eq:CM_derivation}
 \begin{split}
 \bar{a} &= \boldsymbol{B} \bar{d}\\
-\Rightarrow \bar{d} &= \boldsymbol{C} \bar{a}
+\Rightarrow \bar{d} &= \boldsymbol{C} \bar{a},
 \end{split}
 \end{equation}
 
-Where $\bar{d}$ is a length $N$ vector of the actuator control signals, $\bar{a}$ is the length $M$ vector of the Zernike polynomial amplitudes and $\boldsymbol{B}$ is the $M \times N$ matrix representing the response characteristics of the deformable mirror. However, we actually want its inverse, $\boldsymbol{B}^{-1} =\boldsymbol{C}$, otherwise called the control matrix in order to convert from Zernike polynomial amplitudes to actuator control signals.
+Where $\bar{d}$ is a length $N$ vector of the actuator control signals, 
+$\bar{a}$ is the length $M$ vector of the Zernike polynomial amplitudes and 
+$\boldsymbol{B}$ is the $M \times N$ matrix representing the response 
+characteristics of the deformable mirror. However, we actually want its 
+inverse, $\boldsymbol{B}^{-1} =\boldsymbol{C}$, otherwise called the control 
+matrix, in order to convert from Zernike polynomial amplitudes to actuator 
+control signals.
 
-Microscope-AOtools implements an automated calibration routine to obtain $\boldsymbol{C}$. Each actuator is moved through $p$ set positions and a wavefront is extracted. Figure~\ref{fig:observed_wavefront} shows an observed wavefront during the calibration routine. The wavefront is then decomposed into $M$ Zernike modes\cite{townson2019aotools}. A row vector $\boldsymbol{z}$ is obtained for each actuator position containing the computed Zernike mode amplitudes:
+Microscope-AOtools implements an automated calibration routine to obtain 
+$\boldsymbol{C}$. Each actuator is moved through $p$ set positions and a 
+wavefront is extracted. Figure~\ref{fig:observed_wavefront} shows an 
+observed wavefront during the calibration routine. The wavefront is then 
+decomposed into $M$ Zernike modes\cite{townson2019aotools}. A row vector 
+$\boldsymbol{z}$ is obtained for each actuator position containing the 
+computed Zernike mode amplitudes:
 
 \begin{equation}\label{eq:zernike_amp}
 \boldsymbol{z} = 
 \begin{bmatrix}
-z_{1} & z_{2} & \cdots & z_{m} 
-\end{bmatrix}
+z_{1} & z_{2} & \cdots & z_{g} & \cdots & z_{m}
+\end{bmatrix},
 \end{equation}
 
 Where the $g$-th element is the amplitude of the $g$-th
@@ -278,14 +312,14 @@ a plot of the row vector containing the amplitudes of the
 $M$ Zernike modes measured for Figure~\ref{fig:observed_wavefront}.
 Figure~\ref{fig:simulated_wavefront} show a simulated wavefront 
 constructed using these Zernike mode amplitudes. As previously 
-mentioned, a phase wavefront can be constructed from an 
+mentioned, any phase wavefront can be constructed from an 
 infinite linear combination of Zernike modes\cite{noll1976zernike}. 
-However, using a finite number of Zernike modes produces only an 
+However, using a finite number of Zernike modes produces an 
 approximation of the original wavefront. 
 Figure~\ref{fig:observed_simulated_wavefront_diff} show the
 difference between the two and a ``ringing'' analogous to the 
-Gibbs phenomena for recreating periodic signals using a
-truncated Fourier series is present.
+Gibbs phenomena when recreating periodic signals using a
+truncated Fourier series is present\cite{weisstein2003gibbs}.
 
 By collecting the row vectors of each position
 for the $h$-th actuator we can obtain:
@@ -304,10 +338,21 @@ z_{1,1} & z_{1,2} & \cdots & z_{1,m} \\
 z_{2,1} & z_{2,2} & \cdots & z_{2,m} \\
 \vdots  & \vdots  & \ddots & \vdots  \\
 z_{p,1} & z_{p,2} & \cdots & z_{p,m} 
-\end{bmatrix}
+\end{bmatrix}.
 \end{equation}
 
-Linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics between the $h$-th actuator's position and the $g$-th Zernike mode, $b_{g,h}$. Figure~\ref{fig:influence_function_11} shows the influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator. The gradient of the slope is, in this case, $b_{11,26}$. This gradient is acquired for each actuator, for each Zernike mode. In this way, we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. Figure~\ref{fig:calibration_workflow} shows a flowchart of this process as implemented in Microscope-AOtools.
+The row vector shown in Figure~\ref{fig:measured_zernike_modes} was 
+obtained at the first of the $p$ positions i.e. $\boldsymbol{z_{1}}$. 
+Applying linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} 
+& \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics 
+between the $h$-th actuator's position and the $g$-th Zernike mode, 
+$b_{g,h}$. Figure~\ref{fig:influence_function_11} shows the influence 
+function fitting for Zernike mode 11 (Noll index) for the $26^{\text{th}}$ 
+actuator. The gradient of the slope is, in this case, $b_{11,26}$. This 
+gradient is acquired for each actuator, for each Zernike mode. In this way, 
+we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. 
+Figure~\ref{fig:calibration_workflow} shows a flowchart of this process as 
+implemented in Microscope-AOtools.
 
 \begin{figure}[h]
 	\centering
@@ -370,7 +415,25 @@ Linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i} & \cdots & 
 	\label{fig:calibration_workflow}
 \end{figure}
 
-In general, $\boldsymbol{B}$ is singular and therefore has no true inverse and so we must use a pseudo-inverse, calculated using single value decomposition (SVD). However, some values of $\boldsymbol{B}$ may be small since the physical position of certain actuators will mean they have limited influence on creating certain Zernike modes. A control matrix calculated without thresholding out these small values will quickly lead to a saturation of the DM actuators (i.e. all actuators at their maximum stroke length) when corrections are calculated.\cite{booth2005methods} Therefore the calibration method incorporates a threshold by default and the exact threshold can be varied by experienced users. The calibration routine is initiated by pressing the "Calibrate" button shown in Figure~\ref{fig:DM_methods_cockpit}.
+In general, $\boldsymbol{B}$ is singular, or near singular, and therefore has 
+no true inverse. So we must use a pseudo-inverse, calculated using single 
+value decomposition (SVD). Actuators that have little influence on particular 
+Zernike modes will have small values in the $\boldsymbol{B}$ matrix. These 
+small influence values occur due to a combination of the actuators being in 
+physical positions where they have limited influence over certain Zernike 
+modes and noise, which leads to small perturbations in the measured Zernike 
+mode amplitudes and are unrelated to the actuator movement. A control matrix 
+calculated without thresholding out these small values before inversion will 
+quickly lead to a saturation of the deformable mirror  actuators (i.e. 
+actuators at their maximum stroke length) when corrections are 
+calculated\cite{booth2005methods}. This occurs because small values in 
+$\boldsymbol{B}$ become large values in the $\boldsymbol{C}$, which results 
+in large actuator signals, $d_{i}$, even at low Zernike mode amplitudes for 
+certain actuators which try to correct modes which they have minimal 
+influence over. Therefore, the calibration method incorporates a threshold by 
+default and the exact threshold can be varied by experienced users. The 
+calibration routine is initiated by pressing the "Calibrate" button shown in 
+Figure~\ref{fig:DM_methods_cockpit}.
 
 \subsection{Characterisation}
 \label{subsec:characterisation}
@@ -523,7 +586,7 @@ a sensible starting point for the image quality metric, $S$,
 is the total power of the Fourier spectrum:
 
 \begin{equation}\label{eq:fourier_power_spectrum}
-S = \sum\limits_{n,m}{\left\| \tilde{\textbf{D}}_{n,m} \right\|^2}
+S = \sum\limits_{n,m}{\left\| \tilde{\textbf{D}}_{n,m} \right\|^2},
 \end{equation}
 
 Where $\tilde{\textbf{D}}$ is the 2D discrete Fourier transform of 
@@ -541,7 +604,7 @@ fluorescent emission and the system point spread function (PSF):
 \begin{split}
 F(\textbf{r}) &= (E \circledast H)(\textbf{r})\\
 F(\textbf{r}) &= [D(\bar{x})I(\textbf{r})] \circledast H(\textbf{r}),\\
-\end{split}\tag{\ref{eq:fluorescent_image}}
+\end{split}\tag{\ref{eq:fluorescent_image}},
 \end{equation}
 
 Where $D(\textbf{r})$ is the sample fluorescence distribution, 
@@ -556,7 +619,7 @@ transform yields:
 \mathcal{F}[\textbf{F}(\textbf{r})] &= \mathcal{F}[\textbf{D}(\textbf{r}) \circledast \textbf{H}(\textbf{r})]\\
 \tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \tilde{\textbf{H}}(\textbf{k})\\
 &= \tilde{\textbf{D}}(\textbf{k}) \textbf{O}(\textbf{k})		
-\end{split}
+\end{split},
 \end{equation}
 
 Where the tilde ($\sim$) represent the Fourier transform of the corresponding 
@@ -571,7 +634,7 @@ the observed data, this lowpass filter, $\mu_{n,m}$, is defined as:
 \begin{cases}
 1, & \sqrt{n'^{2} + m'^{2}} \le \omega_{l}\\
 0, & \sqrt{n'^{2} + m'^{2}} > \omega_{l}\\ 
-\end{cases}
+\end{cases},
 \end{equation}
 
 Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $\omega_{l}$ 
@@ -588,13 +651,13 @@ contributions. A thresholding mask, $\tau_{n,m}$ is created and defined as:
 \begin{cases}
 0, & \left\| \tilde{\textbf{D}}_{n,m} \right\|^2 < \delta\\
 1, & \left\| \tilde{\textbf{D}}_{n,m} \right\|^2 \ge \delta\\ 
-\end{cases}
+\end{cases},
 \end{equation}
 
 Where $\delta$ is a noise threshold defined as:
 
 \begin{equation}\label{eq:noise_threshold}
-\delta = \frac{\alpha}{P_{noise}}\sum\limits_{l,k}{\left\| \tilde{\textbf{D}}_{l,k} \right\|^2}
+\delta = \frac{\alpha}{P_{noise}}\sum\limits_{l,k}{\left\| \tilde{\textbf{D}}_{l,k} \right\|^2},
 \end{equation}
 
 Where $\left\| \tilde{\textbf{D}}_{l,k} \right\|^2$ is the power in the 
@@ -615,7 +678,7 @@ spatial frequencies. A modulation mask, $\omega$, is constructed and
 defined as:
 
 \begin{equation}\label{eq:attenuation_mask_norm_and_scaled}
-\omega_{n,m} = \beta \left| \left(1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{\omega_{l}}-1}\right) \left(n'^{2} + m'^{2}\right) \right|
+\omega_{n,m} = \beta \left| \left(1 - e^{\frac{\sqrt{n'^{2} + m'^{2}}}{\omega_{l}}-1}\right) \left(n'^{2} + m'^{2}\right) \right|,
 \end{equation}
 
 Where $\omega_{l}$, $n'$ and $m'$ are defined as before, $\left|...\right|$ 
@@ -628,7 +691,7 @@ Applying these modification to Equation~\ref{eq:fourier_power_spectrum}
 yields the image quality metric:
 
 \begin{equation}\label{eq:Fourier_power_metric}
-S = \sum\limits_{n,m}{\mu_{n,m}\tau_{n,m}\omega_{n,m}\left\| \tilde{\textbf{D}}_{n,m} \right\|^2}
+S = \sum\limits_{n,m}{\mu_{n,m}\tau_{n,m}\omega_{n,m}\left\| \tilde{\textbf{D}}_{n,m} \right\|^2},
 \end{equation}
 
 Where $\mu_{n,m}$, $\tau_{n,m}$ and $\omega_{n,m}$ are defined as in
