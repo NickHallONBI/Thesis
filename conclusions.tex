@@ -1,3 +1,76 @@
 \chapter{Conclusions}
+\label{chpt:conclusions}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\section{Summary of Contributions}
+\label{sec:contributions}
+
+The primary contributions of this thesis surround enabling the successful 
+deployment of AO in microscopy, culminating in enabling AO in 
+super-resolution systems for improved image quality and imaging depth. As 
+outlined in Figure~\ref{fig:ao_system_setup_workflow} this process consists 
+of four phases:
+
+\begin{enumerate}
+	\item \textit{System Design Phase}: A potential user should consider 
+	the needs of their imaging modality, system constraints, desired 
+	sample types before deciding on the appropriate AO element to 
+	implement.
+	\item \textit{Installation Phase}: The user installs the chosen AO 
+	element into their beam path.
+	\item \textit{Set-up Phase}: The AO element is calibrated to correct 
+	for optical aberrations. This calibration is checked and the system 
+	aberrations are corrected.
+	\item \textit{Sample Correction Phase}: The sample correction routine 
+	is designed. This will typically fall into one of two categories; 
+	sensorless AO or direct wavefront sensing.
+\end{enumerate}  
+
+The development of the alignment tool BeamDelta improves the accuracy of the 
+\textit{Installation Phase} by providing an empirical accurate measure of 
+relative alignment between beam paths\cite{dobbie2019beamdelta}. It also aids 
+in aberration correction indirectly by minimising the initial optical 
+aberrations present due to alignment errors.
+
+The development of Microscope-AOtools provides a robust, generalised 
+software implementation for the methods required by the \textit{Set-up Phase} 
+and \textit{Sample Correction Phase}\cite{hall2020microscope}. 
+Microscope-AOtools is designed to be modular and configurable in order to 
+enable it to be used on a range of microscopes with varying adaptive 
+elements, wavefront sensing techniques and sample correction techniques. 
+Microscope-AOtools is integrating into Python-Microscope in order to enable 
+accessibility to microscope users without requiring a complete understanding 
+of all the technical details implemented.
+
+The primary evidence for the claim that Microscope-AOtools is robust and 
+generalised is its successful deployment on two separate imaging systems, 
+with additional deployments forthcoming. On both the Aurox Clarity and 
+DeepSIM systems, AO correction provided by Microscope-AOtools yielded 
+significant increases in image quality and contrast. On the DeepSIM system, 
+the AO correction was able to enable diffraction-limited imaging of a highly 
+regular fluorescent structure deep in a glass structure. The AO correction 
+also enabled 3D SIM imaging up to 30$\mu$m in biological samples, well beyond 
+the typical 10-20$\mu$m imaging depth for 
+SIM\cite{schermelleh2019super,wu2018faster}. 
+
+\section{Final Conclusion}
+\label{sec:final_conclusion}
+
+For some time, there has been a call for a robust, generalised implementation 
+for AO. Such an implementation should incorporate all the methods needed to
+setup and operate an AO element for a range of imaging modalities and sample 
+types. These methods should be exposed to the users in an accessible fashion 
+to allow easy-of-use and require minimal direct user involvement. 
+Microscope-AOtools includes methods for calibration, direct wavefront and 
+sensorless correction. In particular, it already incorporates several image 
+quality metrics suited to sensorless correction in a number of different 
+imaging modalities. It also includes a characterisation method for assessing 
+the accuracy of the calibration step. It has also been designed in a modular 
+manner allowing for new wavefront sensing techniques and image quality 
+metrics to be added with minimal disruption to the rest of the workflows and, 
+therefore, minimal work duplication. Microscope-AOtools has been integrated 
+into the Microscope-Cockpit user interface in an accessible manner which 
+allows for a user to control key parameters whilst obfuscating much of the 
+technical complexity. It has been shown to be successfully deployed on a 
+number of different systems, with additional deployments forthcoming. With 
+time and community support, such an implementation has scope to go beyond its 
+current state of ``generalised software implementation'' and become a universal software implementation for AO.
