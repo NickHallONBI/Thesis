@@ -11,7 +11,7 @@ Section~\ref{sec:set_up_methods} and the direct wavefront correction
 outlined in Section~\ref{subsec:system_correction} rely on the Zernike 
 modes generated from the AOtools Python package\cite{townson2019aotools}. 
 It is therefore worth investigating the accuracy of this package for 
-fitting Zerinke modes. 
+fitting Zernike modes. 
 
 In theory, measuring a wavefront image created with a known Zernike mode amplitude using AOtools should yield the same Zernike mode amplitude. In order to test this, AOtools is used to create a wavefront image with RMS 1 radian of a Zernike mode. The Zernike mode amplitude present in the wavefront image is then measured and the percentage error recorded. This process is repeated 50 times for the first 69 Zernike modes. Figure~\ref{fig:zernike_fitting_accuracy} shows the results of this experiment on wavefront images of various sizes. For all sizes the slope of the percentage errors is either approximately flat or increasing with Zernike mode index. Additionally, the magnitude of the percentage error is inversely proportional to the overall wavefront image size. 
 
@@ -60,7 +60,7 @@ random amplitudes for all 69 Zernike modes. Clearly, having multiple modes
 present simultaneously adds a degree of variance to the amplitude 
 measurement accuracy as well as an overall increase in the error magnitude.
 
-It is a time consuming process for AOtools to generate wavefront images of 
+It is a time-consuming process for AOtools to generate wavefront images of 
 sizes greater than $256\times256$ pixels, typically about a $0.1-1$ seconds 
 per image depending on the overall size and number of Zernike modes 
 simulated. In order to increase the speed of fitting, acquired wavefront 
@@ -109,7 +109,7 @@ Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_fact
 	\label{fig:zernike_fitting_accuracy_resize}
 \end{figure}
 
-There accuracy of the Zernike mode amplitude fitting is a limiting factor in two key areas. Firstly, the accuracy of the Zernike mode fitting is one of the limiting factor to acquiring a ideal control matrix and, therefore, the ideal characterisation assay shown in Figure~\ref{fig:characterisation_assay_ideal}. Secondly, the accuracy of the Zernike mode fitting is one of the limiting factor to acquiring a perfectly flat wavefront through direct wavefront sensing.
+There accuracy of the Zernike mode amplitude fitting is a limiting factor in two key areas. Firstly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring an ideal control matrix and, therefore, the ideal characterisation assay shown in Figure~\ref{fig:characterisation_assay_ideal}. Secondly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring a perfectly flat wavefront through direct wavefront sensing.
 
 \subsection{Sensorless correction accuracy}
 \label{subsec:sensorless_accuracy}
@@ -122,7 +122,7 @@ functionality\cite{virtanen2020scipy} is used to fit a Gaussian function of
 the form:
 
 \begin{equation}\label{eq:gaussian}
-	f(x) = (\Delta - \eta) + \eta e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}},
+f(x) = (\Delta - \eta) + \eta e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}},
 \end{equation}
 
 to the data, where $\Delta$ is the offset value, $\eta$ is the 
@@ -138,7 +138,7 @@ possible for the automation to go awry.
 
 Figure~\ref{fig:zernike_fitting_only_current_power_metric_no_fit_2} shows 
 some sample image quality metric values acquired from a correction routine 
-on a \textit{Drosophilia} neuro-muscular junction preparation similar to 
+on a \textit{Drosophila} neuro-muscular junction preparation similar to 
 that shown in Section~\ref{sec:DeepSIM_biology}. Here the metric 
 measurements were acquired for Zernike mode 5 (Noll index) using the 
 Fourier Power metric from Section~\ref{subsec:fourier_power_metric} and the 
@@ -150,7 +150,7 @@ obtained. Clearly, there are two problems with this fit. Firstly, the value
 of $\mu$ is $-688$ radians - a frankly absurdly high aberration, certainly 
 not physically possible for the sample type and depth of imaging in 
 question, and not an aberration amplitude the ALPAO-69 DM on DeepSIM is 
-capable of applying. Secondly, the fit has allegedly found a minima as 
+capable of applying. Secondly, the fit has allegedly found a minimum as 
 opposed to the desired maximum image quality for this mode. 
 
 Imposing the boundary condition that $\mu \in [z_{l}, z_{u}]$ yields 
@@ -159,7 +159,7 @@ $z_{l} = z_{min} - 0.25(z_{max}-z_{min})$ and $z_{u} = z_{max} +
 0.25(z_{max}-z_{min})$ where $z_{max}$ and $z_{min}$ are the maximum and 
 minimum Zernike mode amplitudes applied. The amplitude acquired is of a 
 sensible order of magnitude, $1.85$ radians, however the fit still acquires 
-a minima. Imposing the boundary condition that $\eta \in [0, \infty)$ 
+a minimum. Imposing the boundary condition that $\eta \in [0, \infty)$ 
 yields Figure~\ref{fig:zernike_fitting_current_power_metric_bound_2}. These 
 boundary conditions guarantee that the value of $\mu$ is both of a sensible 
 order of magnitude and corresponds to a maximum. It is worth noting that 
@@ -196,11 +196,11 @@ theoretical image quality metric value according to the obtained fit.
 		\caption{}
 		\label{fig:zernike_fitting_current_power_metric_bound_2}
 	\end{subfigure}
-	\caption[Effect of paramater bounds on sensorless correction fitting accuracy]{Effect of paramater bounds on sensorless correction fitting accuracy. Metric measurements were acquired for Zernike mode 5 (Noll index) using the Fourier Power metric from Section~\ref{subsec:fourier_power_metric} \textbf{(a)} Measured metric values \textbf{(b)} Gaussian fit with no paramater bounds \textbf{(c)} Gaussian fit with bound on $\mu$ \textbf{(c)} Gaussian fit with bound on $\mu$ and $\eta$}
+	\caption[Effect of parameter bounds on sensorless correction fitting accuracy]{Effect of parameter bounds on sensorless correction fitting accuracy. Metric measurements were acquired for Zernike mode 5 (Noll index) using the Fourier Power metric from Section~\ref{subsec:fourier_power_metric} \textbf{(a)} Measured metric values \textbf{(b)} Gaussian fit with no parameter bounds \textbf{(c)} Gaussian fit with bound on $\mu$ \textbf{(c)} Gaussian fit with bound on $\mu$ and $\eta$}
 	\label{fig:sensorless_fitting_accuracy}
 \end{figure}
 
-Of course, these boundary conditions do not guarantee a good fit to the data but they do eliminate some sources of fitting error. If the sample aberration is primarily from one source - i.e. spherical aberration mismatch - then correcting for aberration modes with smaller amplitudes can prove challenging since the image quality is already heavily degraded. Similarly, if the fit for one mode is poor and leads to an incorrect Zernike mode amplitude being applied, this can bias future image quality measurements and prevent correction of subsequent Zernike modes. The first case explains why the order Zernike modes are corrected in, specified by the user in the interface shown in Figure~\ref{fig:DM_sensorless_ao_parameters}, is important. The second case explains the existence of the "Reset DM" and "Apply last pattern" buttons in Figure~\ref{fig:DM_methods_cockpit}. "Reset DM" returns all actuators to their default 0 position. "Apply last pattern" applies the last recorded actuator pattern applied to the DM. Actuator patterns applied through "Reset DM" are not recorded. These buttons allow a user to toggle between the calculated sensorless correction pattern and no correction pattern. For a successful sensorless correction pattern, the improvement in image quality will be visually apparent. For a sensorless correction where an incorrect correction for one mode has caused a run-away degredation of the image quality, this too will be visually apparent.
+Of course, these boundary conditions do not guarantee a good fit to the data, but they do eliminate some sources of fitting error. If the sample aberration is primarily from one source - i.e. spherical aberration mismatch - then correcting for aberration modes with smaller amplitudes can prove challenging since the image quality is already heavily degraded. Similarly, if the fit for one mode is poor and leads to an incorrect Zernike mode amplitude being applied, this can bias future image quality measurements and prevent correction of subsequent Zernike modes. The first case explains why the order Zernike modes are corrected in, specified by the user in the interface shown in Figure~\ref{fig:DM_sensorless_ao_parameters}, is important. The second case explains the existence of the "Reset DM" and "Apply last pattern" buttons in Figure~\ref{fig:DM_methods_cockpit}. "Reset DM" returns all actuators to their default 0 position. "Apply last pattern" applies the last recorded actuator pattern applied to the DM. Actuator patterns applied through "Reset DM" are not recorded. These buttons allow a user to toggle between the calculated sensorless correction pattern and no correction pattern. For a successful sensorless correction pattern, the improvement in image quality will be visually apparent. For a sensorless correction where an incorrect correction for one mode has caused a run-away degradation of the image quality, this too will be visually apparent.
 
 \section{Future development}
 \label{sec:future_dev}
@@ -229,7 +229,7 @@ then adds the function option to the correct suite dictionary.
 
 Microscope-AOtools has been designed so a user can take an adaptive element 
 in an arbitrary set-up, calibrate the adaptive element and use it on any 
-sample type in an range of imaging modalities. Since Microscope-AOtools 
+sample type in a range of imaging modalities. Since Microscope-AOtools 
 leverages Python-Microscope it already supports a number of adaptive 
 elements, mostly deformable mirrors, which will expand as hardware support 
 in Python-Microscope expands. Adding new devices to Python-Microscope is 
@@ -237,7 +237,7 @@ relatively simple. Refer to Python-Microscope
 (\url{https://www.python-microscope.org/}) for more details. 
 Microscope-AOtools only requires that the adaptive element be a 
 Python-Microscope device which has an attribute \textit{n\textunderscore 
-actuators} which defines the number of variable components of the device.
+	actuators} which defines the number of variable components of the device.
 
 The process of setting up an adaptive element requires a wavefront sensor 
 to observe the shape of the phase wavefront and calibrate how the variable 
@@ -249,7 +249,7 @@ already incorporated then a user only has to add the function necessary to
 perform the wavefront sensing step rather than to reimplement the set-up 
 methods in their entirety. Swapping between wavefront sensing techniques is 
 not implemented in the Cockpit user interface (UI) for AO control since the 
-sensing technique is generally reliant on the the physical setup and is 
+sensing technique is generally reliant on the physical setup and is 
 unlikely to change between experiments.
 
 Microscope-AOtools is further generalised as it allows for the control 
@@ -268,10 +268,10 @@ Correction methods. By allowing the user to swap between wavefront sensing
 technique, Microscope-AOtools already possesses all the methods necessary 
 for performing sample correction using direct wavefront sensing, provided 
 the wavefront sensing technique is already included in the suite of 
-methods. Similarly Microscope-AOtools utilises a suite of image quality 
+methods. Similarly, Microscope-AOtools utilises a suite of image quality 
 metrics suited to different sample types and imaging modalities. A user can 
 select a pre-existing metric well suited to their application. If no 
-appropriate metric currently exists an new one can easily be implemented 
+appropriate metric currently exists a new one can easily be implemented 
 and added  to the suite of metrics. Once implemented it can be used in any 
 of the sensorless AO analysis methods outlined in 
 Figure~\ref{fig:sensorless_correction_method}. Since the best image quality 
@@ -316,7 +316,7 @@ measurement and maximises the image quality based on several criteria.
 Another direction for further development concerns restructuring the 
 sensorless correction workflow. As explained in 
 Section~\ref{subsec:sensorless_correction}, each Zernike mode is corrected 
-for seperately. There is an underlying assumption here that since the 
+for separately. There is an underlying assumption here that since the 
 Zernike modes themselves are an orthonormal basis set, the effect they have 
 on the image quality must also be orthogonal. However, phenomena such as 
 the focal shift which accompanies spherical aberration would suggest that 
