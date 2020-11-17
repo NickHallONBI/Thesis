@@ -224,6 +224,56 @@ This phase extraction technique is used as part of other methods, but it is also
 	\label{fig:phase_viewer}
 \end{figure}
 
+\subsection{Zernike Mode Amplitude Measurement}
+\label{subsec:zernike_mode_measurment}
+
+Recall that a phase wavefront can be represented by an linear combination of Zernike polynomials:
+
+\begin{equation}
+\Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),\tag{\ref{eq:phase_zernike_expansion}}
+\end{equation}
+
+where indices $n \in \mathbb{N}_{0}$ and $m \in \mathbb{Z}$ denote the radial order and azimuthal frequency respectively of the Zernike polynomial, $\mathcal{Z}^{m}_{n}$, and are such that $n - \left|m\right| \ge 0$ and even. The coefficients of each Zernike polynomial are represented by $\alpha^{m}_{n} \in \mathbb{R}$. For simplicity, we switch the notation convention of the Zernike modes and the corresponding amplitudes to $\mathcal{Z}_{j}\left(\rho,\theta\right)$ and $\alpha_{j}$ where $j$ is the Noll index of the Zernike mode with $n$ radial order and $m$ azimuthal frequency.
+
+Now, the Zernike polynomials are an orthogonal set of polynomials, and the orthonormality of Zernike polynomials is expressed by\cite{lakshminarayanan2011zernike}:
+
+\begin{equation}\label{eq:orthonormality}
+	\frac{\int_{0}^{1}\int_{0}^{2\pi}\mathcal{Z}_{j}\left(\rho,\theta\right)\mathcal{Z}_{j'}\left(\rho,\theta\right)\rho d\rho d\theta}{\int_{0}^{1}\int_{0}^{2\pi}\rho d\rho d\theta} = \delta_{jj'},
+\end{equation}
+
+where:
+
+\begin{equation}\label{eq:delta_j}
+\delta_{jj'} = 
+\begin{cases}
+1, & j = j'\\
+0, & j \ne j'\\ 
+\end{cases}.
+\end{equation}
+
+Therefore, performing the operation:
+
+\begin{equation}\label{eq:zernike_amp_extraction}
+\frac{\int_{0}^{1}\int_{0}^{2\pi}\Phi\left(\rho,\theta\right)\mathcal{Z}_{j}\left(\rho,\theta\right)\rho d\rho d\theta}{\int_{0}^{1}\int_{0}^{2\pi}\rho d\rho d\theta} = \alpha_{j},
+\end{equation}
+
+allows the $j$-th Zernike mode coefficient, $\alpha_{j}$, present in the 
+phase wavefront $\Phi\left(\rho,\theta\right)$ to be determined. 
+Microscope-AOtools uses this calculation to determine the Zernike mode 
+amplitudes present in the measured phase wavefront. However, this takes a 
+discrete form:
+
+\begin{equation}\label{eq:zernike_amp_extraction_discrete}
+\frac{trapz\left[trapz\left[\Phi\left(x,y\right)\mathcal{Z}_{j}\left(x,y\right)\right]\right]}{N} = \alpha_{j},
+\end{equation}
+
+where $trapz[]$ is \textit{scipy}'s implementation of integration using the 
+composite trapezoidal rule, $N$ is the total number of pupil pixels, and 
+$x,y$ are the pixel coordinates of the phase wavefront image and Zernike mode 
+simulated using AOtools\cite{virtanen2020scipy,townson2019aotools}. This 
+process is repeated for $M$ Zernike modes to obtain a row vector, 
+$\boldsymbol{z}$, containing the $M$ computed Zernike mode amplitudes present.
+
 \subsection{Calibration}
 \label{subsec:calibration}
 
@@ -302,14 +352,15 @@ computed Zernike mode amplitudes:
 \begin{equation}\label{eq:zernike_amp}
 \boldsymbol{z} = 
 \begin{bmatrix}
-z_{1} & z_{2} & \cdots & z_{g} & \cdots & z_{m}
+z_{1} & z_{2} & \cdots & z_{g} & \cdots & z_{M}
 \end{bmatrix},
 \end{equation}
 
 Where the $g$-th element is the amplitude of the $g$-th
 Zernike mode. Figure~\ref{fig:measured_zernike_modes} shows
 a plot of the row vector containing the amplitudes of the 
-$M$ Zernike modes measured for Figure~\ref{fig:observed_wavefront}.
+$M$ Zernike modes measured for Figure~\ref{fig:observed_wavefront} using the 
+method described in Section~\ref{subsec:zernike_mode_measurment}.
 Figure~\ref{fig:simulated_wavefront} show a simulated wavefront 
 constructed using these Zernike mode amplitudes. As previously 
 mentioned, any phase wavefront can be constructed from an 
@@ -334,10 +385,10 @@ A_h =
 \end{bmatrix}
 =
 \begin{bmatrix}
-z_{1,1} & z_{1,2} & \cdots & z_{1,m} \\
-z_{2,1} & z_{2,2} & \cdots & z_{2,m} \\
+z_{1,1} & z_{1,2} & \cdots & z_{1,M} \\
+z_{2,1} & z_{2,2} & \cdots & z_{2,M} \\
 \vdots  & \vdots  & \ddots & \vdots  \\
-z_{p,1} & z_{p,2} & \cdots & z_{p,m} 
+z_{p,1} & z_{p,2} & \cdots & z_{p,M} 
 \end{bmatrix}.
 \end{equation}
 
@@ -490,7 +541,21 @@ The characterisation routine relies on the same generalised phase acquisition me
 \subsection{System Aberration Correction}
 \label{subsec:system_correction}
 
-The applications for aberration correction using direct wavefront sensing have been well documented. The wavefront is measured via interferometry, Shack-Hartmann wavefront sensor, fluorescent guide star, etc and decomposed into Zernike modes. Correction can then be calculated and applied for both system and sample induced aberrations. Microscope-AOtools implements a correction method for situations where the wavefront is directly observed. The workflow is shown in Figure~\ref{fig:direct_wavefront_flattening_workflow}. The wavefront is obtained through whatever direct wavefront sensing method has been implemented and selected, a number of Zernike modes determined by the user are fitted to the wavefront, an equal and opposite magnitude of these modes are applied to the DM. The RMS wavefront error is then calculated. This process repeats until $N$ iterations have been performed or the RMS wavefront error is below a user defined error threshold, $\delta$.
+The applications for aberration correction using direct wavefront sensing 
+have been well documented. The wavefront is measured via interferometry, 
+Shack-Hartmann wavefront sensor, fluorescent guide star, etc and decomposed 
+into Zernike modes. Correction can then be calculated and applied for both 
+system and sample induced aberrations. Microscope-AOtools implements a 
+correction method for situations where the wavefront is directly observed. 
+The workflow is shown in 
+Figure~\ref{fig:direct_wavefront_flattening_workflow}. The wavefront is 
+obtained through whatever direct wavefront sensing method has been 
+implemented and selected, a number of Zernike modes determined by the user 
+are fitted to the wavefront using the method described in 
+Section~\ref{subsec:zernike_mode_measurment}, an equal and opposite magnitude 
+of these modes are applied to the DM. The RMS wavefront error is then 
+calculated. This process repeats until $N$ iterations have been performed or 
+the RMS wavefront error is below a user defined error threshold, $\delta$.
 
 \begin{figure}[h]
 	\centering

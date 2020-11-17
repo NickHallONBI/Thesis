@@ -52,6 +52,145 @@ also enabled 3D SIM imaging up to 30$\mu$m in biological samples, well beyond
 the typical 10-20$\mu$m imaging depth for 
 SIM\cite{schermelleh2019super,wu2018faster}. 
 
+\section{Future development}
+\label{sec:future_dev}
+
+Chapter~\ref{chpt:ao_tools} discussed the specific methods implemented in 
+Microscope-AOtools for both AO device set up and operation. These Set-up 
+and  Sample Correction methods rely on suites of techniques, wavefront 
+sensing and image quality metric assessment respectively. These are 
+designed to be easily extensible by users as new techniques are developed. 
+The functions defining the existing wavefront sensing and image quality 
+metric assessment techniques are stored in separate files. Which wavefront 
+sensing technique will be used is an attribute of the highest level
+of the code hierarchy and is used to select a wavefront sensing technique 
+from the unwrapping method dictionary. Similarly, which image quality 
+metric assessment will be used is an attribute of a lower level	of the 
+code hierarchy and is used to select a wavefront sensing technique from 
+the dictionary of image quality metrics. A detailed guide of where the 
+appropriate classes and dictionaries are located and how to add new 
+wavefront sensing and image quality metric assessment techniques is 
+included in the \textit{README.md} file for Microscope-AOtools. Briefly, 
+these suites are composed of functions with a defined set of input and 
+output variables. A user creates a new wavefront sensing or image 
+quality metric assessment functions with the input and outputs defined 
+in the \textit{README.md}, adds this function to the correct file and 
+then adds the function option to the correct suite dictionary.
+
+Microscope-AOtools has been designed so a user can take an adaptive element 
+in an arbitrary set-up, calibrate the adaptive element and use it on any 
+sample type in a range of imaging modalities. Since Microscope-AOtools 
+leverages Python-Microscope it already supports a number of adaptive 
+elements, mostly deformable mirrors, which will expand as hardware support 
+in Python-Microscope expands. Adding new devices to Python-Microscope is 
+relatively simple. Refer to Python-Microscope 
+(\url{https://www.python-microscope.org/}) for more details. 
+Microscope-AOtools only requires that the adaptive element be a 
+Python-Microscope device which has an attribute \textit{n\textunderscore 
+	actuators} which defines the number of variable components of the device.
+
+The process of setting up an adaptive element requires a wavefront sensor 
+to observe the shape of the phase wavefront and calibrate how the variable 
+components of the adaptive element affect this wavefront. By designing the 
+set-up methods in Microscope-AOtools to accept any method from a suite of 
+wavefront sensing techniques, Microscope-AOtools is both generalised and 
+easily extensible. If the desired wavefront sensing technique is not 
+already incorporated then a user only has to add the function necessary to 
+perform the wavefront sensing step rather than to reimplement the set-up 
+methods in their entirety. Swapping between wavefront sensing techniques is 
+not implemented in the Cockpit user interface (UI) for AO control since the 
+sensing technique is generally reliant on the physical setup and is 
+unlikely to change between experiments.
+
+Microscope-AOtools is further generalised as it allows for the control 
+matrix to be acquired by some external method and then set in 
+Microscope-AOtools with the \textit{set\textunderscore controlMatrix} 
+method. This ensures that a user with an existing calibration routine 
+wishing to access the sensorless AO methods in Microscope-AOtools can do so 
+without having to repeat work they have already performed. It also allows 
+control matrices acquired from routines using different phase acquisition 
+techniques to be compared. Characterisation assays can be acquired for each 
+method's control matrix and the accuracy of the Zernike mode recreation 
+compared.
+
+The generalised nature of Microscope-AOtools continues into the Sample 
+Correction methods. By allowing the user to swap between wavefront sensing 
+technique, Microscope-AOtools already possesses all the methods necessary 
+for performing sample correction using direct wavefront sensing, provided 
+the wavefront sensing technique is already included in the suite of 
+methods. Similarly, Microscope-AOtools utilises a suite of image quality 
+metrics suited to different sample types and imaging modalities. A user can 
+select a pre-existing metric well suited to their application. If no 
+appropriate metric currently exists a new one can easily be implemented 
+and added  to the suite of metrics. Once implemented it can be used in any 
+of the sensorless AO analysis methods outlined in 
+Figure~\ref{fig:sensorless_correction_method}. Since the best image quality 
+metric can vary between samples, this variable is left configurable from 
+the Cockpit UI as shown in Figure~\ref{fig:DM_methods_cockpit_options}. A 
+user need only add the appropriate label for the newly implemented image 
+quality metric assessment technique to the options present in the Cockpit 
+device code and it will be available with the other techniques shown in 
+Figure~\ref{fig:DM_methods_cockpit_options}.
+
+Furthermore, Microscope-AOtools allows for Zernike mode amplitudes to be 
+set directly with the \textit{set\textunderscore phase} method. This means 
+that if a user has an offline analysis technique, such as a machine 
+learning approach, Microscope-AOtools can be used to calibrate the 
+deformable mirror, the sample induced calculations are performed offline 
+and then the appropriate correction applied through Microscope-AOtools.
+
+Microscope-AOtools is free and open-source. It is intended to be a resource 
+for the microscopy community at large and it is designed to minimise the 
+time and effort spent replicating work other AO users have already done. As 
+Microscope-AOtools acquires a larger base of users, some adding their own 
+wavefront sensing techniques or image quality metrics to expand the 
+existing suites, future and existing users will have a wider array of 
+usability options, accelerating the adoption of novel techniques by the 
+microscopy community and lowering the barrier to entry to set-up an AO 
+system.
+
+Beyond the open-ended task of expanding the existing suite of phase 
+acquisition techniques and image quality metrics, there are a number of 
+future developments that could be made to Microscope-AOtools. There does 
+not currently exist a universal image quality metric, although strides have 
+been made in that direction\cite{antonello2020multi}. Image quality metrics 
+attempt to assign a numerical value for how `good' an image is, but what 
+makes a `good' image varies between imaging modalities, sample type and 
+even users. Most metrics pick some aspect of the image deemed to be 
+significant (e.g. contrast, sharpness, maximum intensity, etc) and maximise 
+it. Since Microscope-AOtools has access to multiple image quality metrics, 
+one development would be designing a sensorless AO routine which measures 
+multiple image qualities simultaneously, assigns some weight to each metric 
+measurement and maximises the image quality based on several criteria.
+
+Another direction for further development concerns restructuring the 
+sensorless correction workflow. As explained in 
+Section~\ref{subsec:sensorless_correction}, each Zernike mode is corrected 
+for separately. There is an underlying assumption here that since the 
+Zernike modes themselves are an orthonormal basis set, the effect they have 
+on the image quality must also be orthogonal. However, phenomena such as 
+the focal shift which accompanies spherical aberration would suggest that 
+this is not necessarily the case\cite{torok1997role}. It may therefore be 
+possible to obtain the optimum image quality faster and with fewer images 
+utilising the family of solvers used for objective function maximisation, 
+such as the Nelder-Mead method, than the current uni-variant 
+approach\cite{nelder1965simplex}. Such an approach has been shown to work 
+in principle on point objects to recover diffraction limited images but has 
+not yet been demonstrated on biological samples\cite{murray2005wavefront}.
+
+Finally, the integration of adaptive optical elements, primarily deformable 
+mirrors, into Cockpit allows for the construction of remote focusing 
+experiments. In remote focusing experiments, the adaptive element is used 
+to shift the focal plane by applying a known amount of optical aberrations 
+to the beam path, instead of manually moving the sample plane. This allows 
+for higher axial scan speeds - since deformable mirrors are, on average, an 
+order of magnitude faster than mechanical stages - and avoids mechanical 
+interference between the objective lens and the sample through dipping 
+media such as water or oil\cite{botcherby2008optical,vzurauskas2017rapid} 
+This would require constructing another calibration routine to obtain the 
+maps between physical displacement and defocus aberration applied in order 
+to ensure accurate and reliable remote focusing.
+
 \section{Final Conclusion}
 \label{sec:final_conclusion}
 
