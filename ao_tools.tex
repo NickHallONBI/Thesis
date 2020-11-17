@@ -1,14 +1,14 @@
 \chapter{Adaptive Optics Control Software}
 \label{chpt:ao_tools}
 
-Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality\cite{booth2014adaptive,girkin2009adaptive}. However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirrors (DMs) present in the Aurox Clarity system and DeepSIM optical paths. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this callibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples\cite{wang2014rapid,wang2015direct}. Therefore indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality\cite{rodriguez2018adaptive}. This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive}. So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented\cite{ji2017adaptive}.
+Implementing adaptive optics (AO) in microscopy has already been shown to be highly effective at removing optical aberrations and yielding significantly improvements to image quality\cite{booth2014adaptive,girkin2009adaptive}. However, AO technology has not been widely adopted due to a number of barriers. Firstly, it is not trivial to set-up an AO element such as the deformable mirrors (DMs) present in the Aurox Clarity system and DeepSIM optical paths. The DM must be calibrated to meaningfully recreate and correct aberrations. Performing this calibration step is not something non-specialist user may know how to do, or how to assess if the process has been successful. Secondly, measuring the wavefront deformations (and therefore the aberrations) present in a sample is complicated. While techniques to directly measure the  wavefront do exits, they carry additional complications and are only applicable in certain samples\cite{wang2014rapid,wang2015direct}. Therefore, indirect wavefront sensing is generally preferred which requires inferring the aberrations present from the variance of a measure of the image quality\cite{rodriguez2018adaptive}. This adds an additional complication since there is no universal image quality metric. Indeed, the best metric often varies with sample type and imaging modality\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive}. So far, a robust, easy-to-use implementation which incorporates multiple AO methods for multiple sample types/imaging modalities has yet to be presented\cite{ji2017adaptive}.
 
 Microscope-AOtools provides such an implementation, utilising 
 Python-Microscope to control the physical hardware. Microscope-AOtools
 has the following Python package dependencies: numpy\cite{walt2011numpy},
 scipy\cite{virtanen2020scipy}, scikit-image\cite{van2014scikit}, 
 sympy\cite{meurer2017sympy}, and AOtools\cite{townson2019aotools}.
-It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories; Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
+It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories: Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
 
 \begin{figure}[H]
 	\centering
@@ -44,7 +44,7 @@ It incorporates methods for calibrating a DM, evaluating the success of the cali
 \section{Set-up Methods}
 \label{sec:set_up_methods}
 
-As previously described, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beam path is used for calibrating the deformable mirror. An image is formed by the interference between the reference beam arm and the system beam arm. The size of the reference beam is larger than that of the system beam to ensure easy alignment between the two arms. It is therefore necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Cockpit implements such a method as the functionality of the "Select ROI" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the interferometric ROI. This coordinates of this ROI are saved to the microscope's configuration files with the "Save ROI" button.
+As previously described, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beam path is used for calibrating the deformable mirror. An image is formed by the interference between the reference beam arm and the system beam arm. The size of the reference beam is larger than that of the system beam to ensure easy alignment between the two arms. It is therefore necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Cockpit implements such a method as the functionality of the "Select ROI" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the interferometric ROI. The coordinates of this ROI are saved to the microscope's configuration files with the "Save ROI" button.
 
 \begin{figure}[h]
 	\centering
@@ -60,14 +60,14 @@ As previously described, DeepSIM has multiple beam paths; interferometric, widef
 		\caption{}
 		\label{fig:ROI_selector}
 	\end{subfigure}
-	\caption[User interface for selecting the interferometric region of interest]{User interface for selecting the interferometric region of interest \textbf{(a)} The ROI selecter UI when it is first initialised \textbf{(b)} UI with the ROI selected}
+	\caption[User interface for selecting the interferometric region of interest]{User interface for selecting the interferometric region of interest \textbf{(a)} The ROI selector UI when it is first initialised \textbf{(b)} UI with the ROI selected}
 	\label{fig:ROI_selectors}
 \end{figure}
 
 \subsection{Direct wavefront sensing}
 \label{subsec:direct_wavefront_sensing}
 
-The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within DeepSIM and Microscope-AOtools are calibration and system aberration correction. These are both situation where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proven more challenging  to automate than from Shack-Hartmann sensor data. Interferometric data can be defined as:
+The two most common methods for direct wavefront sensing are Shack-Hartmann and interferometric methods. Shack-Hartmann wavefront sensing is useful for instances where accuracy is less important than the speed of wavefront recovery. While these situations do exist, the current use-cases for direct wavefront sensing within DeepSIM and Microscope-AOtools are calibration and system aberration correction. These are both situations where accuracy is considerably more important than speed. Additionally, implementing phase extraction from interferometric data has proven more challenging  to automate than from Shack-Hartmann sensor data. Interferometric data can be defined as:
 
 \begin{equation}\label{eq:I_basic}
 I(x,y,t) = a(x,y) + b(x,y)cos[\phi(x,y) + \Phi_{R}(x,y,t)],
@@ -227,7 +227,7 @@ This phase extraction technique is used as part of other methods, but it is also
 \subsection{Zernike Mode Amplitude Measurement}
 \label{subsec:zernike_mode_measurment}
 
-Recall that a phase wavefront can be represented by an linear combination of Zernike polynomials:
+Recall that a phase wavefront can be represented by a linear combination of Zernike polynomials:
 
 \begin{equation}
 \Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),\tag{\ref{eq:phase_zernike_expansion}}
@@ -238,7 +238,7 @@ where indices $n \in \mathbb{N}_{0}$ and $m \in \mathbb{Z}$ denote the radial or
 Now, the Zernike polynomials are an orthogonal set of polynomials, and the orthonormality of Zernike polynomials is expressed by\cite{lakshminarayanan2011zernike}:
 
 \begin{equation}\label{eq:orthonormality}
-	\frac{\int_{0}^{1}\int_{0}^{2\pi}\mathcal{Z}_{j}\left(\rho,\theta\right)\mathcal{Z}_{j'}\left(\rho,\theta\right)\rho d\rho d\theta}{\int_{0}^{1}\int_{0}^{2\pi}\rho d\rho d\theta} = \delta_{jj'},
+\frac{\int_{0}^{1}\int_{0}^{2\pi}\mathcal{Z}_{j}\left(\rho,\theta\right)\mathcal{Z}_{j'}\left(\rho,\theta\right)\rho d\rho d\theta}{\int_{0}^{1}\int_{0}^{2\pi}\rho d\rho d\theta} = \delta_{jj'},
 \end{equation}
 
 where:
@@ -462,12 +462,12 @@ implemented in Microscope-AOtools.
 		\caption{}
 		\label{fig:Ith_actuator_calibration_workflow_blue_border}
 	\end{subfigure}
-	\caption[Calibration routine workflow]{\textbf{(a)} Flowchart depicting the generalised calibration routine implemented in Mircoscope-AOtools \textbf{(b)} Flowchart depicting the the process for calibrating the $h$-th actuator of the deformable mirror, the dashed blue process in \textbf{(a)}. The influence functions returned are $b_{g,h}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
+	\caption[Calibration routine workflow]{\textbf{(a)} Flowchart depicting the generalised calibration routine implemented in Mircoscope-AOtools \textbf{(b)} Flowchart depicting the process for calibrating the $h$-th actuator of the deformable mirror, the dashed blue process in \textbf{(a)}. The influence functions returned are $b_{g,h}$ described in Equation~\ref{eq:influence_to_zernike}. This process is performed for each $N$ actuators and used to obtain $\boldsymbol{C}$ described in Equation~\ref{eq:CM_derivation}.}
 	\label{fig:calibration_workflow}
 \end{figure}
 
 In general, $\boldsymbol{B}$ is singular, or near singular, and therefore has 
-no true inverse. So we must use a pseudo-inverse, calculated using single 
+no true inverse. So, we must use a pseudo-inverse, calculated using single 
 value decomposition (SVD). Actuators that have little influence on particular 
 Zernike modes will have small values in the $\boldsymbol{B}$ matrix. These 
 small influence values occur due to a combination of the actuators being in 
@@ -534,9 +534,9 @@ Where $Z_{i}$ is the applied Zernike mode amplitude, $Z'_{i}$ and $Z'_{j}$ are t
 \end{figure}
 
 Clearly not all Zernike modes are recreated equally well and  different modes exhibit varying degrees of mode coupling. As previously mentioned, this arises from mathematical approximations,
-computational errors and the physical characteristics of the adaptive element. Microscope-AOtools provides the tools to assess the accuracy of Zernike mode recreation, which can be used to inform which modes should be included in the aberration correction algorithms. In general, correcting up to the third order spherical ($\mathcal{Z}_{8}^{0}$) is sufficient to recover a defraction limited image and so a good reconstruction accuracy is only necessary for the first 29 Zernike modes\cite{antonello2014optimisation}.
+computational errors and the physical characteristics of the adaptive element. Microscope-AOtools provides the tools to assess the accuracy of Zernike mode recreation, which can be used to inform which modes should be included in the aberration correction algorithms. In general, correcting up to the third order spherical ($\mathcal{Z}_{8}^{0}$) is sufficient to recover a diffraction limited image and so a good reconstruction accuracy is only necessary for the first 29 Zernike modes\cite{antonello2014optimisation}.
 
-The characterisation routine relies on the same generalised phase acquisition method used in the calibration workflow. Recall that this is a user selected method from a suite of phase acquisition methods. The number of Zernike modes assessed, $N$, is the number of modes that have been measured in the calibration step by default, but this can be varied by the user. Once again this preserves generalisability and allows the characterisation method to be used on any arbitrary adaptive element, calibrated for any number of modes and utilising any desired wavefront sensing technique.
+The characterisation routine relies on the same generalised phase acquisition method used in the calibration workflow. Recall that this is a user selected method from a suite of phase acquisition methods. The number of Zernike modes assessed, $N$, is the number of modes that have been measured in the calibration step by default, but this can be varied by the user. Once again, this preserves generalisability and allows the characterisation method to be used on any arbitrary adaptive element, calibrated for any number of modes and utilising any desired wavefront sensing technique.
 
 \subsection{System Aberration Correction}
 \label{subsec:system_correction}
@@ -596,9 +596,9 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 	\label{fig:direct_wavefront_correction}
 \end{figure}
 
-For system aberration corrections it may be preferable to set a minimum wavefront error and continue to iterate until this threshold is reached. However a user may wish to only spend $N$ iterations correcting the wavefront. Microscope-AOtools implements both options to ensure generalisability and these parameters can be set by the user utilising the option window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options}. As with the calibration and characterisation methods, the wavefront flattening routine relies on a user selected phase acquisition method selected from the suite of implemented phase acquisition methods. This generalised construction ensures that the applicability of Microscope-AOtools to any adaptive element with any wavefront sensing technique is preserved throughout all the set-up methods.
+For system aberration corrections it may be preferable to set a minimum wavefront error and continue to iterate until this threshold is reached. However, a user may wish to only spend $N$ iterations correcting the wavefront. Microscope-AOtools implements both options to ensure generalisability and these parameters can be set by the user utilising the option window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options}. As with the calibration and characterisation methods, the wavefront flattening routine relies on a user selected phase acquisition method selected from the suite of implemented phase acquisition methods. This generalised construction ensures that the applicability of Microscope-AOtools to any adaptive element with any wavefront sensing technique is preserved throughout all the set-up methods.
 
-The characterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernikes modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
+The characterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default, the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default, the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernike modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
 \section{Sample Correction Methods}
 \label{sec:sample_correction_methods}
@@ -632,7 +632,7 @@ Clearly, this sensorless routine has multiple parameters and there is a limited 
 
 The values for $j_{min}$ and $j_{max}$ should ideally be chosen to scan a sufficient range of aberration amplitudes to ensure $j_{min} \le a_{max} \le j_{max}$. At the least $a_{max}$ should be sufficiently close to $j_{min}$ or $j_{max}$ so that there is a clear increase in image quality as the aberration amplitude applied approaches one of these bounds. This range should not be too large otherwise a user risks either having sparse image quality data which only captures extreme aberrations and prevents an adequate fitting, or taking a sufficient number of measurements but introducing considerable photodamage. Like the image quality metrics, the $[j_{min},j_{max}]$ range will vary with sample type and so some preliminary work is required before data collection proper to ascertain the correct range as well as the correct number of measurements and iterations, $N$ and $T$, for a given sample type. 
 
-As previously mentioned, the $[j_{min},j_{max}]$ range should ideally contain $a_{max}$ or $a_{max}$ should be close to one of these bounds. Allowing the Gaussian function to be fitted to the image quality metric values with no bounds (i.e. allowing $a_{max}$ to take any value) becomes problematic when the image quality metric values remain largely constant over all the amplitudes applied. This phenomenon can occur for a number of reasons; $a_{max}$ is found far outside the range of amplitudes scanned, the amplitudes sampled were sufficiently sparse that the central region of the Gaussian lies between two amplitudes, the aberration being sampled does not have a strong impact on the image quality measured, another, more significant aberration mode has not been corrected and the effect of this other mode is masking the effect of the current mode, etc. Whatever the reason, an unbounded fitting to a relatively flat profile of image quality metric measurements will lead to a large value of $a_{max}$ which is unreliable and often results in an applying an aberration amplitude which severly damages the image quality. To ensure that the Gaussian fitting to find $a_{max}$ yields a reasonable value, the fitting has bounds defined as $(j_{max}-j_{min}) \pm 0.25(j_{max}-j_{min})$.
+As previously mentioned, the $[j_{min},j_{max}]$ range should ideally contain $a_{max}$ or $a_{max}$ should be close to one of these bounds. Allowing the Gaussian function to be fitted to the image quality metric values with no bounds (i.e. allowing $a_{max}$ to take any value) becomes problematic when the image quality metric values remain largely constant over all the amplitudes applied. This phenomenon can occur for a number of reasons; $a_{max}$ is found far outside the range of amplitudes scanned, the amplitudes sampled were sufficiently sparse that the central region of the Gaussian lies between two amplitudes, the aberration being sampled does not have a strong impact on the image quality measured, another, more significant aberration mode has not been corrected and the effect of this other mode is masking the effect of the current mode, etc. Whatever the reason, an unbounded fitting to a relatively flat profile of image quality metric measurements will lead to a large value of $a_{max}$ which is unreliable and often results in an applying an aberration amplitude which severely damages the image quality. To ensure that the Gaussian fitting to find $a_{max}$ yields a reasonable value, the fitting has bounds defined as $(j_{max}-j_{min}) \pm 0.25(j_{max}-j_{min})$.
 
 \subsection{Image Quality Metric: Fourier Power}
 \label{subsec:fourier_power_metric}
@@ -704,7 +704,7 @@ the observed data, this lowpass filter, $\mu_{n,m}$, is defined as:
 
 Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $\omega_{l}$ 
 is the lateral diffraction limit in reciprocal space as per
- Equation~\ref{eq:lateral_spatial_freq_res} 
+Equation~\ref{eq:lateral_spatial_freq_res} 
 
 Within the OTF lowpass limit, certain spatial frequencies will be dominated
 by noise contributions. As such, when attempting to quantify the power 
@@ -752,7 +752,7 @@ normalisation factor. In effect, this modulation mask amplifies the mid
 to high spatial frequencies while attenuating the low spatial frequencies 
 and the high spatial frequency noise close to $\omega_{l}$.
 
-Applying these modification to Equation~\ref{eq:fourier_power_spectrum} 
+Applying these modifications to Equation~\ref{eq:fourier_power_spectrum} 
 yields the image quality metric:
 
 \begin{equation}\label{eq:Fourier_power_metric}

@@ -12,7 +12,7 @@ scholars, such as Ibn al-Haytham, noted and investigated the phenomenon of
 optical magnification through convex-planar pieces of 
 glass\cite{nasr1968science}. Given the importance which microscopy has had in 
 furthering biological understanding, it is an amusing anecdote that it took 
-over a millenia for anyone to identify an application for the phenomenon of 
+over a millennia for anyone to identify an application for the phenomenon of 
 magnification. It was not until the end of 13th Century  when Roger Bacon 
 penned his \textit{Opus majus} that a practical use for magnification could 
 be found - eyeglasses. It was a further 300 years until the first telescopes 
@@ -151,7 +151,7 @@ is the numerical aperture, $NA = n\sin(\alpha)$. The Rayleigh criterion
 determines that the limit at which two point objects can be meaningfully 
 separated is when the central maxima of one diffraction pattern lies in the
 first minimal of the other\cite{rayleigh1874xii,rayleigh1880investigations}. For a first order Bessel 
-function, this occurs at $v \approx 1.22\pi$. Therefore the lateral resolution 
+function, this occurs at $v \approx 1.22\pi$. Therefore, the lateral resolution 
 limit, $r_l$ is often quoted as:
 
 \begin{equation}\label{eq:lateral_res}
@@ -212,7 +212,7 @@ separate.
 
 Several approximations had to be made to obtain Equations~\ref{eq:lateral_res}
 and~\ref{eq:axial_res}. Firstly, the Fraunhofer and paraxial approximations are
-assumed to hold\cite{goodman2005introduction}. Obviously the microscope system
+assumed to hold\cite{goodman2005introduction}. Obviously, the microscope system
 has been greatly simplified to essentially just the entrance and exit pupils. 
 More complex but accurate models for modern microscopy set-ups have been 
 demonstrated\cite{torok2007optical, foreman2011computational}. Finally, this
@@ -329,7 +329,7 @@ O_{0}(\textbf{k}) =
 \section{Super-resolution Microscopy}
 \label{sec:super_res}
 
-For a some time the diffraction limit represented a kind of practical 
+For some time, the diffraction limit represented a kind of practical 
 resolution asymptote - a point to be approached by never reached. Two
 `gold standard' techniques for optical bioimaging emerged thanks to their
 ease of implementation and how close they were able to get to the diffraction
@@ -338,10 +338,10 @@ confocal laser scanning microscopy\cite{sheppard1981theory,minsky1988memoir}.
 Nonetheless, the instant one defines a limit it is practically human nature 
 to attempt to surpass it. Therefore, a number of `super-resolution' techniques
 have emerged capable of surpassing even the ideal diffraction limit. These
-can be broadly divided into two categories; near-field and far-field methods.
+can be broadly divided into two categories: near-field and far-field methods.
 Near-field methods, whilst capable of achieving resolutions of $\sim 20 nm$,
 are only suitable for surface structure imaging\cite{schermelleh2010guide}. 
-Far-field techniques fall into 4 broad techniques; structured illumination
+Far-field techniques fall into 4 broad techniques: structured illumination
 microscopy (SIM), stimulated emission depletion (STED) microscopy, 
 single-molecule localisation microscopy (SMLM) and interferometric-based 
 techniques. There are some implementations which combine several 
@@ -358,7 +358,7 @@ high temporal resolution and low photodamage impact\cite{leung2011review}.
 \label{subsec:SIM}
 
 There are a number of microscopy techniques which fall under the structured
-illumination microscopy umbrella; Re-scan\cite{de2013re}, 
+illumination microscopy umbrella: Re-scan\cite{de2013re}, 
 Airyscan\cite{huff2015airyscan}, iSIM\cite{york2013instant,curd2015construction},
 and SIMFlux\cite{cnossen2020localization} to name a few. Whilst all these can be 
 considered `structured illumination' techniques since they do rely on spatially 
@@ -1046,7 +1046,7 @@ in the beam path, such as an opto-acoustic lens.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/ao_system_schematic_simple.jpg}
-	\caption[Schematic of the emission path of an adaptive optics system.]{Schematic of the emission path of an adaptive optics system. The emitted wavefront of a point in the fluorescent sample, $\Phi_{I}$, arrives at the aperture of the microscope. It is reimaged onto the adaptive element. The adaptive element has some phase, $\Phi_{AO}$, on its surface. The light then passed through a beamsplitter and is focused onto an imaging device. The residual phase aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either calculated directly by the wavefront sensor or inferred indirectly from the data acquired by the imaging device. This information is passed to a controller which applies the a phase aberration to the adaptive element, $\Phi_{AO}$, in order to minimise $rms(\Phi_{R})$.}
+	\caption[Schematic of the emission path of an adaptive optics system.]{Schematic of the emission path of an adaptive optics system. The emitted wavefront of a point in the fluorescent sample, $\Phi_{I}$, arrives at the aperture of the microscope. It is reimaged onto the adaptive element. The adaptive element has some phase, $\Phi_{AO}$, on its surface. The light then passed through a beamsplitter and is focused onto an imaging device. The residual phase aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either calculated directly by the wavefront sensor or inferred indirectly from the data acquired by the imaging device. This information is passed to a controller which applies a phase aberration to the adaptive element, $\Phi_{AO}$, in order to minimise $rms(\Phi_{R})$.}
 	\label{fig:ao_system_schematic_simple}
 \end{figure}
 
@@ -1089,7 +1089,7 @@ to any other system, imaging modality, sample type, etc.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth, scale=0.5]{./images/ao_system_setup_workflow_new.jpg}
-	\caption[Flowchart depicting the general process for building a system utilising AO.]{Flowchart depicting the general process for building a system utilising AO. \textbf{a)} \textit{System Design Phase}. User decides whether the system needs AO and, if so, what type. \textbf{b)} \textit{Installation Phase}. The chosen AO elements are added to the system. \textbf{c)} \textit{Set-up Phase}. The chosen AO element is calibrated. Typically this involves mapping the variable elements of the AO element (e.g. deformable mirror actuators) to a useful set of basis functions which represent optical aberrations. \textbf{d)} \textit{Sample Correction Phase}. Here the user designs the methods to be used for correcting their desired sample.}
+	\caption[Flowchart depicting the general process for building a system utilising AO.]{Flowchart depicting the general process for building a system utilising AO. \textbf{a)} \textit{System Design Phase}. User decides whether the system needs AO and, if so, what type. \textbf{b)} \textit{Installation Phase}. The chosen AO elements are added to the system. \textbf{c)} \textit{Set-up Phase}. The chosen AO element is calibrated. Typically, this involves mapping the variable elements of the AO element (e.g. deformable mirror actuators) to a useful set of basis functions which represent optical aberrations. \textbf{d)} \textit{Sample Correction Phase}. Here the user designs the methods to be used for correcting their desired sample.}
 	\label{fig:ao_system_setup_workflow}
 \end{figure}
 
@@ -1109,7 +1109,7 @@ and is laid out as follows:
 	\item Chapter 2 discusses the two systems which Microscope-AOtools has
 	been deployed on: Aurox Clarity and DeepSIM. It discusses their optical 
 	layout and contains a brief discussion of the optical alignment 
-	proceedure as well as an alignment tool developed during the course of 
+	procedure as well as an alignment tool developed during the course of 
 	this thesis; ``Hall, Nicholas J., David Miguel Susano Pinto, and Ian M. 
 	Dobbie. "BeamDelta: simple alignment tool for optical systems." 
 	\textit{Wellcome Open Research} 4.194 (2019): 194.''\cite{dobbie2019beamdelta} 
@@ -1128,7 +1128,7 @@ and is laid out as follows:
 	\item Chapter 4 corresponds to the scientific publication: ``Hussain, 
 	Syed Asad, et al. ``Wavefront-sensorless adaptive optics with a 
 	laser-free spinning disk confocal microscope.'' \textit{Journal of 
-	Microscopy} (2020).'' 
+		Microscopy} (2020).'' 
 	on which the author is a co-first author\cite{hussain2020wavefront}. It details the successful 
 	implementation of Microscope-AOtools on the Aurox Clarity system.
 	\item Chapter 5 details the successful implementation of Microscope-AOtools 
