@@ -9,53 +9,53 @@
 Many the setup methods for Microscope-AOtools outlined in 
 Section~\ref{sec:set_up_methods} and the direct wavefront correction 
 outlined in Section~\ref{subsec:system_correction} rely on the Zernike 
-modes generated from the AOtools Python package and the method 
+modes generated from the \textit{AOtools} Python package and the method 
 described in Section~\ref{subsec:zernike_mode_measurment} to determine the 
 Zernike mode amplitudes present in a phase 
 wavefront\cite{townson2019aotools}. It is therefore worth investigating the 
 accuracy of this fitting for determining the amplitude of Zernike modes 
 present. In theory, measuring the Zernike mode amplitudes present in a 
-wavefront image created with known Zernike mode amplitudes using AOtools 
-should be trivial and yield the same Zernike mode amplitudes exactly. 
-Measuring the Zernike mode amplitude present is done using the method 
-described in Section~\ref{subsec:zernike_mode_measurment}, but in this case 
-the simulated wavefront image created using AOtools takes the place of the 
-measured phase wavefront, $\Phi(x,y)$. 
+wavefront image created with known Zernike mode amplitudes using 
+\textit{AOtools} should be trivial and yield the same Zernike mode amplitudes 
+exactly. Measuring the Zernike mode amplitude present is done using the 
+method described in Section~\ref{subsec:zernike_mode_measurment}, but in this 
+case the simulated wavefront image created using \textit{AOtools} takes the 
+place of the measured phase wavefront, $\Phi(x,y)$. 
 
 The simplest test of the accuracy of the Zernike mode amplitude fitting 
-follows thusly. AOtools is used to create a wavefront image with RMS 1 radian 
-(i.e. $\alpha_{j} = 1$) of a particular Zernike mode. The Zernike mode 
-amplitudes present in the wavefront image is then measured and the percentage 
-error between the measured and simulated Zernike mode amplitudes is recorded. 
-This process is repeated 50 times for all Zernike modes up to radial degree, 
-$n = 10$. Figure~\ref{fig:zernike_fitting_accuracy} shows the results of this 
-experiment on wavefront images of various sizes. In no case is the expected 
-Zernike mode amplitude returned exactly - there is always some degree of 
-error in the Zernike mode amplitude measurement. Zernike modes with an even 
-azimuthal degree appear to perform worse than Zernike modes with either an 
-odd or zero azimuthal degree. All non-zero azimuthal degree Zernike modes 
-display a trend of increasing percentage error with radial degree. The 
-magnitude of percentage error also decreases with simulated wavefront size. 
+follows thusly. \textit{AOtools} is used to create a wavefront image with RMS 
+1 radian (i.e. $\alpha_{j} = 1$) of a particular Zernike mode. The Zernike 
+mode amplitudes present in the wavefront image is then measured and the 
+percentage error between the measured and simulated Zernike mode amplitudes 
+is recorded. This process is repeated 50 times for all Zernike modes up to 
+radial order, $n = 10$. Figure~\ref{fig:zernike_fitting_accuracy} shows the 
+results of this experiment on wavefront images of various sizes. In no case 
+is the expected Zernike mode amplitude returned exactly - there is always 
+some degree of error in the Zernike mode amplitude measurement. Zernike modes 
+with an even azimuthal frequency appear to perform worse than Zernike modes 
+with either an odd or zero azimuthal frequency. All non-zero azimuthal 
+frequency Zernike modes display a trend of increasing percentage error with 
+radial order. The magnitude of percentage error also decreases with simulated 
+wavefront size. 
 
 Interestingly, there is often a clear split in percentage error between 
-Zernike modes with positive and negative even azimuthal degrees. This is most 
-visible in 
+Zernike modes with positive and negative even azimuthal frequencies. This is most visible in 
 Figure~\ref{fig:Zernike_fitting_percentage_error_one_mode_256_shape} but it 
-can be observed in some radial degrees in all the simulated wavefront sizes 
+can be observed in some radial orders in all the simulated wavefront sizes 
 shown in Figure~\ref{fig:zernike_fitting_accuracy}. The positive and negative 
-even azimuthal degrees correspond to `vertical' and `oblique' Zernike modes 
-respectively. This observed difference in performance between `vertical' and 
-`oblique' Zernike modes is due to a class of discretisation error where some 
-of the principle variation in the simulated wavefront shape falls between 
-pixels and is therefore not captured by the discrete representation of the 
-Zernike mode. Odd azimuthal degree Zernike modes do not exhibit this 
-splitting since positive and negative odd azimuthal degrees correspond to 
-`horizontal' and `vertical' Zernike modes respectively. Therefore, odd 
-azimuthal Zernike modes always suffer from this class of discretisation 
-error. For smaller simulated wavefront sizes, this split in the even 
-azimuthal degree Zernike modes is less visible at higher radial orders 
-because other, less geometrically determined, discretisation errors dominate 
-the overall percentage error measurements.
+even azimuthal frequencies correspond to `vertical' and `oblique' Zernike 
+modes respectively. This observed difference in performance between 
+`vertical' and `oblique' Zernike modes is due to a class of discretisation 
+error where some of the principle variation in the simulated wavefront shape 
+falls between pixels and is therefore not captured by the discrete 
+representation of the Zernike mode. Odd azimuthal frequency Zernike modes do 
+not exhibit this splitting since positive and negative odd azimuthal 
+frequencies correspond to `horizontal' and `vertical' Zernike modes 
+respectively. Therefore, odd azimuthal Zernike modes always suffer from this 
+class of discretisation error. For smaller simulated wavefront sizes, this 
+split in the even azimuthal frequency Zernike modes is less visible at higher 
+radial orders because other, less geometrically determined, discretisation 
+errors dominate the overall percentage error measurements.
 
 \begin{figure}[h]
 	\centering
@@ -97,58 +97,83 @@ the overall percentage error measurements.
 A wavefront may be dominated by a single Zernike mode, but they are almost 
 never composed entirely of one Zernike mode. 
 Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1} shows the mean percentage error in the Zernike mode amplitude 
-measurement for 50 wavefront, $256\times256$ pixel size, generated with 
-random amplitudes for 69 Zernike modes. Clearly, having multiple modes 
-present simultaneously adds a degree of variance to the amplitude 
-measurement accuracy as well as an overall increase in the error magnitude.
+measurement for 50 wavefronts, $256\times256$ pixel size, generated with 
+random amplitudes for Zernike modes up to radial order, $n = 10$. Clearly, 
+having multiple modes present simultaneously adds a degree of variance to the 
+amplitude measurement accuracy as well as an overall increase in the error 
+magnitude.
 
-It is a time-consuming process for AOtools to generate wavefront images of 
-sizes greater than $256\times256$ pixels, typically about a $0.1-1$ seconds 
-per image depending on the overall size and number of Zernike modes 
+It is a time-consuming process for \textit{AOtools} to generate wavefront 
+images of sizes greater than $256\times256$ pixels, typically about a $0.1-1$ 
+seconds per image depending on the overall size and number of Zernike modes 
 simulated. In order to increase the speed of fitting, acquired wavefront 
 images are often resized. This too has an effect on Zernike mode accuracy 
 fitting since the resizing function bins multiple pixels together and takes 
 their mean, effectively smoothing the wavefront. 
 Figures~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_2}-\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_8} show the same set of wavefronts used for the results in 
-Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1}, except that the wavefronts were resized by varying factors prior to the Zernike modes amplitude measurements. Clearly, the resizing factor is inversely proportional to the overall Zernike mode fitting accuracy.
+Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1}, except that the wavefronts were resized by varying factors prior to 
+the Zernike modes amplitude measurements. Clearly, the resizing factor is 
+inversely proportional to the overall Zernike mode fitting accuracy.
+
+The splitting in fitting error between positive and negative even azimuthal 
+frequencies (i.e. `vertical' and `oblique' Zernike modes respectively) is 
+once again observed, and it is observed for all resizing factors. However, a 
+splitting in fitting error is also observed in 
+Figure~\ref{fig:zernike_fitting_accuracy_resize} between positive and 
+negative odd azimuthal frequencies which was not present previously. Recall 
+positive and negative odd azimuthal frequencies correspond to `horizontal' 
+and `vertical' Zernike modes respectively. One might suspect that this is due 
+to the order in which the image axes are integrated along using 
+\textit{scipy}'s $trapz$ function. However, reversing the order in which the 
+axes are integrated along preserves this error splitting as presented in 
+Figure~\ref{fig:zernike_fitting_accuracy_resize}. Another reasonable 
+candidate for suspicion might be the function used to resize the wavefront. 
+If this were the source of this difference in fitting errors, it should not 
+occur in 
+Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1} since the simulated wavefronts used in this dataset have not been 
+resized. This difference in fitting errors may be a result of some internal 
+preference within \textit{AOtools}' \textit{phaseFromZernikes()} function 
+used to generate the simulated wavefronts. Alternatively, this may reflect a 
+genuine preference in the Zernike mode amplitude measurements in complex 
+wavefronts for azimuthal frequencies less than 0.
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1.png}
+		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1_order_radial_azimuthal.png}
 		\caption{}
 		\label{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1}
 	\end{subfigure}
 	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_2.png}
+		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_2_order_radial_azimuthal.png}
 		\caption{}
 		\label{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_2}
 	\end{subfigure}
 	
 	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_4.png}
+		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_4_order_radial_azimuthal.png}
 		\caption{}
 		\label{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_4}
 	\end{subfigure}
 	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_8.png}
+		\includegraphics[width=\linewidth]{images/Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_8_order_radial_azimuthal.png}
 		\caption{}
 		\label{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_8}
 	\end{subfigure}
 	\caption[The effect of image resizing on Zernike mode fitting 	
 	accuracy]{The effect of image resizing on Zernike mode fitting accuracy. 
 		Original images of size $256\times256$ pixels was generated with 
-		random amplitudes for 69 Zernike modes. Each subfigure shows the 
-		percentage error in the Zernike mode measurement and the linear 
-		regression of all Zernike mode measurements for images resized by 
-		\textbf{(a)} $1$ i.e. no resizing \textbf{(b)} $\frac{1}{2}$ i.e 
-		$128\times128$ pixels \textbf{(c)} $\frac{1}{4}$ i.e $64\times64$ 
-		pixels \textbf{(d)} $\frac{1}{8}$ i.e. $32\times32$ pixels}
-	\label{fig:zernike_fitting_accuracy_resize}
+		random amplitudes for Zernike modes up to radial order, 
+		$n = 10$. Each subfigure shows the percentage error in the Zernike 
+		mode measurement and the linear regression of all Zernike mode 
+		measurements for images resized by \textbf{(a)} $1$ i.e. no resizing 
+		\textbf{(b)} $\frac{1}{2}$ i.e $128\times128$ pixels \textbf{(c)} 
+		$\frac{1}{4}$ i.e $64\times64$ pixels \textbf{(d)} $\frac{1}{8}$ i.e. 
+		$32\times32$ pixels} \label{fig:zernike_fitting_accuracy_resize}
 \end{figure}
 
 There accuracy of the Zernike mode amplitude fitting is a limiting factor in two key areas. Firstly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring an ideal control matrix and, therefore, the ideal characterisation assay shown in Figure~\ref{fig:characterisation_assay_ideal}. Secondly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring a perfectly flat wavefront through direct wavefront sensing.
