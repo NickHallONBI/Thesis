@@ -24,7 +24,7 @@ first microscope is not known, but the invention did occur at around the same
 time and the term was coined by Giovanni Faber in 
 1625\cite{bardell2004invention}. It is interesting to note that the invention 
 of microscopes and telescopes are so closely linked, and that both astronomy 
-and microscopy continued enjoy a mutually beneficial relationship. The true 
+and microscopy continued to enjoy a mutually beneficial relationship. The true 
 power of microscopes to yield novel biological understanding was first 
 popularised by Robert Hooke and then later by Antonie van 
 Leeuwenhoek\cite{hooke1665micrographia, chung2017pioneers}. Since then, the 
@@ -62,7 +62,7 @@ release their energy as a photon - it is this phenomenon which is called
 fluorescence\cite{ghiran2011introduction}. For atoms, these energy states are
 reasonably discrete and (for the lowest levels) easy enough to draw in 
 Jab\l{}onski diagrams. Molecules capable of fluorescence, called 
-fluorophores, have broad ``energy bands'' of possible excitation and emission 
+fluorophores, more complex energy levels (XXmayebe landscapes?) and broad ``energy bands'' of possible excitation and emission 
 wavelengths. Additionally, the absorption and emission cross-sections are not 
 the same for all wavelengths. This leads to excitation and emission spectra 
 for fluorescent molecules. Figure~\ref{fig:GFP_emission_absorption_spectra} 
@@ -117,8 +117,11 @@ of this simplified system.
 		rays process through the microscope system before emerging at the exit pupil 
 		and being focused at the image plane, $\textbf{O'}$. The light rays which 
 		form and angle with the optical axis, $\textbf{OO'}$, of $\alpha$ are called
-		marginal rays. Marginal rays are the highest diffraction order collectable by
-		the entrance pupil and therefore the microscope system as a whole.}
+		marginal rays. Marginal rays are the highest XX diffraction order collectable by
+		the entrance pupil XX (NO this is only true is
+                transmission. In fl the light isnt diffracted, it is
+                just the highest angle of light that can be collected.
+                XX) and therefore the microscope system as a whole.}
 	\label{fig:simplified_microscope_layout}
 \end{figure}
 
@@ -158,7 +161,8 @@ limit, $r_l$ is often quoted as:
 r_l \approx \frac{1.22\lambda}{2NA}
 \end{equation}
 
-otherwise known as the Abbe diffraction limit\cite{abbe1873beitrage}. Through
+otherwise known as the Abbe diffraction limit\cite{abbe1873beitrage}
+(XX NO abbe limit is 0.5*lambda/NA. Related but different contrast limitXX). Through
 a similar process and considering the field intensity along the $z'$ axis, the
 axial resolution, $r_a$, is given as\cite{pawley2006handbook}:
 
@@ -225,7 +229,10 @@ determining the location of the first minima is not as simple as it has been
 presented here. The first minima may not even be radially symmetric. 
 
 Furthermore, the `true' resolution achievable by a microscopy system is 
-affected by other factors such as the signal-to-noise ratio of an image, 
+affected by other factors such as the signal-to-noise ratio of an
+image (XX in fact the difefrence bewteen for instance the abbe and
+reyleigh limits can be atributed to s:n. Reighley assumes a ~25\% dip
+between peaks Abbe is much lessXX), 
 coherence conditions of illumination, apodization, discretisation errors for 
 digital cameras, to name a few\cite{den1997resolution}. There have been 
 attempts to develop alternative resolution measurements for point 
@@ -330,7 +337,7 @@ O_{0}(\textbf{k}) =
 \label{sec:super_res}
 
 For some time, the diffraction limit represented a kind of practical 
-resolution asymptote - a point to be approached by never reached. Two
+resolution asymptote - a point to be approached but never reached. Two
 `gold standard' techniques for optical bioimaging emerged thanks to their
 ease of implementation and how close they were able to get to the diffraction
 limit; deconvolution\cite{agard1983three, wallace2001workingperson} and
@@ -365,13 +372,14 @@ considered `structured illumination' techniques since they do rely on spatially
 structured excitation light, for the duration of this thesis the term 
 `structured illumination microscopy' or SIM refers to the form of 
 interference-based microscopy pioneered by Mats 
-Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}.
+Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}
+(XX probably should ref the early Heizmann and Cremer paper(s)XX https://www.spiedigitallibrary.org/conference-proceedings-of-spie/3568/0000/Laterally-modulated-excitation-microscopy--improvement-of-resolution-by-using/10.1117/12.336833.short?SSO=1).
 This implementation of SIM is best understood through the moir\'{e} effect.
 Two patterns, such as those shown in Figure~\ref{fig:fringes_1} and 
 \ref{fig:fringes_1}, which are multiplicatively superimposed on one another
 will produce a beat pattern - moir\'{e} fringes - such as those shown in
 Figure~\ref{fig:fringes_moire}. Using the convolution theorem, the Fourier
-transform if this superposition is equivalent to the convolution of the 
+transform of this superposition is equivalent to the convolution of the 
 Fourier transforms of the two original patterns\cite{mcgillem1991continuous},
 as shown in Figures~\ref{fig:fringes_1_ft}-\ref{fig:fringes_moire_ft}. 
 
@@ -599,7 +607,7 @@ wavelengths respectively.  However, this extension factor only applied in
 the direction $\overrightarrow{\textbf{p}}$. To achieve isotropic 
 resolution enhancement, a number of pattern directions are required. 
 Rotating the illumination pattern through the three stripe angles shown 
-in Figure~\ref{fig:3D_SIM_OTF_stripe_angles} yields the extended 
+in Figure~\ref{fig:3D_SIM_OTF_stripe_angles} yields the close to isoptropic extended 
 observable region in Figure~\ref{fig:2D_SIM_OTF_all_2D_angles}, the 
 projection of which in the $k_{x}k_{y}$ plane is shown in
 Figure~\ref{fig:3D_SIM_OTF_xy_expansion_w_double_rad_filled}. 
@@ -709,7 +717,7 @@ since these Fourier components are closer together than the
 on-axis components, much of these missing cones is filled out by 
 the rotation of the interference pattern through several stripe
 angles. Taken together, the extension of the observable region 
-yields a super-resolution image with an isotropic resolution 
+yields a super-resolution image with a near isotropic resolution 
 doubling compared to a diffraction limited 
 system\cite{gustafsson2008three}.
 
@@ -912,7 +920,7 @@ rms(\Phi) = \left(\sum\limits_{n,m}{\left({\alpha_{n}^{m}}\right)^{2}}\right)^{\
 var(\Phi) = \sum\limits_{n\ne 0,m\ne 0}{\left({\alpha_{n}^{m}}\right)^{2}},
 \end{align}
 
-Since $\mathcal{Z}_{n}^{m}$ - i.e. piston - does not affect image 
+Since $\mathcal{Z}_{n}^{m}$  (XX shouldnt this be n=0, m=0? XX)- i.e. piston - does not affect image 
 formation, often its corresponding amplitude $\alpha_{0}^{0}$ is
 simply not included. In this case, $rms(\Phi) = \sqrt{var(\Phi)}$
 
