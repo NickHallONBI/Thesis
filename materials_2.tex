@@ -29,7 +29,7 @@ F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r}),\\
 \end{split}\tag{\ref{eq:fluorescent_image}}
 \end{equation}
 
-Where $D(\textbf{r})$ is the sample fluorescence distribution, 
+where $D(\textbf{r})$ is the sample fluorescence distribution, 
 $I(\textbf{r})$ is the illumination pattern, $E(\bar{x})$ is
 the resultant emission signal and $H(\textbf{r})$ is the system 
 point spread function (PSF). Section~\ref{sec:aberrations} has already
@@ -64,7 +64,7 @@ transform operation. Utilizing the Fourier convolution
 theorem, Equation~\ref{eq:SIM_illumination} becomes:
 
 \begin{equation}\label{eq:SIM_illumination_invFT}
-I(\textbf{r}) = \left\| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\textbf{r}') + \frac{\exp^{-i\theta}}{2}\delta(\textbf{r}'-\textbf{p}) + \frac{\exp^{i\theta}}{2}\delta(\textbf{r}'+\textbf{p})\right]P(\textbf{r}')\right\} \right\|^{2}
+I(\textbf{r}) = \left| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\textbf{r}') + \frac{\exp^{-i\theta}}{2}\delta(\textbf{r}'-\textbf{p}) + \frac{\exp^{i\theta}}{2}\delta(\textbf{r}'+\textbf{p})\right]P(\textbf{r}')\right\} \right|^{2}
 \end{equation}
 
 Where value of $\textbf{p}$ positions the delta functions in the
@@ -212,14 +212,11 @@ fluorophore to visualise the neurons, washed with HL3 buffer with 0.3mM
 $\text{Ca}^{2+}$ and imaged in HL3 buffer with 0mM $\text{Ca}^{2+}$ to 
 prevent the larvae from moving.
 
-\section{Experimental Results}
-\label{sec:DeepSIM_results}
+\section{Experimental Setup}
+\label{sec:DeepSIM_setup}
 
-\subsection{Experimental Setup}
-\label{subsec:DeepSIM_setup}
-
-As previously notes, the theoretical resolution extension factor for 
-a diffraction limited SIM system is given by:
+As previously noted in Section~\ref{subsec:SIM}, the theoretical resolution 
+extension factor for a diffraction limited SIM system is given by:
 
 \begin{equation}
 \alpha_{l} = \frac{\left(\frac{1}{\lambda_{ex}} + \frac{1}{\lambda_{em}}\right)}{\frac{1}{\lambda_{em}}} = 1 + \frac{\lambda_{em}}{\lambda_{ex}}.\tag{\ref{eq:lateral_res_extension_factor}}
@@ -247,6 +244,9 @@ green and red channels respectively is $291$nm and $338$nm. The stripe
 width was $322$nm and $367$nm for $488$nm and $561$nm excitation
 wavelengths respectively.
 
+\section{Experimental Results}
+\label{sec:DeepSIM_results}
+
 To verify both that the system is capable of achieving super-resolution
 and that Microscope-AOtools is capable of correcting for optical 
 aberrations, the Argolight SIM slide was image. The structure chosen for
@@ -254,7 +254,7 @@ imaging was a set of pairs of $36 \mu$m-long horizontal lines pairs lines
 which spacing gradually increases, from $0$ to $390$nm, with a step of 
 $30$nm. 
 
-This structure was chosen for two principle reasons. Firstly, the known
+This structure was chosen for two principal reasons. Firstly, the known
 separation of the fluorescent structures allows for an accurate gauge of 
 the system resolving power. The structure was excited at $488$nm and 
 measured with a peak emission wavelength of $610$nm. Therefore, utilising 
