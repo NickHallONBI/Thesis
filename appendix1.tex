@@ -1,3 +1,50 @@
-\chapter{Sample Title}
+\chapter{Noll indexing and Zernike polynomial expansions}
+\label{app:zernike_expansion}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Table~\ref{tab:zernike_expansion} contains the algebraic expansion of the Zernike polynomial sequence expressed in general form in Equation~\ref{eq:zernike_polynomial} up to radial order $n = 7$. The Zernike polynomials in Table~\ref{tab:zernike_expansion} are presented in ascending Noll index order. The Zernike polynomials are assigned a Noll index, $j$, first according to their radial order, $n$, in ascending order. For Zernike polynomials with the same radial order, a Noll index is then assigned according to their absolute azimuthal frequency, $|m|$, in ascending order. Finally, for Zernike polynomials with the same absolute azimuthal frequency, a Noll index is assigned according to the convention that Zernike polynomials with an even Noll index have a $\cos(m\theta)$ term and Zernike polynomials with an odd Noll index have a $\sin(m\theta)$ term\cite{noll1976zernike}. Table~\ref{tab:zernike_expansion} lists for each Zernike polynomial: the Noll index, $j$; radial order, $n$; azimuthal frequency, $m$; algebraic expansion, $\mathcal{Z}^{m}_{n}\left(\rho,\theta\right)$; and classical aberration name.
+
+\begin{table}
+	\vspace{-2cm}
+	\hspace{-2cm}
+	\begin{tabular}{ | p{2cm} | p{1.5cm} | p{2cm} | p{6.25cm} | p{4cm} |}
+		\hline
+		Noll index ($j$) & Radial order ($n$) & Azimuthal frequency ($m$) & $\mathcal{Z}^{m}_{n}\left(\rho,\theta\right)$ & Classical aberration name \\ \hline
+		$1$ & $0$ & $0$ & $1$ & Piston \\ \hline
+		$2$ & $1$ & $+1$ & $2\rho \cos(\theta)$ & Tip \\ \hline
+		$3$ & $1$ & $-1$ & $2\rho \sin(\theta)$ & Tilt \\ \hline
+		$4$ & $2$ & $0$ & $\sqrt{3}\left(2\rho^{2} - 1\right)$ & Defocus \\ \hline	
+		$5$ & $2$ & $-2$ & $\sqrt{6}\rho^{2} \sin(2\theta)$ & Oblique Astigmatism \\ \hline
+		$6$ & $2$ & $+2$ & $\sqrt{6}\rho^{2} \cos(2\theta)$ & Vertical Astigmatism \\ \hline
+		$7$ & $3$ & $-1$ & $\sqrt{8}\left(3\rho^{3} - 2\rho\right) \sin(\theta)$ & Vertical Coma \\ \hline
+		$8$ & $3$ & $+1$ & $\sqrt{8}\left(3\rho^{3} - 2\rho\right) \cos(\theta)$ & Horizontal Coma \\ \hline
+		$9$ & $3$ & $-3$ & $\sqrt{8}\rho^{3} \sin(3\theta)$ & Vertical Trefoil \\ \hline
+		$10$ & $3$ & $+3$ & $\sqrt{8}\rho^{3} \cos(3\theta)$ & Oblique Trefoil \\ \hline
+		$11$ & $4$ & $0$ & $\sqrt{5}\left(6\rho^{4} - 6\rho^{2} + 1\right)$ & Primary Spherical \\ \hline	
+		$12$ & $4$ & $+2$ & $\sqrt{10}\left(4\rho^{4} - 3\rho^{2}\right) \cos(2\theta)$ & Vertical Secondary Astigmatism \\ \hline
+		$13$ & $4$ & $-2$ & $\sqrt{10}\left(4\rho^{4} - 3\rho^{2}\right) \sin(2\theta)$ & Oblique Secondary Astigmatism \\ \hline
+		$14$ & $4$ & $+4$ & $\sqrt{10}\rho^{4} \cos(4\theta)$ & Vertical Quadrafoil \\ \hline
+		$15$ & $4$ & $-4$ & $\sqrt{10}\rho^{4} \sin(4\theta)$ & Oblique Quadrafoil \\ \hline
+		$16$ & $5$ & $+1$ & $\sqrt{12}\left(10\rho^{5} - 12\rho^{3} + 3\rho\right) \cos(\theta)$ & Secondary Horizontal Coma \\ \hline
+		$17$ & $5$ & $-1$ & $\sqrt{12}\left(10\rho^{5} - 12\rho^{3} + 3\rho\right) \sin(\theta)$ & Secondary Vertical Coma \\ \hline
+		$18$ & $5$ & $+3$ & $\sqrt{12}\left(5\rho^{5} - 4\rho^{3}\right) \cos(3\theta)$ & - \\ \hline
+		$19$ & $5$ & $-3$ & $\sqrt{12}\left(5\rho^{5} - 4\rho^{3}\right) \sin(3\theta)$ & - \\ \hline
+		$20$ & $5$ & $+5$ & $\sqrt{12}\rho^{5} \cos(5\theta)$ & Vertical Pentafoil \\ \hline
+		$21$ & $5$ & $-5$ & $\sqrt{12}\rho^{5} \sin(5\theta)$ & Horizontal Pentafoil \\ \hline
+		$22$ & $6$ & $0$ & $\sqrt{7}\left(20\rho^{6} - 30\rho^{4} + 12\rho^{2} - 1\right)$ & Secondary Spherical \\ \hline
+		$23$ & $6$ & $-2$ & $\sqrt{14}\left(15\rho^{6} - 20\rho^{4} + 6\rho^{2}\right)\sin(2\theta)$ & - \\ \hline
+		$24$ & $6$ & $+2$ & $\sqrt{14}\left(15\rho^{6} - 20\rho^{4} + 6\rho^{2}\right)\cos(2\theta)$ & - \\ \hline
+		$25$ & $6$ & $-4$ & $\sqrt{14}\left(6\rho^{6} - 5\rho^{4}\right)\sin(4\theta)$ & - \\ \hline
+		$26$ & $6$ & $+4$ & $\sqrt{14}\left(6\rho^{6} - 5\rho^{4}\right)\cos(4\theta)$ & - \\ \hline
+		$27$ & $6$ & $-6$ & $\sqrt{14}\rho^{6}\sin(6\theta)$ & - \\ \hline
+		$28$ & $6$ & $+6$ & $\sqrt{14}\rho^{6}\cos(6\theta)$ & - \\ \hline
+		$29$ & $7$ & $-1$ & $4\left(35\rho^{7} - 60\rho^{5} + 30\rho^{3} - 4\rho\right) \sin(\theta)$ & - \\ \hline
+		$30$ & $7$ & $+1$ & $4\left(35\rho^{7} - 60\rho^{5} + 30\rho^{3} - 4\rho\right) \cos(\theta)$ & - \\ \hline
+		$31$ & $7$ & $-3$ & $4\left(2\rho^{7} - 30\rho^{5} + 10\rho^{3}\right) \sin(3\theta)$ & - \\ \hline
+		$32$ & $7$ & $+3$ & $4\left(2\rho^{7} - 30\rho^{5} + 10\rho^{3}\right) \cos(3\theta)$ & - \\ \hline
+		$33$ & $7$ & $-5$ & $4\left(7\rho^{7} - 6\rho^{5}\right) \sin(5\theta)$ & - \\ \hline
+		$34$ & $7$ & $+5$ & $4\left(7\rho^{7} - 6\rho^{5}\right) \cos(5\theta)$ & - \\ \hline
+		$35$ & $7$ & $-7$ & $4\rho^{7} \sin(7\theta)$ & - \\ \hline
+		$36$ & $7$ & $+7$ & $4\rho^{7} \cos(7\theta)$ & - \\ \hline
+	\end{tabular}
+	\caption{\label{tab:zernike_expansion}Algebraic expansion of the Zernike polynomial sequence}
+\end{table}
