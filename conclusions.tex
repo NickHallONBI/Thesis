@@ -39,7 +39,8 @@ enable it to be used on a range of microscopes with varying adaptive
 elements, wavefront sensing techniques and sample correction techniques. 
 Microscope-AOtools is integrating into Python-Microscope in order to enable 
 accessibility to microscope users without requiring a complete understanding 
-of all the technical details implemented.
+of all the technical details of the implementation and wide
+applicability due to the varied hardware support.
 
 The primary evidence for the claim that Microscope-AOtools is robust and 
 generalised is its successful deployment on two separate imaging systems, 
@@ -47,7 +48,8 @@ with additional deployments forthcoming. On both the Aurox Clarity and
 DeepSIM systems, AO correction provided by Microscope-AOtools yielded 
 significant increases in image quality and contrast. On the DeepSIM system, 
 the AO correction was able to enable diffraction-limited imaging of a highly 
-regular fluorescent structure deep in a glass structure. The AO correction 
+regular fluorescent structure deep in a glass structure with
+significant spherical aberration. The AO correction 
 also enabled 3D SIM imaging up to 30$\mu$m in biological samples, well beyond 
 the typical 10-20$\mu$m imaging depth for 
 SIM\cite{schermelleh2019super,wu2018faster}. 
@@ -115,7 +117,7 @@ compared.
 
 The generalised nature of Microscope-AOtools continues into the Sample 
 Correction methods. By allowing the user to swap between wavefront sensing 
-technique, Microscope-AOtools already possesses all the methods necessary 
+techniques, Microscope-AOtools already possesses all the methods necessary 
 for performing sample correction using direct wavefront sensing, provided 
 the wavefront sensing technique is already included in the suite of 
 methods. Similarly, Microscope-AOtools utilises a suite of image quality 
@@ -212,4 +214,9 @@ allows for a user to control key parameters whilst obfuscating much of the
 technical complexity. It has been shown to be successfully deployed on a 
 number of different systems, with additional deployments forthcoming. With 
 time and community support, such an implementation has scope to go beyond its 
-current state of ``generalised software implementation'' and become a universal software implementation for AO.
+current state of ``generalised software implementation'' and become a
+universal software implementation for AO.
+
+(XX should say you have demonstarted that it has significantly
+improved imaging iusing it, especially in challenging conditions, deep
+in biolofgical tissue. XX).
