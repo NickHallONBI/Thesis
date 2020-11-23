@@ -8,7 +8,11 @@ Python-Microscope to control the physical hardware. Microscope-AOtools
 has the following Python package dependencies: numpy\cite{walt2011numpy},
 scipy\cite{virtanen2020scipy}, scikit-image\cite{van2014scikit}, 
 sympy\cite{meurer2017sympy}, and AOtools\cite{townson2019aotools}.
-It incorporates methods for calibrating a DM, evaluating the success of the calibration in recreating aberrations and performing both direct wavefront sensing and sensorless adaptive optics corrections. The methods for sensorless adaptive optics correction can utilise a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories: Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
+It incorporates methods for calibrating a DM, evaluating the success
+of the calibration in recreating aberrations and performing both
+direct wavefront sensing and sensorless adaptive optics
+corrections. The methods for sensorless adaptive optics correction can
+utilise one of a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories: Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
 
 \begin{figure}[H]
 	\centering
@@ -79,7 +83,7 @@ Where $a(x,y)$ describes the variation of the background illumination, $b(x,y)$ 
 I(x,y) = a(x,y) + c(x,y) + c^{*}(x,y),
 \end{equation}
 
-Where $c^{*}(x,y)$ is the complex conjugate of $c^{*}(x,y)$. Applying the 2-D Fourier transform Equation~\ref{eq:I_cos_expand} becomes:
+Where $c^{*}(x,y)$ is the complex conjugate of $c(x,y)$. Applying the 2-D Fourier transform Equation~\ref{eq:I_cos_expand} becomes:
 
 \begin{equation}\label{eq:I_fourier}
 \boldsymbol{I}(u,v) = \boldsymbol{A}(u,v) + \boldsymbol{C}(u,v) + \boldsymbol{C}^{*}(u,v),
@@ -91,7 +95,7 @@ Where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  
 \phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right).
 \end{equation}
 
-In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
+In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a Tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
 
 \begin{figure*}
 	\centering
@@ -200,9 +204,19 @@ In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow
 
 Having performed the FFT (\ref{fig:puw_new_fringe_fft}), an array described by Equation~\ref{eq:I_fourier} is obtained. A selection of the central spatial frequencies are masked (\ref{fig:puw_new_fringe_fft_centre_blocked}), primarily to mask out the central spatial frequency which represents the mean intensity and has an amplitude orders of magnitude larger than any other spatial frequency. The spatial frequencies which now have the highest amplitudes correspond to both $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$. One of the aforementioned amplitude peaks is located and a bandpass filter described by $\sin^{2}(x,y)$ is constructed (\ref{fig:puw_fft_filter}) centred on the spatial frequency location of this amplitude peak. As previously noted, the Fourier transform of the interferogram is symmetrical around the central spatial frequency. So, it doesn't matter which of the two peaks this filter is centred on since they encode the same information. The aforementioned bandpass filter is then applied to the FFT of the interferogram (\ref{fig:puw_new_fringe_order1}) and these spatial frequencies are then rolled to the central spatial frequency position (\ref{fig:puw_order1_roll}). Applying this successfully filters $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$, isolating $\boldsymbol{C}(u,v)$ as desired.
 
-The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$. An 2D  algorithm is used to unwrap the phase map and yield a phase Figure~\ref{fig:puw_unwrapped_phase} is obtained\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
+The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$. A 2D  algorithm is used to unwrap the phase map and yield a phase Figure~\ref{fig:puw_unwrapped_phase} is obtained\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
 
-Automation does have a drawback. The location of the phase component of the Fourier transform is determined by finding the maximum intensity in the data represented by Figure~\ref{fig:puw_new_fringe_fft_centre_blocked} and then performing a number of centre of mass calculations to find the `true' centre of the phase component. However, this `true' centre may still be incorrect by a few pixels. This offset leads to an artificial introduction of tip and/or tilt in the final wavefront and this artificial tip/tilt cannot be separated from the true tip/tilt. Therefore, the described phase acquisition implementation cannot be said to be sensitive to tip or tilt. However, since tip and tilt (along with piston) are not considered to be a true optical aberration, this is a small price to pay for a fully automated phase acquisition workflow.
+Automation does have a drawback. The location of the phase component
+of the Fourier transform is determined by finding the maximum
+intensity in the data represented by
+Figure~\ref{fig:puw_new_fringe_fft_centre_blocked} and then performing
+a number of centre of mass calculations to find the `true' centre of
+the phase component. However, this `true' centre may still be
+incorrect by a few pixels. This offset leads to an artificial
+introduction of tip and/or tilt in the final wavefront and this
+artificial tip/tilt cannot be separated from the true
+tip/tilt. Therefore, the described phase acquisition implementation is
+not sensitive to tip or tilt. However, since tip and tilt (along with piston) are not considered to be a true optical aberration, this is a small price to pay for a fully automated phase acquisition workflow.
 
 This phase extraction technique is used as part of other methods, but it is also useful for a user to be able to visualise the wavefront phase map. Principally this is because if the interferogram is not well focused on the camera it can result in the wavefront being heavily distorted by the Zernike mode corresponding to the defocus optical aberration (Noll Index 4). This can mask smaller wavefront deformations caused by the movement of the DM actuators and therefore bias calibration measurements. It can also be useful to view the system aberrations present, to check the difference applying the system aberration correction makes to the wavefront shape and to manually check for discontinuities. Cockpit implements such a method as the functionality of the "Visualise Phase" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:phase_viewer_phase}, displaying the phase wavefront acquired from the interferogram. The display can be changed to the power spectrum of the interferogram, Figure~\ref{fig:phase_viewer_ft}, and back by pressing the "Real/Fourier Transform switch" button. 
 
@@ -552,7 +566,9 @@ Figure~\ref{fig:direct_wavefront_flattening_workflow}. The wavefront is
 obtained through whatever direct wavefront sensing method has been 
 implemented and selected, a number of Zernike modes determined by the user 
 are fitted to the wavefront using the method described in 
-Section~\ref{subsec:zernike_mode_measurment}, an equal and opposite magnitude 
+Section~\ref{subsec:zernike_mode_measurment}, an equal (XX surely this
+is 1/2 the error as the mirror effectively gives you 2x the applied
+phase correction XX) and opposite magnitude 
 of these modes are applied to the DM. The RMS wavefront error is then 
 calculated. This process repeats until $N$ iterations have been performed or 
 the RMS wavefront error is below a user defined error threshold, $\delta$.
@@ -617,7 +633,15 @@ have been numerous metrics developed which have been shown to be effective on ce
 	\label{fig:sensorless_correction_method}
 \end{figure}
 
-The complexity of sensorless adaptive optics correction lies in selecting the best image quality metric. There have been numerous metrics developed which have been shown to be effective on certain sample types or imaging modalities\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive}. In order for an adaptive optics implementation to be considered generalised, it should not be tied to a particular sample type or imaging modality. For this reason, Microscope-AOtools offers a range of image quality metrics, all located in the \textit{aoMetrics.py}.  
+The complexity of sensorless adaptive optics correction lies in
+selecting the best image quality metric. There have been numerous
+metrics developed which have been shown to be effective on certain
+sample types or imaging
+modalities\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive}. In
+order for an adaptive optics implementation to be considered
+generalised, it should not be tied to a particular sample type or
+imaging modality. For this reason, Microscope-AOtools offers a range
+of image quality metrics, all located in the program file \textit{aoMetrics.py}.  
 
 Unlike the calibration, characterisation and direct wavefront sensing techniques, the sensorless adaptive optics routine is not a method implemented in Microscope-AOtools and simply called by Cockpit. Instead, the sensorless correction routine relies on coordination between Cockpit, Python Microscope and Microscope-AOtools. The biological sample is set up in the image plane. A known amplitude of the first Zernike mode to be corrected for is applied to the DM by Microscope-AOtools, Then the light sources and camera are triggered by Python Microscope and the image data is collected by Cockpit. This is repeated for $M$ measurements. Then, Cockpit passes the $M$ images to Microscope-AOtools where the image quality metric for each image is evaluated. These values are then used to fit a Gaussian function and the mean of the Gaussian yields the Zernike mode amplitudes which should yield the maximum image quality, $a_{max}$. This amplitude is then applied to the DM and stored as the offset on top of which all further corrections should be applied. This process is then repeated for $N$ Zernike modes. This whole process is further repeated for $T$ iterations. Finally, the recorded Zernike mode amplitudes which have been corrected for and the actuator positions associated with that correction are stored in in Cockpit's internal configuration. The sensorless adaptive optics routine is initiated by pressing the "Sensorless AO" button shown in Figure~\ref{fig:DM_methods_cockpit}. The workflow of this routine is shown in Figure~\ref{fig:sensorless_correction_workflow_DeepSIM}
 
@@ -632,7 +656,28 @@ Clearly, this sensorless routine has multiple parameters and there is a limited 
 
 The values for $j_{min}$ and $j_{max}$ should ideally be chosen to scan a sufficient range of aberration amplitudes to ensure $j_{min} \le a_{max} \le j_{max}$. At the least $a_{max}$ should be sufficiently close to $j_{min}$ or $j_{max}$ so that there is a clear increase in image quality as the aberration amplitude applied approaches one of these bounds. This range should not be too large otherwise a user risks either having sparse image quality data which only captures extreme aberrations and prevents an adequate fitting, or taking a sufficient number of measurements but introducing considerable photodamage. Like the image quality metrics, the $[j_{min},j_{max}]$ range will vary with sample type and so some preliminary work is required before data collection proper to ascertain the correct range as well as the correct number of measurements and iterations, $N$ and $T$, for a given sample type. 
 
-As previously mentioned, the $[j_{min},j_{max}]$ range should ideally contain $a_{max}$ or $a_{max}$ should be close to one of these bounds. Allowing the Gaussian function to be fitted to the image quality metric values with no bounds (i.e. allowing $a_{max}$ to take any value) becomes problematic when the image quality metric values remain largely constant over all the amplitudes applied. This phenomenon can occur for a number of reasons; $a_{max}$ is found far outside the range of amplitudes scanned, the amplitudes sampled were sufficiently sparse that the central region of the Gaussian lies between two amplitudes, the aberration being sampled does not have a strong impact on the image quality measured, another, more significant aberration mode has not been corrected and the effect of this other mode is masking the effect of the current mode, etc. Whatever the reason, an unbounded fitting to a relatively flat profile of image quality metric measurements will lead to a large value of $a_{max}$ which is unreliable and often results in an applying an aberration amplitude which severely damages the image quality. To ensure that the Gaussian fitting to find $a_{max}$ yields a reasonable value, the fitting has bounds defined as $(j_{max}-j_{min}) \pm 0.25(j_{max}-j_{min})$.
+As previously mentioned, the $[j_{min},j_{max}]$ range should ideally
+contain $a_{max}$ or $a_{max}$ should be close to one of these
+bounds. Allowing the Gaussian function to be fitted to the image
+quality metric values with no bounds (i.e. allowing $a_{max}$ to take
+any value) becomes problematic when the image quality metric values
+remain largely constant over all the amplitudes applied. This
+phenomenon can occur for a number of reasons; $a_{max}$ is found far
+outside the range of amplitudes scanned, the amplitudes sampled were
+sufficiently sparse that the central region of the Gaussian lies
+between two amplitudes, the aberration being sampled does not have a
+strong impact on the image quality measured, another, more significant
+aberration mode has not been corrected and the effect of this other
+mode is masking the effect of the current mode, etc. Whatever the
+reason, an unbounded fitting to a relatively flat profile of image
+quality metric measurements will lead to a large value of $a_{max}$
+which is unreliable and often results in an applying an aberration
+amplitude which severely damages the image quality. To ensure that the
+Gaussian fitting to find $a_{max}$ yields a reasonable value, the
+fitting has bounds defined as $(j_{max}-j_{min}) \pm
+0.25(j_{max}-j_{min})$. (XX this doesnt seem right, as this means the
+result must be in the central 50\% of the input range, is this really
+how you run it or is this formula wrong? XX)
 
 \subsection{Image Quality Metric: Fourier Power}
 \label{subsec:fourier_power_metric}
@@ -645,7 +690,8 @@ metrics to choose from. Both the DeepSIM and the Aurox
 Clarity systems can be considered structured illumination
 system. Although the Aurox Clarity system is clearly not a 
 Gustafsson-style SIM system, the illumination pattern imposed by
-the spinning disk. If follow that the image quality of both systems is
+the spinning disk (XX not sure what you are trying to say but this
+isnt a senstence XX) . If follow that the image quality of both systems is
 contingent on high quality Fourier information. Therefore, 
 a sensible starting point for the image quality metric, $S$, 
 is the total power of the Fourier spectrum:
@@ -708,7 +754,7 @@ Equation~\ref{eq:lateral_spatial_freq_res}
 
 Within the OTF lowpass limit, certain spatial frequencies will be dominated
 by noise contributions. As such, when attempting to quantify the power 
-contribution from the fluorescent it is desirable to ignore the noise
+contribution from the fluorescence it is desirable to ignore the noise
 contributions. A thresholding mask, $\tau_{n,m}$ is created and defined as:
 
 \begin{equation}\label{eq:noise_threshold_mask}
