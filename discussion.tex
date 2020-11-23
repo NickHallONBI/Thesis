@@ -1,5 +1,12 @@
 \chapter{Discussion}
 
+(XX I think this needs a paragraph of introduction, I have shown that
+Ao can significantly improve image quality. Here I discus some
+limitations... Dont like that phrtasing but something to set the scene
+otherwise getting straight into Zernike mode fitting accurancy is a
+bit jarring XX)
+
+
 \section{Limitations of Microscope-AOtools}
 \label{sec:limitations}
 
@@ -23,7 +30,8 @@ case the simulated wavefront image created using \textit{AOtools} takes the
 place of the measured phase wavefront, $\Phi(x,y)$. 
 
 The simplest test of the accuracy of the Zernike mode amplitude fitting 
-follows thusly. \textit{AOtools} is used to create a wavefront image with RMS 
+follows thusly. \textit{AOtools} is used to create a wavefront image
+with RMS (XX I think this should be ``amplitude'' XX) 
 1 radian (i.e. $\alpha_{j} = 1$) of a particular Zernike mode. The Zernike 
 mode amplitudes present in the wavefront image is then measured and the 
 percentage error between the measured and simulated Zernike mode amplitudes 
@@ -35,8 +43,9 @@ some degree of error in the Zernike mode amplitude measurement. Zernike modes
 with an even azimuthal frequency appear to perform worse than Zernike modes 
 with either an odd or zero azimuthal frequency. All non-zero azimuthal 
 frequency Zernike modes display a trend of increasing percentage error with 
-radial order. The magnitude of percentage error also decreases with simulated 
-wavefront size. 
+radial order. The magnitude of percentage error also decreases with
+increasing simulated 
+wavefront size (XX I think, it was not clear before XX). 
 
 Interestingly, there is often a clear split in percentage error between 
 Zernike modes with positive and negative even azimuthal frequencies. This is most visible in 
@@ -199,7 +208,7 @@ measurements are used as the $x$ and $f(x)$ variables respectively.
 \textit{scipy}'s \textit{curve\textunderscore fit} functionality then 
 estimates the values of $\Delta$, $\eta$, $\mu$, and $\sigma$ which give 
 the best fit to the data. An amplitude $\mu$ of the current Zernike mode is 
-then applied to obtain the optimum correction for that mode. It is wise to 
+then applied to obtain the optimum correction for that mode. It is necessary to 
 constrain the values which these parameters can take, otherwise it is 
 possible for the automation to go awry.
 
@@ -207,7 +216,8 @@ Figure~\ref{fig:zernike_fitting_only_current_power_metric_no_fit_2} shows
 some sample image quality metric values acquired from a correction routine 
 on a \textit{Drosophila} neuro-muscular junction preparation similar to 
 that shown in Section~\ref{sec:DeepSIM_biology}. Here the metric 
-measurements were acquired for Zernike mode 5 (Noll index) using the 
+measurements were acquired for Zernike mode 5 (Noll index) (XX what
+aberaration is this? vertical Astigmatism? XX) using the 
 Fourier Power metric from Section~\ref{subsec:fourier_power_metric} and the 
 sampled Zernike mode amplitudes were $[-2,2]$ radians. If \textit{scipy}'s 
 \textit{curve\textunderscore fit} functionality is applied with no 
@@ -233,7 +243,8 @@ order of magnitude and corresponds to a maximum. It is worth noting that
 the image quality amplitude for data points corresponding to ``Zernike 
 amplitude for maximum quality'' in 
 Figure~\ref{fig:sensorless_fitting_accuracy} do not represent the true 
-image quality metric measurement when that amplitude is applied, only the 
+image quality metric measurement (XX what do you mean? I dont
+understand this XX)  when that amplitude is applied, only the 
 theoretical image quality metric value according to the obtained fit. 
 
 \begin{figure}[h]
@@ -283,7 +294,7 @@ actuators to their default 0 position. "Apply last pattern" applies the last
 recorded actuator pattern applied to the DM. Actuator patterns applied 
 through "Reset DM" are not recorded. These buttons allow a user to toggle 
 between the calculated sensorless correction pattern and no correction 
-pattern. 
+pattern (XX is this no correction or system correction? XX). 
 
 For a sensorless correction routine which has failed due to, for example, an 
 incorrect correction for one mode has caused a run-away degradation of the 
@@ -295,7 +306,7 @@ characteristic PSF distortions may be visible.
 Figure~\ref{fig:sensorless_unsuccessful_end} shows the results of an 
 unsuccessful sensorless correction routine performed on the Alexa488 channel 
 of bovine pulmonary artery endothelial cells (F36924, Invitrogen), where 
-Alexa488 was used to stain F-actin. 
+Alexa488-phalloidin was used to stain F-actin. 
 Figure~\ref{fig:sensorless_unsuccessful_end} displays poorer contrast, lower 
 intensity, and overall lower resolution compared to 
 Figure~\ref{fig:sensorless_unsuccessful_start}.
@@ -327,7 +338,23 @@ Figure~\ref{fig:sensorless_unsuccessful_start}.
 		\caption{}
 		\label{fig:sensorless_successful_end}
 	\end{subfigure}
-	\caption[Visual distinction between unsuccessful and successful sensorless correction routines]{Visual distinction between successful and unsuccessful sensorless correction routines. \textbf{(a)} A bovine pulmonary artery endothelial junction before an unsuccessful sensorless correction routine \textbf{(b)} A bovine pulmonary artery endothelial after an unsuccessful sensorless correction routine. \textbf{(a)} and \textbf{(b)} are displayed on the same colour scale and show the Alexa488 channel staining F-actin. \textbf{(c)} A \textit{drosophila} neuro-muscular junction before a successful sensorless correction routine \textbf{(d)} A \textit{drosophila} neuro-muscular junction after a successful sensorless correction routine. \textbf{(c)} and \textbf{(d)} are displayed on the same colour scale and show the Alexa488 channel labelling Horseradish Peroxidase (HRP).}
+	\caption[Visual distinction between unsuccessful and
+          successful sensorless correction routines]{Visual
+          distinction between successful and unsuccessful sensorless
+          correction routines. \textbf{(a)} A bovine pulmonary artery
+          endothelial junction before an unsuccessful sensorless
+          correction routine \textbf{(b)} A bovine pulmonary artery
+          endothelial after an unsuccessful sensorless correction
+          routine. \textbf{(a)} and \textbf{(b)} are displayed on the
+          same colour scale and show the Alexa488 channel staining
+          F-actin. \textbf{(c)} A \textit{drosophila} neuro-muscular
+          junction before a successful sensorless correction routine
+          \textbf{(d)} A \textit{drosophila} neuro-muscular junction
+          after a successful sensorless correction
+          routine. \textbf{(c)} and \textbf{(d)} are displayed on the
+          same colour scale and show the Alexa488 channel labelling
+          Horseradish Peroxidase (HRP) (XX yes alex488-HRP but what
+          biological structure is it labelling? XX).}
 	\label{fig:sensorless_routine_success_failure}
 \end{figure}
 
