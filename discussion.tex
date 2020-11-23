@@ -51,20 +51,22 @@ Interestingly, there is often a clear split in percentage error between
 Zernike modes with positive and negative even azimuthal frequencies. This is most visible in 
 Figure~\ref{fig:Zernike_fitting_percentage_error_one_mode_256_shape} but it 
 can be observed in some radial orders in all the simulated wavefront sizes 
-shown in Figure~\ref{fig:zernike_fitting_accuracy}. The positive and negative 
-even azimuthal frequencies correspond to `vertical' and `oblique' Zernike 
-modes respectively. This observed difference in performance between 
-`vertical' and `oblique' Zernike modes is due to a class of discretisation 
-error where some of the principle variation in the simulated wavefront shape 
-falls between pixels and is therefore not captured by the discrete 
-representation of the Zernike mode. Odd azimuthal frequency Zernike modes do 
-not exhibit this splitting since positive and negative odd azimuthal 
-frequencies correspond to `horizontal' and `vertical' Zernike modes 
-respectively. Therefore, odd azimuthal Zernike modes always suffer from this 
-class of discretisation error. For smaller simulated wavefront sizes, this 
-split in the even azimuthal frequency Zernike modes is less visible at higher 
-radial orders because other, less geometrically determined, discretisation 
-errors dominate the overall percentage error measurements.
+shown in Figure~\ref{fig:zernike_fitting_accuracy}. This observed difference 
+in performance between these Zernike modes occurs because positive even 
+azimuthal frequencies have a component of variation along the aligned with 
+either the $x$ or $y$ axis whereas negative even azimuthal frequencies do 
+not. Zernike modes with a positive even azimuthal frequencies are vulnerable 
+to a class of discretisation error where some of the principle variation in 
+the simulated wavefront shape falls between pixels and is therefore not 
+captured by the discrete representation of the Zernike mode. Odd azimuthal 
+frequency Zernike modes do not exhibit this splitting since positive and 
+negative odd azimuthal frequencies both have some component of variation 
+along the aligned with either the $x$ or $y$ axis. Therefore, odd azimuthal 
+Zernike modes always suffer from this class of discretisation error. For 
+smaller simulated wavefront sizes, this split in the even azimuthal frequency 
+Zernike modes is less visible at higher radial orders because other, less 
+geometrically determined, discretisation errors dominate the overall 
+percentage error measurements.
 
 \begin{figure}[h]
 	\centering
@@ -125,20 +127,18 @@ the Zernike modes amplitude measurements. Clearly, the resizing factor is
 inversely proportional to the overall Zernike mode fitting accuracy.
 
 The splitting in fitting error between positive and negative even azimuthal 
-frequencies (i.e. `vertical' and `oblique' Zernike modes respectively) is 
+frequencies is 
 once again observed, and it is observed for all resizing factors. However, a 
 splitting in fitting error is also observed in 
 Figure~\ref{fig:zernike_fitting_accuracy_resize} between positive and 
-negative odd azimuthal frequencies which was not present previously. Recall 
-positive and negative odd azimuthal frequencies correspond to `horizontal' 
-and `vertical' Zernike modes respectively. One might suspect that this is due 
-to the order in which the image axes are integrated along using 
-\textit{scipy}'s $trapz$ function. However, reversing the order in which the 
-axes are integrated along preserves this error splitting as presented in 
-Figure~\ref{fig:zernike_fitting_accuracy_resize}. Another reasonable 
-candidate for suspicion might be the function used to resize the wavefront. 
-If this were the source of this difference in fitting errors, it should not 
-occur in 
+negative odd azimuthal frequencies which was not present previously. One 
+might suspect that this is due to the order in which the image axes are 
+integrated along using \textit{scipy}'s $trapz$ function. However, reversing 
+the order in which the axes are integrated along preserves this error 
+splitting as presented in Figure~\ref{fig:zernike_fitting_accuracy_resize}. 
+Another reasonable candidate for suspicion might be the function used to 
+resize the wavefront. If this were the source of this difference in fitting 
+errors, it should not occur in 
 Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1} since the simulated wavefronts used in this dataset have not been 
 resized. This difference in fitting errors may be a result of some internal 
 preference within \textit{AOtools}' \textit{phaseFromZernikes()} function 

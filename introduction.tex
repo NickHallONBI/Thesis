@@ -62,7 +62,7 @@ release their energy as a photon - it is this phenomenon which is called
 fluorescence\cite{ghiran2011introduction}. For atoms, these energy states are
 reasonably discrete and (for the lowest levels) easy enough to draw in 
 Jab\l{}onski diagrams. Molecules capable of fluorescence, called 
-fluorophores, more complex energy levels (XXmayebe landscapes?) and broad ``energy bands'' of possible excitation and emission 
+fluorophores, more complex energy level landscapes and broad ``energy bands'' of possible excitation and emission 
 wavelengths. Additionally, the absorption and emission cross-sections are not 
 the same for all wavelengths. This leads to excitation and emission spectra 
 for fluorescent molecules. Figure~\ref{fig:GFP_emission_absorption_spectra} 
@@ -117,11 +117,8 @@ of this simplified system.
 		rays process through the microscope system before emerging at the exit pupil 
 		and being focused at the image plane, $\textbf{O'}$. The light rays which 
 		form and angle with the optical axis, $\textbf{OO'}$, of $\alpha$ are called
-		marginal rays. Marginal rays are the highest XX diffraction order collectable by
-		the entrance pupil XX (NO this is only true is
-                transmission. In fl the light isnt diffracted, it is
-                just the highest angle of light that can be collected.
-                XX) and therefore the microscope system as a whole.}
+		marginal rays. Marginal rays are the highest angle of light  collectable by
+		the entrance pupil and therefore the microscope system as a whole.}
 	\label{fig:simplified_microscope_layout}
 \end{figure}
 
@@ -161,8 +158,7 @@ limit, $r_l$ is often quoted as:
 r_l \approx \frac{1.22\lambda}{2NA}
 \end{equation}
 
-otherwise known as the Abbe diffraction limit\cite{abbe1873beitrage}
-(XX NO abbe limit is 0.5*lambda/NA. Related but different contrast limitXX). Through
+otherwise known as the Rayleigh criterion\cite{rayleigh1874xii}. Through
 a similar process and considering the field intensity along the $z'$ axis, the
 axial resolution, $r_a$, is given as\cite{pawley2006handbook}:
 
@@ -230,12 +226,12 @@ presented here. The first minima may not even be radially symmetric.
 
 Furthermore, the `true' resolution achievable by a microscopy system is 
 affected by other factors such as the signal-to-noise ratio of an
-image (XX in fact the difefrence bewteen for instance the abbe and
-reyleigh limits can be atributed to s:n. Reighley assumes a ~25\% dip
-between peaks Abbe is much lessXX), 
-coherence conditions of illumination, apodization, discretisation errors for 
-digital cameras, to name a few\cite{den1997resolution}. There have been 
-attempts to develop alternative resolution measurements for point 
+image, coherence conditions of illumination, apodization, discretisation 
+errors for digital cameras, to name a few\cite{den1997resolution}. One of the 
+key distinction between the Abbe diffraction limit and the Rayleigh 
+criterion is that the Rayleigh based his criterion on the sensitivity of the 
+human eye to intensity variations\cite{weisenburger2015light}. There have 
+been attempts to develop alternative resolution measurements for point 
 objects\cite{ram2006beyond}. Unfortunately, the actual resolution achieved in 
 biological samples varies across the image plane, determined by factors such 
 as the labelling density of the underlying biological 
@@ -372,8 +368,7 @@ considered `structured illumination' techniques since they do rely on spatially
 structured excitation light, for the duration of this thesis the term 
 `structured illumination microscopy' or SIM refers to the form of 
 interference-based microscopy pioneered by Mats 
-Gustafsson\cite{gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}
-(XX probably should ref the early Heizmann and Cremer paper(s)XX https://www.spiedigitallibrary.org/conference-proceedings-of-spie/3568/0000/Laterally-modulated-excitation-microscopy--improvement-of-resolution-by-using/10.1117/12.336833.short?SSO=1).
+Gustafsson\cite{heintzmann1999laterally,gustafsson1999extended,gustafsson2000surpassing,gustafsson2008three}.
 This implementation of SIM is best understood through the moir\'{e} effect.
 Two patterns, such as those shown in Figure~\ref{fig:fringes_1} and 
 \ref{fig:fringes_1}, which are multiplicatively superimposed on one another
@@ -887,10 +882,13 @@ R^{m}_{n}(\rho) = \sum_{s=0}^{\frac{n-m}{2}}{\frac{(-1)^{s}(n-s)!}{s!\left(\frac
 \end{cases}.
 \end{equation}
 
-This formulation of Zernike modes is normalised and ordered according
-to the Noll indexing convention, although other modal bases and ordering 
-conventions do exist\cite{noll1976zernike,thibos2002standards,
-	loomis1978computer,soloviev2017optimal,burton1984effects}. 
+This formulation of Zernike modes is normalised. Throughout this thesis the 
+Noll index ordering covention is used\cite{noll1976zernike}. 
+Appendix~\ref{app:zernike_expansion} describes this ordering convention and 
+contains the algebraic expansion for the Zernike polynomials up to radial 
+order $n = 7$. Other modal bases and ordering conventions do 
+exist\cite{thibos2002standards,loomis1978computer,soloviev2017optimal,
+burton1984effects}. 
 
 It is useful to be able to compare phase distortions to one another to
 measure their severity. In order to do so, scalar indicators are required.
@@ -920,7 +918,7 @@ rms(\Phi) = \left(\sum\limits_{n,m}{\left({\alpha_{n}^{m}}\right)^{2}}\right)^{\
 var(\Phi) = \sum\limits_{n\ne 0,m\ne 0}{\left({\alpha_{n}^{m}}\right)^{2}},
 \end{align}
 
-Since $\mathcal{Z}_{n}^{m}$  (XX shouldnt this be n=0, m=0? XX)- i.e. piston - does not affect image 
+Since $\mathcal{Z}_{0}^{0}$ - i.e. piston - does not affect image 
 formation, often its corresponding amplitude $\alpha_{0}^{0}$ is
 simply not included. In this case, $rms(\Phi) = \sqrt{var(\Phi)}$
 

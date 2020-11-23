@@ -89,13 +89,13 @@ Where $c^{*}(x,y)$ is the complex conjugate of $c(x,y)$. Applying the 2-D Fourie
 \boldsymbol{I}(u,v) = \boldsymbol{A}(u,v) + \boldsymbol{C}(u,v) + \boldsymbol{C}^{*}(u,v),
 \end{equation}
 
-Where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  $\boldsymbol{C}^{*}(u,v)$ are the Fourier transforms of $I(u,v)$, $a(u,v)$, $c(u,v)$ and $c^{*}(u,v)$ respectively. Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{I}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ to leave only $\boldsymbol{C}(u,v)$\cite{lewis1993absolute}. Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
+where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  $\boldsymbol{C}^{*}(u,v)$ are the Fourier transforms of $I(u,v)$, $a(u,v)$, $c(u,v)$ and $c^{*}(u,v)$ respectively. Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{I}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ to leave only $\boldsymbol{C}(u,v)$\cite{lewis1993absolute}. Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
 
 \begin{equation}\label{eq:phase}
-\phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right).
+\phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right),
 \end{equation}
 
-In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a Tukey window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
+where $\Re\{c(x,y)\}$ and $\Im\{c(x,y)\}$ are the real and imaginary components of $c(x,y)$ respectively. In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow}, these mathematical steps are implemented in a practical way. The interferogram (\ref{fig:puw_inteferogram}) is cropped (\ref{fig:puw_inteferogram_cropped}) and the ROI, that is the area described by Equation~\ref{eq:I_basic}, is isolated by masking out all the information outside the ROI. The desired ROI is provided by the user using the ROI selector shown in Figure~\ref{fig:ROI_selector}. Quadrant shifting the image (\ref{fig:puw_data_fftshift}) and applying a tukey (or cosine-tapered) window mask (\ref{fig:puw_tukey_window}) is done to minimise the spurious spatial frequencies which arise from performing a fast Fourier transform (FFT) on an image with sharp discontinuities at the quadrant edges.
 
 \begin{figure*}
 	\centering
@@ -204,7 +204,7 @@ In the phase acquisition workflow shown in Figure~\ref{fig:phase_unwrap_workflow
 
 Having performed the FFT (\ref{fig:puw_new_fringe_fft}), an array described by Equation~\ref{eq:I_fourier} is obtained. A selection of the central spatial frequencies are masked (\ref{fig:puw_new_fringe_fft_centre_blocked}), primarily to mask out the central spatial frequency which represents the mean intensity and has an amplitude orders of magnitude larger than any other spatial frequency. The spatial frequencies which now have the highest amplitudes correspond to both $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$. One of the aforementioned amplitude peaks is located and a bandpass filter described by $\sin^{2}(x,y)$ is constructed (\ref{fig:puw_fft_filter}) centred on the spatial frequency location of this amplitude peak. As previously noted, the Fourier transform of the interferogram is symmetrical around the central spatial frequency. So, it doesn't matter which of the two peaks this filter is centred on since they encode the same information. The aforementioned bandpass filter is then applied to the FFT of the interferogram (\ref{fig:puw_new_fringe_order1}) and these spatial frequencies are then rolled to the central spatial frequency position (\ref{fig:puw_order1_roll}). Applying this successfully filters $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$, isolating $\boldsymbol{C}(u,v)$ as desired.
 
-The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$. A 2D  algorithm is used to unwrap the phase map and yield a phase Figure~\ref{fig:puw_unwrapped_phase} is obtained\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
+The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$ radians. An 2D  algorithm is used to unwrap the phase map and yield a phase Figure~\ref{fig:puw_unwrapped_phase} is obtained\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
 
 Automation does have a drawback. The location of the phase component
 of the Fourier transform is determined by finding the maximum
@@ -241,7 +241,7 @@ This phase extraction technique is used as part of other methods, but it is also
 \subsection{Zernike Mode Amplitude Measurement}
 \label{subsec:zernike_mode_measurment}
 
-Recall that a phase wavefront can be represented by a linear combination of Zernike polynomials:
+Recall from Section~\ref{subsec:zernike} that a phase wavefront can be represented by a linear combination of Zernike polynomials:
 
 \begin{equation}
 \Phi\left(\rho,\theta\right) = \sum\limits_{n,m}\alpha^{m}_{n}\mathcal{Z}^{m}_{n}\left(\rho,\theta\right),\tag{\ref{eq:phase_zernike_expansion}}
@@ -306,14 +306,11 @@ determines the position of the $h$-th actuator in its overall
 movement range) and $\phi_{h}(x,y)$ is the $h$-th influence
 function, so called as they describe how the elements 
 of the device influence the phase wavefront. We can convert
-this set of basis functions to a different basis set. An 
-obvious alternative basis set is the Zernike polynomials 
-since they are defined on the unit circle, are orthogonal, and 
-the wavefront distortion can be well approximated by the linear 
-addition of a limited number of Zernike 
-polynomials\cite{noll1976zernike,von1934beugungstheorie}.
-Describing $\phi_{h}(x,y)$ in terms of Zernike polynomials we
-obtain:
+this set of basis functions to a different basis set. Since 
+$\phi_{h}(x,y)$ describes the effect of the device elements affect
+the phase wavefront, an obvious choice of alternative basis set is
+the Zernike polynomials from before. Describing $\phi_{h}(x,y)$ in 
+terms of Zernike polynomials we obtain:
 
 \begin{equation}\label{eq:influence_to_zernike}
 \phi_{h}(x,y) = \sum_{g=1}^{M} b_{g,h}z_{g}(x,y),
@@ -682,34 +679,36 @@ how you run it or is this formula wrong? XX)
 \subsection{Image Quality Metric: Fourier Power}
 \label{subsec:fourier_power_metric}
 
-As mentioned in Section~\ref{subsec:sensorless_correction}, 
-sensorless AO correction requires an image quality metric which
-is well suited to both the imaging modality and the desired 
-sample. Microscope-AOtools implements a suite of image quality
-metrics to choose from. Both the DeepSIM and the Aurox
-Clarity systems can be considered structured illumination
-system. Although the Aurox Clarity system is clearly not a 
-Gustafsson-style SIM system, the illumination pattern imposed by
-the spinning disk (XX not sure what you are trying to say but this
-isnt a senstence XX) . If follow that the image quality of both systems is
-contingent on high quality Fourier information. Therefore, 
-a sensible starting point for the image quality metric, $S$, 
-is the total power of the Fourier spectrum:
+
+As mentioned in Section~\ref{subsec:sensorless_correction}, sensorless AO 
+correction requires an image quality metric which is well suited to both the 
+imaging modality and the desired sample. Microscope-AOtools implements a 
+suite of image quality metrics to choose from. Both the DeepSIM and the Aurox 
+Clarity systems can be considered structured illumination system. Although 
+the Aurox Clarity system is clearly not a Gustafsson-style SIM system, an 
+illumination pattern is imposed by the spinning disk and therefore the 
+illumination light can be said to have a spatial structure to it. The image 
+quality of both systems is contingent on high quality Fourier information. 
+Therefore, a sensible starting point for the image quality metric, $S$, is 
+the total power of the Fourier spectrum:
 
 \begin{equation}\label{eq:fourier_power_spectrum}
 S = \sum\limits_{n,m}{\left\| \tilde{\textbf{D}}_{n,m} \right\|^2},
 \end{equation}
 
-Where $\tilde{\textbf{D}}$ is the 2D discrete Fourier transform of 
+where $\tilde{\textbf{D}}$ is the 2D discrete Fourier transform of 
 the fluorescent signal (i.e. the camera image) and $n$ and 
 $m$ are the pixel coordinates with ranges $[0, N-1]$ and $[0, M-1]$ 
 respectively, where $N$ and $M$ are the number of pixels along each 
-dimension of the image. From Parseval's Theorem, $\sum\limits_{n,m}
+dimension of the image. $\left\| C \right\|$ is the modulus of a complex 
+number, $C$, such that $\left\| C \right\| = \sqrt{CC^{*}}$ where $C^{*}$ is 
+the complex conjugate of $C$. From Parseval's Theorem, $\sum\limits_{n,m}
 \left\| \tilde{\textbf{D}}_{n,m} \right\|^2$ is the power of the 
 observed signal. However, the Fourier spectrum obtained is not 
-entirely composed of sample information. Recall that the fluorescent 
-signal for a single image is the convolution of the distribution of 
-fluorescent emission and the system point spread function (PSF):
+entirely composed of sample information. Recall from Section~\ref{subsec:SIM} 
+that the fluorescent signal for a single image is the convolution of the 
+distribution of fluorescent emission and the system point spread function 
+(PSF):
 
 \begin{equation}
 \begin{split}
