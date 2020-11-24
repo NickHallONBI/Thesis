@@ -409,12 +409,12 @@ Applying linear regression to each column, $\begin{bmatrix} z_{1,i} & z_{2,i}
 & \cdots & z_{p,i} \end{bmatrix}^T$, yields the response characteristics 
 between the $h$-th actuator's position and the $g$-th Zernike mode, 
 $b_{g,h}$. Figure~\ref{fig:influence_function_11} shows the influence 
-function fitting for Zernike mode 11 (Noll index) for the $26^{\text{th}}$ 
-actuator. The gradient of the slope is, in this case, $b_{11,26}$. This 
-gradient is acquired for each actuator, for each Zernike mode. In this way, 
-we construct $\boldsymbol{B}$ and then calculate $\boldsymbol{C}$. 
-Figure~\ref{fig:calibration_workflow} shows a flowchart of this process as 
-implemented in Microscope-AOtools.
+function fitting for primary spherical aberrations (Noll index 11) for the 
+$26^{\text{th}}$ actuator. The gradient of the slope is, in this case, 
+$b_{11,26}$. This gradient is acquired for each actuator, for each Zernike 
+mode. In this way, we construct $\boldsymbol{B}$ and then calculate 
+$\boldsymbol{C}$. Figure~\ref{fig:calibration_workflow} shows a flowchart of 
+this process as implemented in Microscope-AOtools.
 
 \begin{figure}[h]
 	\centering
@@ -455,7 +455,7 @@ implemented in Microscope-AOtools.
 		\caption{}		
 		\label{fig:influence_function_11}
 	\end{subfigure}
-	\caption[Visualisation of the influence function fitting stage of the calibration routine]{Visualisation of the influence function fitting stage of the calibration routine \textbf{(a)} An example observed wavefront obtained during the calibration process for an Alpao-69 actuator deformable mirror. The $26^{th}$ actuator is at the first of the 5 positions. \textbf{(b)} A simulated wavefront created from the 69 Zernike mode amplitudes measured in the observed wavefront. \textbf{(c)} The difference in the observed and simulated wavefronts. \textbf{(d)} The 69 Zernike mode amplitudes measured for the observed wavefront \textbf{(e)} The influence function fitting for Zernike mode 11 (Noll index) for the $26^{th}$ actuator}
+	\caption[Visualisation of the influence function fitting stage of the calibration routine]{Visualisation of the influence function fitting stage of the calibration routine \textbf{(a)} An example observed wavefront obtained during the calibration process for an Alpao-69 actuator deformable mirror. The $26^{th}$ actuator is at the first of the 5 positions. \textbf{(b)} A simulated wavefront created from the 69 Zernike mode amplitudes measured in the observed wavefront. \textbf{(c)} The difference in the observed and simulated wavefronts. \textbf{(d)} The 69 Zernike mode amplitudes measured for the observed wavefront \textbf{(e)} The influence function fitting for primary spherical aberrations (Noll index 11) for the $26^{th}$ actuator}
 	\label{fig:wavefront_decomposition}
 \end{figure}
 
@@ -563,9 +563,7 @@ Figure~\ref{fig:direct_wavefront_flattening_workflow}. The wavefront is
 obtained through whatever direct wavefront sensing method has been 
 implemented and selected, a number of Zernike modes determined by the user 
 are fitted to the wavefront using the method described in 
-Section~\ref{subsec:zernike_mode_measurment}, an equal (XX surely this
-is 1/2 the error as the mirror effectively gives you 2x the applied
-phase correction XX) and opposite magnitude 
+Section~\ref{subsec:zernike_mode_measurment}, an equal and opposite magnitude 
 of these modes are applied to the DM. The RMS wavefront error is then 
 calculated. This process repeats until $N$ iterations have been performed or 
 the RMS wavefront error is below a user defined error threshold, $\delta$.
@@ -671,10 +669,7 @@ quality metric measurements will lead to a large value of $a_{max}$
 which is unreliable and often results in an applying an aberration
 amplitude which severely damages the image quality. To ensure that the
 Gaussian fitting to find $a_{max}$ yields a reasonable value, the
-fitting has bounds defined as $(j_{max}-j_{min}) \pm
-0.25(j_{max}-j_{min})$. (XX this doesnt seem right, as this means the
-result must be in the central 50\% of the input range, is this really
-how you run it or is this formula wrong? XX)
+fitting has bounds defined as [$j_{max} + 0.25(j_{max}-j_{min})$, $j_{min} - 0.25(j_{max}-j_{min})$].
 
 \subsection{Image Quality Metric: Fourier Power}
 \label{subsec:fourier_power_metric}

@@ -13,10 +13,14 @@ yields images with high contrast and good optical
 sectioning\cite{nwaneshiudu2012introduction}. The original Minsky
 design struggled with a low-frame rate. Advances in technology have
 led to improved scanning speeds and therefore improved image frame
-rates which, for modern CLSM set-ups, is 0.1-1
-fps\cite{schermelleh2010guide,xiao1988real}(XX this is a bit low, a
-resonant scanning confocal will scan 30-60 fps at 512x512. A more
-conventional one is probably half this XX). For many dynamic biological processes this is still insufficient, which lead to the development of (among other things) the Nipkow-Petran spinning disk setup which allows for video rate confocal imaging\cite{egger1967new,fuseler2018types,tsien1995video}. Hence, spinning disk confocal microscopes are frequently used for imaging live biological processes.
+rates which, for modern CLSM set-ups, is generally on the order of 
+milliseconds per 2D frame\cite{schermelleh2010guide,xiao1988real}. For many 
+dynamic biological processes this is still insufficient, which lead to the 
+development of (among other things) the Nipkow-Petran spinning disk setup 
+which allows for video rate confocal 
+imaging\cite{egger1967new,fuseler2018types,tsien1995video}. Hence, spinning 
+disk confocal microscopes are frequently used for imaging live biological 
+processes.
 
 The Nipkow-Petran design does have disadvantage in that it discards 
 $\sim99\%$ of both excitation and emission light in order to achieve good 
@@ -113,10 +117,9 @@ single exit port, magnified and then reflected onto the spatial light
 modulator (SLM) at a shallow angle ($<10^{\circ}$). The SLM acts as a
 programable phase grating imposing the structure to the illumination
 pattern required for SIM imaging. The beam is then magnified and
-reimaged onto the Alpao 69-actuator DM. The beam is then magnified
-further and directed to the LUMFLN60XW $60\times$ water dipping
-objective (XX the back apature is smaller than the DM so must be
-demagnified here XX). The emission beam path follows the same path in
+reimaged onto the Alpao 69-actuator DM. The beam is then demagnified and 
+directed to the LUMFLN60XW $60\times$ water dipping
+objective. The emission beam path follows the same path in
 reverse up until past the DM. At this point the emission beam path is redirected by a dichroic mirror (Chroma Technology ZT405/488/561/640rpc), magnified and then reimaged onto the Andor iXon Ultra EMCCD cameras. There is a secondary dichroic (Chroma Technology ZT561rdc-xr) which separates the "red" colour channel (562nm-800nm) from the "green" colour channel (390nm-562nm). Since the DM is in both the excitation and emission paths it is able to correct for aberrations in both paths.
 
 \begin{figure}[h]
