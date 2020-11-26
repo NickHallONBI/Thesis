@@ -15,8 +15,8 @@ In widefield microscopy, an even field of illumination is
 applied to the field of view and the resultant fluorescent
 signal from the sample is measured. In SIM, this even 
 illumination is replaced by a sinusoidally varying
-illumination pattern. Multiple images with varying angle 
-and phase shifts to the illumination pattern are acquired. 
+illumination pattern. Multiple images with variations to the angle 
+and phase shift to the illumination pattern are acquired. 
 These images are then used to reconstruct a single 
 super-resolved image\cite{gustafsson2000surpassing,gustafsson2008three}.
 Recall a single fluorescent image, $F(\textbf{r})$, is 
@@ -30,14 +30,14 @@ F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r}),\\
 \end{equation}
 
 where $D(\textbf{r})$ is the sample fluorescence distribution, 
-$I(\textbf{r})$ is the illumination pattern, $E(\bar{x})$ is
+$I(\textbf{r})$ is the illumination pattern, $E(\textbf{r})$ is
 the resultant emission signal and $H(\textbf{r})$ is the system 
 point spread function (PSF). Section~\ref{sec:aberrations} has already
 discussed the effect aberrations have on distorting the system
 PSF, $H(\textbf{r})$. However, in SIM imaging the illumination 
 pattern, $I(\textbf{r})$, is also formed in the same imaging path
 and is therefore the illumination pattern formation is also 
-affected by the system aberrations.
+affected by aberrations.
 
 Consider the illumination pattern function. Fully coherent
 illumination conditions yield optimum imaging performance and
@@ -46,28 +46,28 @@ conditions are achievable. Utilising the fully coherent
 approximation, $I(\textbf{r})$ can be expressed as:
 
 \begin{equation}\label{eq:SIM_illumination}
-I(\textbf{r}) = \left\| \frac{1}{2}[1 + \cos(\textbf{r}\bullet\textbf{p} + \phi)]\circledast H_{amp}(\textbf{r}) \right\|^{2}
+I(\textbf{r}) = \left\| \frac{1}{2}[1 + \cos(\textbf{r}\bullet\textbf{p} + \phi)]\circledast H_{amp}(\textbf{r}) \right\|^{2},
 \end{equation}
 
-Where $\textbf{p}$ and $\phi$ define the orientation and phase of
+where $\textbf{p}$ and $\phi$ define the orientation and phase of
 the illumination pattern respectively. $H_{amp}(\textbf{r})$ is the
-amplitude PSF, as opposed to $H(\textbf{r})$ which is the intensity
-PSF and is defined as:
+amplitude PSF - as opposed to $H(\textbf{r})$ which is the intensity
+PSF - and is defined as:
 
 \begin{equation}\label{eq:amplitude_PSF}
-H_{amp}(\textbf{r}) = \mathcal{F}[P(\textbf{r}')]
+H_{amp}(\textbf{r}) = \mathcal{F}[P(\textbf{r}')],
 \end{equation}
 
-Where $P$ is the pupil function, $\textbf{r}'$ is the coordinate
+where $P$ is the pupil function, $\textbf{r}'$ is the coordinate
 vector in the pupil plane and $\mathcal{F}$ is the Fourier
 transform operation. Utilizing the Fourier convolution 
 theorem, Equation~\ref{eq:SIM_illumination} becomes:
 
 \begin{equation}\label{eq:SIM_illumination_invFT}
-I(\textbf{r}) = \left| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\textbf{r}') + \frac{\exp^{-i\theta}}{2}\delta(\textbf{r}'-\textbf{p}) + \frac{\exp^{i\theta}}{2}\delta(\textbf{r}'+\textbf{p})\right]P(\textbf{r}')\right\} \right|^{2}
+I(\textbf{r}) = \left| \mathcal{F}^{-1}\left\{\frac{1}{2}\left[\delta(\textbf{r}') + \frac{\exp^{-i\theta}}{2}\delta(\textbf{r}'-\textbf{p}) + \frac{\exp^{i\theta}}{2}\delta(\textbf{r}'+\textbf{p})\right]P(\textbf{r}')\right\} \right|^{2},
 \end{equation}
 
-Where value of $\textbf{p}$ positions the delta functions in the
+where value of $\textbf{p}$ positions the delta functions in the
 pupil plane. $\textbf{p}$ is chosen to have a value of or close
 to 1, to maximise the resolution increase. 
 Equation~\ref{eq:SIM_illumination_invFT} shows there is clearly only
@@ -117,7 +117,7 @@ non-uniform manner. There has recently been a technique developed
 to overcome  this issue; IsoSense\cite{vzurauskas2019isosense}. 
 It relies  on producing spatially structured light in order to fill 
 empty sections of the image Fourier spectrum. IsoSense is designed 
-to be used in structured illumination microscopy (SIM) setups since 
+to be used in SIM setups since 
 they often incorporate spatial light modulators (SLM) as high-speed, 
 dynamic diffraction  gratings and SIM is particularly sensitive to 
 Fourier space anisotropies.
@@ -146,10 +146,10 @@ illumination. The resultant emission image  obtained, $E(\textbf{r})$,
 can be described as:
 
 \begin{equation}\label{eq:isosense_real}
-E(\textbf{r}) = D(\textbf{r}) \times I(\textbf{r})
+E(\textbf{r}) = D(\textbf{r}) \times I(\textbf{r}),
 \end{equation}	
 
-Where $I(\textbf{r})$ is the interference pattern, similar to that shown in 
+where $I(\textbf{r})$ is the interference pattern, similar to that shown in 
 Figure\ref{fig:isosense_visualisation_real}, $D(\textbf{r})$ is the sample 
 fluorescence distribution as before and $\textbf{r}$ is the spatial 
 coordinate vector. Applying a Fourier transform yields:
@@ -159,20 +159,18 @@ coordinate vector. Applying a Fourier transform yields:
 \mathcal{F}[F(\textbf{r})] &= \mathcal{F}[D(\textbf{r})\times I(\textbf{r})] \\
 \tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \circledast \tilde{\textbf{I}}(\textbf{k}) \\
 \tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\iint\tilde{\textbf{D}}(\textbf{k})\delta(\textbf{k} - \kappa)dudv \\
-\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\tilde{\textbf{D}}(\textbf{k} - \kappa)
+\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\tilde{\textbf{D}}(\textbf{k} - \kappa),
 \end{split}
 \end{equation}
 
-Where $\tilde{\textbf{F}}(\textbf{k})$, $\tilde{\textbf{I}}(\textbf{k})$ and 
-$\tilde{\textbf{D}}(\textbf{k})$ are the Fourier transforms of $F(\textbf{k})$, 
-$I(\textbf{k})$ and $D(\textbf{k})$, the $\kappa$ frequencies are the 
+where bold text and $\sim$ indicates the Fourier transform of the respective real-space functions, the $\kappa$ frequencies are the 
 locations of interference pattern beams described above and $\textbf{k}$ is 
 the spatial frequency vector. By convolving the sample fluorescence 
 distribution with  multiple $\delta$-functions, multiple copies of the 
 sample spatial frequency information are created and regions of the 
 system OTF left  unfilled by sample fluorescence distribution anisotropies 
 are filled, leading to  improved sampling of the system OTF particularly 
-at high spatial frequencies close to $w$ and greater aberration 
+at high spatial frequencies close to $\omega_{l}$ and greater aberration 
 sensitivity\cite{vzurauskas2019isosense}.
 
 \begin{figure}[h]
@@ -192,26 +190,6 @@ sensitivity\cite{vzurauskas2019isosense}.
 	\caption[IsoSense pattern visualisation.]{IsoSense pattern visualisation. \textbf{(a)} A simulated IsoSense pattern created with a 4-beam interference. A pattern similar to this is applied to the SLM \textbf{(b)} A diagram of a 4-beam interference pattern in Fourier space. The diagonal axis and the horizontal/vertical axis have $\frac{1}{2}$ and $\frac{1}{4}$ of the intensity of the central beam respectively.}
 	\label{fig:isosense_visualisation}
 \end{figure}
-
-\section{Biological Exemplar}
-\label{sec:DeepSIM_biology}
-
-To demonstrate both the improvement in image quality adaptive optics
-provides in the DeepSIM system and the viability of an upright configuration 
-for live-sample, open-dish imaging, we utilise the live \textit{Drosophila melanogaster} neuro-muscular junction (NMJ) sample.
-
-\subsection{Sample preparation}
-\label{subsec:DeepSIM_sample_prep}
-
-The samples were prepared by following the 
-protocol\cite{brent2009drosophila}. 3rd instar \textit{Drosophila 
-	melanogaster} larvae (Bruchpilot (Brp)-GFP strain) were dissected in HL3 
-buffer with 0.3mM $\text{Ca}^{2+}$ to prepare a so-called larval fillet,
-and the larval brains were removed. After this, larvae were stained for 15 
-minutes with Horseradish Peroxidase (HRP) conjugated to Alexa568 
-fluorophore to visualise the neurons, washed with HL3 buffer with 0.3mM 
-$\text{Ca}^{2+}$ and imaged in HL3 buffer with 0mM $\text{Ca}^{2+}$ to 
-prevent the larvae from moving.
 
 \section{Experimental Setup}
 \label{sec:DeepSIM_setup}
@@ -243,19 +221,37 @@ spectrum and $\lambda_{I}$ is the stripe width of the illumination
 pattern. For DeepSIM, the conventional resolution limit for the 
 green and red channels respectively is $291$nm and $338$nm, 
 utilising the Rayleigh criterion from Equation~\ref{eq:lateral_res} 
-for wavelengths $525$nm and $610$nm respectively. These wavelengths 
-are chosen as they are the mid-point wavelenghts for the green and 
-red emission filters respectively. The stripe width was $322$nm and 
-$367$nm for $488$nm and $561$nm excitation wavelengths respectively.
+for wavelengths $525$nm and $610$nm respectively. The stripe width was $322$nm 
+and $367$nm for $488$nm and $561$nm excitation wavelengths respectively.
+
+\section{Biological Exemplar}
+\label{sec:DeepSIM_biology}
+
+To demonstrate both the improvement in image quality adaptive optics
+provides in the DeepSIM system and the viability of an upright configuration 
+for live-sample, open-dish imaging, we utilise the live \textit{Drosophila melanogaster} neuro-muscular junction (NMJ) sample.
+
+\subsection{Sample preparation}
+\label{subsec:DeepSIM_sample_prep}
+
+The samples were prepared by following the 
+protocol\cite{brent2009drosophila}. 3rd instar \textit{Drosophila 
+	melanogaster} larvae (Bruchpilot (Brp)-GFP strain) were dissected in HL3 
+buffer with 0.3mM $\text{Ca}^{2+}$ to prepare a so-called larval fillet,
+and the larval brains were removed. After this, larvae were stained for 15 
+minutes with 1:50 Horseradish Peroxidase (HRP) conjugated to Alexa568 
+fluorophore to visualise the neurons, washed with HL3 buffer with 0.3mM 
+$\text{Ca}^{2+}$ and imaged in HL3 buffer with 0mM $\text{Ca}^{2+}$ to 
+prevent the larvae from moving.
 
 \section{Experimental Results}
 \label{sec:DeepSIM_results}
 
 To verify both that the system is capable of achieving super-resolution
 and that Microscope-AOtools is capable of correcting for optical 
-aberrations, the Argolight SIM slide was image. The structure chosen for
+aberrations, the Argolight SIM slide was imaged. The structure chosen for
 imaging was a set of pairs of $36 \mu$m-long horizontal lines pairs lines 
-which spacing gradually increases, from $0$ to $390$nm, with a step of 
+with gradually increasing spacing, from $0$ to $390$nm, with a step of 
 $30$nm. 
 
 This structure was chosen for two principal reasons. Firstly, the known
@@ -275,7 +271,7 @@ Figure~\ref{fig:Argolight_slide_both} shows both the maximum intensity
 projection of $13\mu$m SIM z-stacks and a $xz$ slice at the midpoint of 
 the $y$-axis. In both datasets, the $150$nm separation is resolvable, which 
 is slightly better than the anticipated lateral resolution. The $150$nm line 
-pair is marked in Figure~\ref{fig:Argolight_slide_woAO_axis} and 
+pair is marked in Figures~\ref{fig:Argolight_slide_woAO_axis} and 
 \ref{fig:Argolight_slide_AO} with arrows. This is not 
 entirely surprising as the Argolight sample is a highly fluorescent, 
 regular structure with very little out-of-focus fluorescence to compromise 
@@ -477,8 +473,8 @@ a significant portion of the aberrations present are broadly achromatic.
 		Lateral (FTL) (top) and Fourier	Transform Radial (FTR) (bottom) of 
 		the central $z$-slice from the SIMCheck ImageJ 
 		plug-in\cite{ball2015simcheck} for \textbf{(a)} green channel without 
-		AO correction \textbf{(b)} red channel without AO correction 
-		\textbf{(c)} green channel with AO correction \textbf{(d)} red 
+		AO correction \textbf{(b)} green channel with AO correction 
+		\textbf{(c)} red channel without AO correction \textbf{(d)} red 
 		channel with AO correction. Green channel used for imaging Bruchpilot 
 		(Brp), endogenously labelled with GFP. Red channel used for imaging 
 		Horseradish Peroxidase (HRP), conjugated to Alexa568 fluorophore}

@@ -12,9 +12,9 @@ It incorporates methods for calibrating a DM, evaluating the success
 of the calibration in recreating aberrations and performing both
 direct wavefront sensing and sensorless adaptive optics
 corrections. The methods for sensorless adaptive optics correction can
-utilise one of a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories: Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
+utilise one of a number from a suite of image quality metrics that can be easily extended to include additional sample or imaging method-specific metrics. These methods are automated, require minimal user involvement and setup and are tied to simple, descriptive  buttons on the Microscope-Cockpit UI allowing for greater accessibility to users, shown in Figure~\ref{fig:DeepSIM_control_software}. The functions specific to the DM are shown in Figure~\ref{fig:DM_methods_cockpit}. These methods are divided into two categories: Set-up methods and Sample Correction methods. Figures~\ref{fig:DM_methods_cockpit_options} -~\ref{fig:DM_sensorless_ao_parameters} are optional windows that can be used by advanced users to change certain parameters used in the correction routines. How these parameters affect the correction routines will be explained in the relevant sections.
 
-\begin{figure}[H]
+\begin{figure*}
 	\centering
 	\begin{subfigure}{0.25\textwidth}
 		\centering
@@ -41,14 +41,14 @@ utilise one of a number from a suite of image quality metrics that can be easily
 		\caption{}
 		\label{fig:DM_sensorless_ao_parameters}
 	\end{subfigure}
-	\caption[Cockpit GUI DM specific functionality]{Cockpit GUI DM specific functionality. \textbf{(a)} Deformable mirror specific functions on the Cockpit UI \textbf{(b)} Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods \textbf{(c)} Options window for varying the parameters used in the system aberration routing correction routing. Spawned by the "Set System Flat Calculation Parameters" button \textbf{(d)} Options window for varying the parameters used in the sensorless AO routine. Spawned by the "Set Sensorless Parameters" button}
+	\caption[Microscope-Cockpit GUI DM specific functionality]{Microscope-Cockpit GUI DM specific functionality. \textbf{(a)} Deformable mirror specific functions on the Microscope-Cockpit UI \textbf{(b)} Options window used for changing the image quality metric used in the sensorless AO routine and to spawn additional parameter varying windows. Spawned by right-clicking on the AO methods \textbf{(c)} Options window for varying the parameters used in the system aberration correction routine. Spawned by the ``Set System Flat Calculation Parameters'' button \textbf{(d)} Options window for varying the parameters used in the sensorless AO routine. Spawned by the ``Set Sensorless Parameters'' button}
 	\label{fig:DeepSIM_control_software}
-\end{figure}
+\end{figure*}
 
 \section{Set-up Methods}
 \label{sec:set_up_methods}
 
-As previously described, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beam path is used for calibrating the deformable mirror. An image is formed by the interference between the reference beam arm and the system beam arm. The size of the reference beam is larger than that of the system beam to ensure easy alignment between the two arms. It is therefore necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Cockpit implements such a method as the functionality of the "Select ROI" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the interferometric ROI. The coordinates of this ROI are saved to the microscope's configuration files with the "Save ROI" button.
+As previously described in Section~\ref{subsec:DeepSIM_optics}, DeepSIM has multiple beam paths; interferometric, widefield and SIM. The interferometric beam path is used for calibrating the deformable mirror. An image is formed by the interference between the reference beam arm and the system beam arm. The size of the reference beam is larger than that of the system beam to ensure easy alignment between the two arms. It is therefore necessary to have a method for selecting the interferometric region of interest (ROI) i.e. the region where the reference and system beam arms interfere. Microscope-Cockpit implements such a method as the functionality of the ``Select RO'' button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:ROI_selectors} where the user can draw a circle which will define the interferometric ROI. The coordinates of this ROI are saved to the Microscope-Cockpit configuration files with the ``Save ROI'' button.
 
 \begin{figure}[h]
 	\centering
@@ -77,19 +77,19 @@ The two most common methods for direct wavefront sensing are Shack-Hartmann and 
 I(x,y,t) = a(x,y) + b(x,y)cos[\phi(x,y) + \Phi_{R}(x,y,t)],
 \end{equation}
 
-Where $a(x,y)$ describes the variation of the background illumination, $b(x,y)$ describes the noise and contrast variations, $\phi(x,y)$ describes the phase imparted by the DM surface and $\Phi_{R}(x,y,t)$ is the reference phase at time $t$. $\Phi_{R}(x,y,t)$ is an offset in the measured phase position, and any variation in this term shifts the lateral position of the entire interference pattern. The relevant phase information is encoded in the $\phi(x,y)$ term and this term specifies shape and spacing of the interference pattern. $\Phi_{R}(x,y,t)$ can therefore be arbitrarily set to 0, simplifying the cosine term in Equation~\ref{eq:I_basic} to $cos[\phi(x,y)]$. Expanding this simplified cosine term using Euler's formula, as well as the definition that $c(x,y) = \frac{1}{2}b(x,y)e^{i\phi(x,y)}$, leads to:
+where $a(x,y)$ describes the variation of the background illumination, $b(x,y)$ describes the noise and contrast variations, $\phi(x,y)$ describes the phase imparted by the DM surface and $\Phi_{R}(x,y,t)$ is the reference phase at time $t$. $\Phi_{R}(x,y,t)$ is an offset in the measured phase position, and any variation in this term shifts the lateral position of the entire interference pattern. The relevant phase information is encoded in the $\phi(x,y)$ term and this term specifies shape and spacing of the interference pattern. $\Phi_{R}(x,y,t)$ can therefore be arbitrarily set to 0, simplifying the cosine term in Equation~\ref{eq:I_basic} to $cos[\phi(x,y)]$. Expanding this simplified cosine term using Euler's formula, as well as the definition that $c(x,y) = \frac{1}{2}b(x,y)e^{i\phi(x,y)}$, leads to:
 
 \begin{equation}\label{eq:I_cos_expand}
 I(x,y) = a(x,y) + c(x,y) + c^{*}(x,y),
 \end{equation}
 
-Where $c^{*}(x,y)$ is the complex conjugate of $c(x,y)$. Applying the 2-D Fourier transform Equation~\ref{eq:I_cos_expand} becomes:
+where $c^{*}(x,y)$ is the complex conjugate of $c(x,y)$. Applying the 2-D Fourier transform Equation~\ref{eq:I_cos_expand} becomes:
 
 \begin{equation}\label{eq:I_fourier}
-\boldsymbol{I}(u,v) = \boldsymbol{A}(u,v) + \boldsymbol{C}(u,v) + \boldsymbol{C}^{*}(u,v),
+\tilde{\boldsymbol{I}}(u,v) = \tilde{\boldsymbol{A}}(u,v) + \tilde{\boldsymbol{C}}(u,v) + \tilde{\boldsymbol{C}}^{*}(u,v),
 \end{equation}
 
-where, $\boldsymbol{I}(u,v)$, $\boldsymbol{A}(u,v)$, $\boldsymbol{C}(u,v)$ and  $\boldsymbol{C}^{*}(u,v)$ are the Fourier transforms of $I(u,v)$, $a(u,v)$, $c(u,v)$ and $c^{*}(u,v)$ respectively. Now, given that $I(x,y)$ is real valued, it naturally follows that $\boldsymbol{I}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$ to leave only $\boldsymbol{C}(u,v)$\cite{lewis1993absolute}. Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
+where bold text and $\sim$ indicates the Fourier transform of the respective real-space functions. Now, given that $I(x,y)$ is real valued, it naturally follows that $\tilde{\boldsymbol{I}}(u,v)$ is Hermitian. The amplitude spectrum is symmetric around the zero position (i.e. $u = 0$, $v = 0$). It follows then that $\tilde{\boldsymbol{C}}(u,v)$ and $\tilde{\boldsymbol{C}}^{*}(u,v)$ must contain the same information, only centred on different spatial frequencies. One can apply a bandpass filter in the spatial frequency domain to remove both $\tilde{\boldsymbol{A}}(u,v)$ and $\tilde{\boldsymbol{C}}^{*}(u,v)$ to leave only $\tilde{\boldsymbol{C}}(u,v)$\cite{lewis1993absolute}. Applying the inverse Fourier transform yields $c(x,y)$, which is now complex. The phase of the wavefront can then be recovered by:
 
 \begin{equation}\label{eq:phase}
 \phi(x,y) = \arctan\left(\frac{\Im\{c(x,y)\}}{\Re\{c(x,y)\}}\right),
@@ -202,9 +202,9 @@ where $\Re\{c(x,y)\}$ and $\Im\{c(x,y)\}$ are the real and imaginary components 
 	\label{fig:phase_unwrap_workflow}
 \end{figure*}
 
-Having performed the FFT (\ref{fig:puw_new_fringe_fft}), an array described by Equation~\ref{eq:I_fourier} is obtained. A selection of the central spatial frequencies are masked (\ref{fig:puw_new_fringe_fft_centre_blocked}), primarily to mask out the central spatial frequency which represents the mean intensity and has an amplitude orders of magnitude larger than any other spatial frequency. The spatial frequencies which now have the highest amplitudes correspond to both $\boldsymbol{C}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$. One of the aforementioned amplitude peaks is located and a bandpass filter described by $\sin^{2}(x,y)$ is constructed (\ref{fig:puw_fft_filter}) centred on the spatial frequency location of this amplitude peak. As previously noted, the Fourier transform of the interferogram is symmetrical around the central spatial frequency. So, it doesn't matter which of the two peaks this filter is centred on since they encode the same information. The aforementioned bandpass filter is then applied to the FFT of the interferogram (\ref{fig:puw_new_fringe_order1}) and these spatial frequencies are then rolled to the central spatial frequency position (\ref{fig:puw_order1_roll}). Applying this successfully filters $\boldsymbol{A}(u,v)$ and $\boldsymbol{C}^{*}(u,v)$, isolating $\boldsymbol{C}(u,v)$ as desired.
+Having performed the FFT (\ref{fig:puw_new_fringe_fft}), an array described by Equation~\ref{eq:I_fourier} is obtained. A selection of the central spatial frequencies are masked (\ref{fig:puw_new_fringe_fft_centre_blocked}), primarily to mask out the central spatial frequency which represents the mean intensity and has an amplitude orders of magnitude larger than any other spatial frequency. The spatial frequencies which now have the highest amplitudes correspond to both $\tilde{\boldsymbol{C}}(u,v)$ and $\tilde{\boldsymbol{C}}^{*}(u,v)$. One of the aforementioned amplitude peaks is located and a bandpass filter described by $\sin^{2}(x,y)$ is constructed (\ref{fig:puw_fft_filter}) centred on the spatial frequency location of this amplitude peak. As previously noted, the Fourier transform of the interferogram is symmetrical around the central spatial frequency. So, it doesn't matter which of the two peaks this filter is centred on since they encode the same information. The aforementioned bandpass filter is then applied to the FFT of the interferogram (\ref{fig:puw_new_fringe_order1}) and these spatial frequencies are then rolled to the central spatial frequency position (\ref{fig:puw_order1_roll}). Applying this successfully filters $\tilde{\boldsymbol{A}}(u,v)$ and $\tilde{\boldsymbol{C}}^{*}(u,v)$, isolating $\tilde{\boldsymbol{C}}(u,v)$ as desired.
 
-The array corresponding to $\boldsymbol{C}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$ radians. An 2D  algorithm is used to unwrap the phase map and yield a phase Figure~\ref{fig:puw_unwrapped_phase} is obtained\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
+The array corresponding to $\tilde{\boldsymbol{C}}(u,v)$ is inverse Fourier transformed to yield $c(x,y)$ (\ref{fig:puw_complex_phase}). This is then converted to a phase map by performing the calculation in Equation~\ref{eq:phase} (\ref{fig:puw_phaseorder1}) and the mask in Figure~\ref{fig:puw_mask} is applied again to mask out any spurious noise outside the ROI. Due to the periodic nature of trigonometric functions, this phase map is wrapped around $-\pi$ and $\pi$ radians. A 2D  algorithm is used to unwrap the phase map and yield a continuous wavefront similar to  Figure~\ref{fig:puw_unwrapped_phase}\cite{herraez2002fast}. Other than determining the appropriate ROI, this workflow is entirely automated and requires no user input. 
 
 Automation does have a drawback. The location of the phase component
 of the Fourier transform is determined by finding the maximum
@@ -218,7 +218,7 @@ artificial tip/tilt cannot be separated from the true
 tip/tilt. Therefore, the described phase acquisition implementation is
 not sensitive to tip or tilt. However, since tip and tilt (along with piston) are not considered to be a true optical aberration, this is a small price to pay for a fully automated phase acquisition workflow.
 
-This phase extraction technique is used as part of other methods, but it is also useful for a user to be able to visualise the wavefront phase map. Principally this is because if the interferogram is not well focused on the camera it can result in the wavefront being heavily distorted by the Zernike mode corresponding to the defocus optical aberration (Noll Index 4). This can mask smaller wavefront deformations caused by the movement of the DM actuators and therefore bias calibration measurements. It can also be useful to view the system aberrations present, to check the difference applying the system aberration correction makes to the wavefront shape and to manually check for discontinuities. Cockpit implements such a method as the functionality of the "Visualise Phase" button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:phase_viewer_phase}, displaying the phase wavefront acquired from the interferogram. The display can be changed to the power spectrum of the interferogram, Figure~\ref{fig:phase_viewer_ft}, and back by pressing the "Real/Fourier Transform switch" button. 
+This phase extraction technique is used as part of other methods, but it is also useful for a user to be able to visualise the wavefront phase map. Principally this is because if the interferogram is not well focused on the camera it can result in the wavefront being heavily distorted by the Zernike mode corresponding to the defocus optical aberration (Noll Index 4). This can mask smaller wavefront deformations caused by the movement of the DM actuators and therefore bias calibration measurements. It can also be useful to view the system aberrations present, to check the difference applying the system aberration correction makes to the wavefront shape and to manually check for discontinuities. Microscope-Cockpit implements such a method as the functionality of the ``Visualise Phase'' button shown in Figure~\ref{fig:DM_methods_cockpit}. This spawns the window shown in Figure~\ref{fig:phase_viewer_phase}, displaying the phase wavefront acquired from the interferogram. The display can be changed to the power spectrum of the interferogram, Figure~\ref{fig:phase_viewer_ft}, and back by pressing the ``Real/Fourier Transform switch'' button. 
 
 \begin{figure}[h]
 	\centering
@@ -283,15 +283,16 @@ discrete form:
 
 where $trapz[]$ is \textit{scipy}'s implementation of integration using the 
 composite trapezoidal rule, $N$ is the total number of pupil pixels, and 
-$x,y$ are the pixel coordinates of the phase wavefront image and Zernike mode 
-simulated using AOtools\cite{virtanen2020scipy,townson2019aotools}. This 
-process is repeated for $M$ Zernike modes to obtain a row vector, 
-$\boldsymbol{z}$, containing the $M$ computed Zernike mode amplitudes present.
+$x,y$ are the pixel coordinates of the phase wavefront image, and the Zernike 
+mode with a unit amplitude is simulated using 
+AOtools\cite{virtanen2020scipy,townson2019aotools}. This process is repeated 
+for $M$ Zernike modes to obtain a row vector, $\boldsymbol{z}$, containing the 
+$M$ computed Zernike mode amplitudes present.
 
 \subsection{Calibration}
 \label{subsec:calibration}
 
-For aberration correction, one could attempt to measure the overall aberration of the optical wavefront and apply the opposite shape to the DM. For direct wavefront sensing, this would appear as simple as measuring the phase distortion and shaping the DM to cancel this distortion. However, for continuous membrane DMs (which the majority of commercially available DMs are) the response of mirror shape to the actuators which control the mirror shape is generally non-linear, due to the membrane's mechanical elasticity, electrostatic forces and the coupling between actuators\cite{Zhu:99}. For indirect wavefront sensing this presents an even greater problem since any minimisation of the wavefront aberration would involve \textit{N} degrees of freedom, where \textit{N} is the number of actuators. Assuming that the overall mirror shape is the linear 
+For aberration correction, one could attempt to measure the overall aberration of the optical wavefront and apply the opposite shape to the DM. For direct wavefront sensing, this would appear as simple as measuring the phase distortion and shaping the DM to cancel this distortion. However, for continuous membrane DMs (which the majority of commercially available DMs are) the response of mirror shape to the actuators which control the mirror shape is generally non-linear, due to the membrane's mechanical elasticity, electrostatic forces, and the coupling between actuators\cite{Zhu:99}. For indirect wavefront sensing this presents an even greater problem since any minimisation of the wavefront aberration would involve \textit{N} degrees of freedom, where \textit{N} is the number of actuators. Assuming that the overall mirror shape is the linear 
 superposition of all the individual actuator deflections, we can 
 define the overall mirror shape, $S(x,y)$ as:
 
@@ -299,7 +300,7 @@ define the overall mirror shape, $S(x,y)$ as:
 S(x,y) = \sum_{h=1}^{N} d_{h}\phi_{h}(x,y),
 \end{equation}
 
-Where $S(x,y)$ is the change in the deformable mirror shape from its
+where $S(x,y)$ is the change in the deformable mirror shape from its
 original position, $d_h$ is the $h$-th actuator control signal
 (an arbitrary value related to applied voltage which
 determines the position of the $h$-th actuator in its overall
@@ -316,7 +317,7 @@ terms of Zernike polynomials we obtain:
 \phi_{h}(x,y) = \sum_{g=1}^{M} b_{g,h}z_{g}(x,y),
 \end{equation}
 
-Where $b_{g,h}$ is the coefficient corresponding to the $g$-th
+where $b_{g,h}$ is the coefficient corresponding to the $g$-th
 Zernike polynomial due to $d_h$, the $h$-th actuator control
 signal (i.e. the relationship between how the $h$-th actuator 
 position affects the $g$-th Zernike mode amplitude). This leads to:
@@ -329,7 +330,7 @@ S(x,y) & = \sum_{h=1}^{N} d_{h}\left[\sum_{g=1}^{M} b_{g,h}z_{g}(x,y)\right] \\
 \end{split}
 \end{equation}
 
-Where the new Zernike coefficients, $a_{g}$, are defined as:
+where the new Zernike coefficients, $a_{g}$, are defined as:
 
 \begin{equation}\label{eq:new_z_coef}
 a_{g} = \sum_{h=1}^{N} b_{g,h} d_{h} \text{~for~} g=1,2,...,M.
@@ -344,7 +345,7 @@ Converting this to a matrix form yields:
 \end{split}
 \end{equation}
 
-Where $\bar{d}$ is a length $N$ vector of the actuator control signals, 
+where $\bar{d}$ is a length $N$ vector of the actuator control signals, 
 $\bar{a}$ is the length $M$ vector of the Zernike polynomial amplitudes and 
 $\boldsymbol{B}$ is the $M \times N$ matrix representing the response 
 characteristics of the deformable mirror. However, we actually want its 
@@ -354,9 +355,9 @@ control signals.
 
 Microscope-AOtools implements an automated calibration routine to obtain 
 $\boldsymbol{C}$. Each actuator is moved through $p$ set positions and a 
-wavefront is extracted. Figure~\ref{fig:observed_wavefront} shows an 
-observed wavefront during the calibration routine. The wavefront is then 
-decomposed into $M$ Zernike modes\cite{townson2019aotools}. A row vector 
+wavefront is extracted at each position. Figure~\ref{fig:observed_wavefront} 
+shows an observed wavefront during the calibration routine. The wavefront is 
+then decomposed into $M$ Zernike modes\cite{townson2019aotools}. A row vector 
 $\boldsymbol{z}$ is obtained for each actuator position containing the 
 computed Zernike mode amplitudes:
 
@@ -379,7 +380,7 @@ infinite linear combination of Zernike modes\cite{noll1976zernike}.
 However, using a finite number of Zernike modes produces an 
 approximation of the original wavefront. 
 Figure~\ref{fig:observed_simulated_wavefront_diff} show the
-difference between the two and a ``ringing'' analogous to the 
+difference between the two. A ``ringing'' analogous to the 
 Gibbs phenomena when recreating periodic signals using a
 truncated Fourier series is present\cite{weisstein2003gibbs}.
 
@@ -494,13 +495,13 @@ in large actuator signals, $d_{i}$, even at low Zernike mode amplitudes for
 certain actuators which try to correct modes which they have minimal 
 influence over. Therefore, the calibration method incorporates a threshold by 
 default and the exact threshold can be varied by experienced users. The 
-calibration routine is initiated by pressing the "Calibrate" button shown in 
+calibration routine is initiated by pressing the ``Calibrate'' button shown in 
 Figure~\ref{fig:DM_methods_cockpit}.
 
 \subsection{Characterisation}
 \label{subsec:characterisation}
 
-Feedback on the quality of the calibration process is essential. Ideally, once the deformable mirror is calibrated we have a linear map which allows known quantities of Zernike modes to be applied exactly. This linear map is never exact in practice due to issues; the fact that some parameters, such as the number of steps used to calibrate each actuator and the threshold used in the SVD pseudo-inversion, are chosen empirically, the approximate nature of the pseudo-inverse, discretisation errors (due to discrete sampling of a continuous functions) in the measuring of Zernike modes. etc It is therefore necessary to have some measure of how well the adaptive element is able to recreate desired Zernike modes. This process is called characterisation. The process involves applying a fixed amplitude of single Zernike modes to the adaptive element, measuring the Zernike modes present and comparing the amplitude to that supposedly applied. An automated implementation of this process is present in Microscope-AOtools with the results returned to the user for interrogation. Figure~\ref{fig:characterisation_workflow} shows a flowchart of this method in Microscope-AOtools. 
+Feedback on the quality of the calibration process is essential. Ideally, once the deformable mirror is calibrated we have a linear map which allows known quantities of Zernike modes to be applied exactly. This linear map is never exact in practice due to issues; the fact that some parameters, such as the number of steps used to calibrate each actuator and the threshold used in the SVD pseudo-inversion, are chosen empirically, the approximate nature of the pseudo-inverse, discretisation errors (due to discrete sampling of a continuous functions) in the measuring of Zernike modes, etc. It is therefore necessary to have some measure of how well the adaptive element is able to recreate desired Zernike modes. This process is called characterisation. The process involves applying a fixed amplitude of single Zernike modes to the adaptive element, measuring the Zernike modes present and comparing the amplitude to that supposedly applied. An automated implementation of this process is present in Microscope-AOtools with the results returned to the user for interrogation. Figure~\ref{fig:characterisation_workflow} shows a flowchart of this method in Microscope-AOtools. 
 
 \begin{figure}[h]
 	\centering
@@ -609,7 +610,7 @@ shows the Zernike mode amplitudes before and after correction. The dots visible 
 
 For system aberration corrections it may be preferable to set a minimum wavefront error and continue to iterate until this threshold is reached. However, a user may wish to only spend $N$ iterations correcting the wavefront. Microscope-AOtools implements both options to ensure generalisability and these parameters can be set by the user utilising the option window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options}. As with the calibration and characterisation methods, the wavefront flattening routine relies on a user selected phase acquisition method selected from the suite of implemented phase acquisition methods. This generalised construction ensures that the applicability of Microscope-AOtools to any adaptive element with any wavefront sensing technique is preserved throughout all the set-up methods.
 
-The characterisation routine is initiated by pressing the "Calculate System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default, the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default, the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernike modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Cockpit's internal configuration and can be applied at any time using the "System Flat" button shown in Figure~\ref{fig:DM_methods_cockpit}.
+The system aberration correction routine is initiated by pressing the ``Calculate System Flat'' button shown in Figure~\ref{fig:DM_methods_cockpit}. Spawning the window shown in Figure~\ref{fig:DM_direct_wavefront_sensing_options} allows a user to vary the number of iterations and RMS error threshold used for the wavefront correction routine. By default, the routine runs for exactly 10 iterations, since the default error threshold is $\infty$ and so any wavefront deformation will yield an RMS value under this threshold. A user can also vary the Zernike modes the wavefront flatting routine will try to correct for. By default, the Zernike modes corrected for are all Zernike modes with Noll indices, $j$, $\ge$ 4 (i.e. all the true optical aberrations) and $<$ the number of actuators, N. Once the Characterisation routine has been performed this is changed to be all Zernike modes with $4 \le j < N$ and with a recreation accuracy within 1 standard deviation of 0.75.  Once the actuator values for correcting the system aberrations have been calculated they are stored in Microscope-Cockpit's internal configuration and can be applied at any time using the ``System Flat'' button shown in Figure~\ref{fig:DM_methods_cockpit}.
 
 \section{Sample Correction Methods}
 \label{sec:sample_correction_methods}
@@ -618,15 +619,14 @@ The characterisation routine is initiated by pressing the "Calculate System Flat
 \label{subsec:sensorless_correction}
 
 In many biological applications, direct wavefront sensing is not possible and so we rely on sensorless techniques to determine the best correction to apply. The generalised methodology for this is shown in Figure~\ref{fig:sensorless_correction_method}. Some metric, $S$, which gives a useful measure of the image quality is chosen. This metric should be a numerical value and should 
-increase to a global maximum as the aberrations present decrease. Often these metrics are related to common measures of image quality, such as sharpness or contrast. For each Zernike mode, $Z_{i}$, a number of amplitudes of that mode, $a_{j}$, are applied and an image of the sample obtained. The quality of each image, $S_{j}$ is calculated. Assuming that $S$ is a function of the Zernike mode amplitude applied,	fitting a Gaussian function to the $S_{j}$ values yields a Zernike mode amplitude, $a_{max}$, which theoretically yields the best image quality, $S_{max}$. The complexity of sensorless AO correction lies in selecting the most appropriate image quality metric. There 
-have been numerous metrics developed which have been shown to be effective on certain sample types or imaging modalities\cite{burke2015adaptive,booth2002adaptive,fienup2003aberration,debarre2008adaptive}.
+increase to a global maximum as the aberrations present decrease. Often these metrics are related to common measures of image quality, such as sharpness or contrast. For each Zernike mode, $Z_{i}$, a number of amplitudes of that mode, $\alpha_{j}$, are applied and an image of the sample obtained. The quality of each image, $S_{j}$ is calculated. Assuming that $S$ is a function of the Zernike mode amplitude applied,	fitting a Gaussian function to the $S_{j}$ values yields a Zernike mode amplitude, $\alpha_{max}$, which theoretically yields the best image quality, $S_{max}$. 
 
-\begin{figure}[h]
+\begin{figure*}
 	\centering
 	\includegraphics[width=1\textwidth,scale=0.5]{./images/sensorless_aberration_fitting_w_images.png}
-	\caption[Principle of sensorless adaptive optics correction.]{Principle of sensorless adaptive optics correction. For each Zernike mode, $Z_i$, images of the sample with different amplitudes of the $i$-th Zernike mode are obtained. A value of the image quality metric, $S$, is obtained for each (blue dots). A Gaussian function is then fitted to these image quality metric values and the amplitude, $a$ corresponding to the maximum image quality, $S_{max}$, is obtained (green dot). The inset images are Drosophila Neuro-muscular Junction with various amplitudes of spherical aberration present.}
+	\caption[Principle of sensorless adaptive optics correction.]{Principle of sensorless adaptive optics correction. For each Zernike mode, $Z_i$, images of the sample with different amplitudes of the $i$-th Zernike mode are obtained. A value of the image quality metric, $S$, is obtained for each (blue dots). A Gaussian function is then fitted to these image quality metric values and the amplitude, $\alpha$ corresponding to the maximum image quality, $S_{max}$, is obtained (green dot). The inset images are Drosophila Neuro-muscular Junction with various amplitudes of spherical aberration present.}
 	\label{fig:sensorless_correction_method}
-\end{figure}
+\end{figure*}
 
 The complexity of sensorless adaptive optics correction lies in
 selecting the best image quality metric. There have been numerous
@@ -638,7 +638,7 @@ generalised, it should not be tied to a particular sample type or
 imaging modality. For this reason, Microscope-AOtools offers a range
 of image quality metrics, all located in the program file \textit{aoMetrics.py}.  
 
-Unlike the calibration, characterisation and direct wavefront sensing techniques, the sensorless adaptive optics routine is not a method implemented in Microscope-AOtools and simply called by Cockpit. Instead, the sensorless correction routine relies on coordination between Cockpit, Python Microscope and Microscope-AOtools. The biological sample is set up in the image plane. A known amplitude of the first Zernike mode to be corrected for is applied to the DM by Microscope-AOtools, Then the light sources and camera are triggered by Python Microscope and the image data is collected by Cockpit. This is repeated for $M$ measurements. Then, Cockpit passes the $M$ images to Microscope-AOtools where the image quality metric for each image is evaluated. These values are then used to fit a Gaussian function and the mean of the Gaussian yields the Zernike mode amplitudes which should yield the maximum image quality, $a_{max}$. This amplitude is then applied to the DM and stored as the offset on top of which all further corrections should be applied. This process is then repeated for $N$ Zernike modes. This whole process is further repeated for $T$ iterations. Finally, the recorded Zernike mode amplitudes which have been corrected for and the actuator positions associated with that correction are stored in in Cockpit's internal configuration. The sensorless adaptive optics routine is initiated by pressing the "Sensorless AO" button shown in Figure~\ref{fig:DM_methods_cockpit}. The workflow of this routine is shown in Figure~\ref{fig:sensorless_correction_workflow_DeepSIM}
+Unlike the calibration, characterisation and direct wavefront sensing techniques, the sensorless adaptive optics routine is not a method implemented in Microscope-AOtools and simply called by Microscope-Cockpit. Instead, the sensorless correction routine relies on coordination between Microscope-Cockpit, Python Microscope and Microscope-AOtools. The biological sample is set up in the image plane. A known amplitude of the first Zernike mode to be corrected for is applied to the DM by Microscope-AOtools. Then the light sources and camera are triggered by Python Microscope and the image data is collected by Microscope-Cockpit. This is repeated for $M$ measurements. Then, Microscope-Cockpit passes the $M$ images to Microscope-AOtools where the image quality metric for each image is evaluated. These values are then used to fit a Gaussian function and the mean of the Gaussian yields the Zernike mode amplitudes which should yield the maximum image quality, $\alpha_{max}$. This amplitude is then applied to the DM and stored as the offset on top of which all further corrections should be applied. This process is then repeated for $N$ Zernike modes. This whole process is further repeated for $T$ iterations. Finally, the recorded Zernike mode amplitudes which have been corrected for and the actuator positions associated with that correction are stored in in Microscope-Cockpit's internal configuration. The sensorless adaptive optics routine is initiated by pressing the ``Sensorless AO'' button shown in Figure~\ref{fig:DM_methods_cockpit}. The workflow of this routine is shown in Figure~\ref{fig:sensorless_correction_workflow_DeepSIM}
 
 \begin{figure}[h]
 	\centering
@@ -647,17 +647,17 @@ Unlike the calibration, characterisation and direct wavefront sensing techniques
 	\label{fig:sensorless_correction_workflow_DeepSIM}
 \end{figure}
 
-Clearly, this sensorless routine has multiple parameters and there is a limited degree to which these can be automatically selected. To this end, Figures~\ref{fig:DeepSIM_control_software} \&~\ref{fig:DM_methods_cockpit_options} allow the user to vary these parameters. Figure~\ref{fig:DM_methods_cockpit_options} shows various options the user can select for the image quality metric to be used. As previously mentioned, different image quality metrics are optimised for different imaging modalities and sample types. Allowing the user to easily switch between metrics is critical for a generalised implementation of adaptive optics which is accessible to non-experts. Figure~\ref{fig:DeepSIM_control_software} shows a window which allows the user to vary the number of iterations, $T$, the Zernike modes to be corrected, $N$ and the number of measurements for each mode, $M$. By default, the Zernike modes corrected for are $1^{st}$ and $2^{nd}$ order spherical aberration, coma, astigmatism and trefoil (in that order) as in biological samples these are often the source of the most significant wavefront deformation, and therefore loss of image quality. The amplitudes applied to the DM are evenly spaced between the "Aberration range minima", $j_{min}$ and "Aberration range maxima", $j_{max}$, in $M$ intervals. These are user specified variable, set using the window show in Figure~\ref{fig:DM_sensorless_ao_parameters}. 
+Clearly, this sensorless routine has multiple parameters and there is a limited degree to which these can be automatically selected. To this end, Figures~\ref{fig:DeepSIM_control_software} \&~\ref{fig:DM_methods_cockpit_options} allow the user to vary these parameters. Figure~\ref{fig:DM_methods_cockpit_options} shows various options the user can select for the image quality metric to be used. As previously mentioned, different image quality metrics are optimised for different imaging modalities and sample types. Allowing the user to easily switch between metrics is critical for a generalised implementation of adaptive optics which is accessible to non-experts. Figure~\ref{fig:DM_sensorless_ao_parameters} shows a window which allows the user to vary the number of iterations, $T$, the Zernike modes to be corrected, $N$ and the number of measurements for each mode, $M$. By default, the Zernike modes corrected for are $1^{st}$ and $2^{nd}$ order spherical aberration, coma, astigmatism and trefoil (in that order) as in biological samples these are often the source of the most significant wavefront deformation, and therefore loss of image quality. The amplitudes applied to the DM are evenly spaced between the ``Aberration range minima'', $z_{min}$ and ``Aberration range maxima'', $z_{max}$, in $M$ intervals.
 
-The values for $j_{min}$ and $j_{max}$ should ideally be chosen to scan a sufficient range of aberration amplitudes to ensure $j_{min} \le a_{max} \le j_{max}$. At the least $a_{max}$ should be sufficiently close to $j_{min}$ or $j_{max}$ so that there is a clear increase in image quality as the aberration amplitude applied approaches one of these bounds. This range should not be too large otherwise a user risks either having sparse image quality data which only captures extreme aberrations and prevents an adequate fitting, or taking a sufficient number of measurements but introducing considerable photodamage. Like the image quality metrics, the $[j_{min},j_{max}]$ range will vary with sample type and so some preliminary work is required before data collection proper to ascertain the correct range as well as the correct number of measurements and iterations, $N$ and $T$, for a given sample type. 
+The values for $z_{min}$ and $z_{max}$ should ideally be chosen to scan a sufficient range of aberration amplitudes to ensure $z_{min} \le \alpha_{max} \le z_{max}$. $\alpha_{max}$ should at least be sufficiently close to $z_{min}$ or $z_{max}$ so that there is a clear increase in image quality as the aberration amplitude applied approaches one of these bounds. This range should not be too large otherwise a user risks either having sparse image quality data which only captures extreme aberrations and prevents an adequate fitting, or taking a sufficient number of measurements but introducing considerable photodamage. Like the image quality metrics, the $[z_{min},z_{max}]$ range will vary with sample type and so some preliminary work is required before data collection proper to ascertain the correct range as well as the correct number of measurements and iterations, $N$ and $T$, for a given sample type. 
 
-As previously mentioned, the $[j_{min},j_{max}]$ range should ideally
-contain $a_{max}$ or $a_{max}$ should be close to one of these
+As previously mentioned, the $[z_{min},z_{max}]$ range should ideally
+contain $\alpha_{max}$ or $\alpha_{max}$ should be close to one of these
 bounds. Allowing the Gaussian function to be fitted to the image
-quality metric values with no bounds (i.e. allowing $a_{max}$ to take
+quality metric values with no bounds (i.e. allowing $\alpha_{max}$ to take
 any value) becomes problematic when the image quality metric values
 remain largely constant over all the amplitudes applied. This
-phenomenon can occur for a number of reasons; $a_{max}$ is found far
+phenomenon can occur for a number of reasons; $\alpha_{max}$ is found far
 outside the range of amplitudes scanned, the amplitudes sampled were
 sufficiently sparse that the central region of the Gaussian lies
 between two amplitudes, the aberration being sampled does not have a
@@ -665,11 +665,11 @@ strong impact on the image quality measured, another, more significant
 aberration mode has not been corrected and the effect of this other
 mode is masking the effect of the current mode, etc. Whatever the
 reason, an unbounded fitting to a relatively flat profile of image
-quality metric measurements will lead to a large value of $a_{max}$
+quality metric measurements will lead to a large value of $\alpha_{max}$
 which is unreliable and often results in an applying an aberration
 amplitude which severely damages the image quality. To ensure that the
-Gaussian fitting to find $a_{max}$ yields a reasonable value, the
-fitting has bounds defined as [$j_{max} + 0.25(j_{max}-j_{min})$, $j_{min} - 0.25(j_{max}-j_{min})$].
+Gaussian fitting to find $\alpha_{max}$ yields a reasonable value, the
+fitting has bounds defined as [$z_{max} + 0.25(z_{max}-z_{min})$, $z_{min} - 0.25(z_{max}-z_{min})$].
 
 \subsection{Image Quality Metric: Fourier Power}
 \label{subsec:fourier_power_metric}
@@ -679,7 +679,7 @@ As mentioned in Section~\ref{subsec:sensorless_correction}, sensorless AO
 correction requires an image quality metric which is well suited to both the 
 imaging modality and the desired sample. Microscope-AOtools implements a 
 suite of image quality metrics to choose from. Both the DeepSIM and the Aurox 
-Clarity systems can be considered structured illumination system. Although 
+Clarity systems can be considered structured illumination systems. Although 
 the Aurox Clarity system is clearly not a Gustafsson-style SIM system, an 
 illumination pattern is imposed by the spinning disk and therefore the 
 illumination light can be said to have a spatial structure to it. The image 
@@ -712,7 +712,7 @@ F(\textbf{r}) &= [D(\bar{x})I(\textbf{r})] \circledast H(\textbf{r}),\\
 \end{split}\tag{\ref{eq:fluorescent_image}},
 \end{equation}
 
-Where $D(\textbf{r})$ is the sample fluorescence distribution, 
+where $D(\textbf{r})$ is the sample fluorescence distribution, 
 $I(\textbf{r})$ is the illumination pattern, $E(\bar{x})$ is
 the resultant emission signal and $H(\textbf{r})$ is the system 
 point spread function (PSF). For a widefield image, 
@@ -727,8 +727,8 @@ transform yields:
 \end{split},
 \end{equation}
 
-Where the tilde ($\sim$) represent the Fourier transform of the corresponding 
-real-space functions and $\textbf{O}(\textbf{k})$ is the system optical transfer 
+where bold text and $\sim$ indicates the Fourier transform of the corresponding 
+real-space function and $\textbf{O}(\textbf{k})$ is the system optical transfer 
 function (OTF)\cite{gustafsson2008three}. The OTF both attenuates the sample 
 fluorescence distribution spatial frequencies and acts as a lowpass filter. 
 Since $\tilde{\textbf{D}}_{n,m}$ is the 2D discrete Fourier transform of 
@@ -742,7 +742,7 @@ the observed data, this lowpass filter, $\mu_{n,m}$, is defined as:
 \end{cases},
 \end{equation}
 
-Where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $\omega_{l}$ 
+where $n' = n - \frac{N-1}{2}$, $m' = m - \frac{M-1}{2}$ and $\omega_{l}$ 
 is the lateral diffraction limit in reciprocal space as per
 Equation~\ref{eq:lateral_spatial_freq_res} 
 
@@ -759,13 +759,13 @@ contributions. A thresholding mask, $\tau_{n,m}$ is created and defined as:
 \end{cases},
 \end{equation}
 
-Where $\delta$ is a noise threshold defined as:
+where $\delta$ is a noise threshold defined as:
 
 \begin{equation}\label{eq:noise_threshold}
 \delta = \frac{\alpha}{P_{noise}}\sum\limits_{l,k}{\left\| \tilde{\textbf{D}}_{l,k} \right\|^2},
 \end{equation}
 
-Where $\left\| \tilde{\textbf{D}}_{l,k} \right\|^2$ is the power in the 
+where $\left\| \tilde{\textbf{D}}_{l,k} \right\|^2$ is the power in the 
 $l$-th, $k$-th spatial frequency where $l$ \& $k$ are the coordinates 
 where $\mu_{n,m} = 0$, $P_{noise}$ is the total number of pixels 
 outside the OTF lowpass limit and $\alpha$ is a user defined 

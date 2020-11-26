@@ -6,7 +6,7 @@
 
 Figure~\ref{fig:confocal_schematic} shows a simplified schematic 
 for a Nipkow-Petran spinning disk confocal microscope. The 
-excitation illumination passes through aperture mask, which is 
+excitation illumination passes through an aperture mask, which is 
 then imaged onto the sample. This aperture mask consists of a 
 number of pinholes packed closely together, illuminating a number 
 of focal spots at once. The excitation light then passes back 
@@ -26,15 +26,15 @@ light source, immediately after the detector mask the
 intensity, $I\left(\textbf{x}_{2}\right)$, is given by:
 
 \begin{equation}\label{eq:intensity_after_detector}
-I\left(\textbf{x}_{2}\right) = \int S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right) \left| \int h_{1}\left(\textbf{x}_{0} + \frac{\textbf{x}_{1}}{M}\right) \tau\left(\textbf{x}_{0}\right) h_{2}\left(\textbf{x}_{0} + \frac{\textbf{x}_{2}}{M}\right)d\textbf{x}_{0}\right|^{2}d\textbf{x}_{1}
+I\left(\textbf{x}_{2}\right) = \int S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right) \left| \int h_{1}\left(\textbf{x}_{0} + \frac{\textbf{x}_{1}}{M}\right) \tau\left(\textbf{x}_{0}\right) h_{2}\left(\textbf{x}_{0} + \frac{\textbf{x}_{2}}{M}\right)d\textbf{x}_{0}\right|^{2}d\textbf{x}_{1},
 \end{equation}
 
-Where $S\left(\textbf{x}_{1}\right)$ is the intensity 
+where $S\left(\textbf{x}_{1}\right)$ is the intensity 
 sensitivity of the source mask, $D\left(\textbf{x}_{2}\right)$ 
 is the detector mask, $\tau\left(\textbf{x}_{0}\right)$ is 
 the amplitude transmittance function of the aperture mask, 
 $h_{1}$ and $h_{2}$ are the amplitude point spread functions 
-(PSFs) of the two imaging lenses respectively and $M$ is the 
+(PSFs) of the two imaging lenses respectively, and $M$ is the 
 magnification factor. 
 
 \begin{figure}[h]
@@ -54,10 +54,10 @@ the intensity at $\textbf{x}_{i}$ from
 Equation~\ref{eq:intensity_after_detector} becomes:
 
 \begin{equation}\label{eq:confocal_image_form}
-I\left(\textbf{x}_{i}\right) = \left| \int h_{1}\left(\textbf{x}\right) h_{2}\left(\textbf{x}\right) \tau\left(\textbf{x} - \frac{\textbf{x}_{i}}{M}\right)d\textbf{x}\right|^{2}
+I\left(\textbf{x}_{i}\right) = \left| \int h_{1}\left(\textbf{x}\right) h_{2}\left(\textbf{x}\right) \tau\left(\textbf{x} - \frac{\textbf{x}_{i}}{M}\right)d\textbf{x}\right|^{2},
 \end{equation}
 
-Which is the equation which describes image formation in 
+which is the equation which describes image formation in 
 conventional confocal microscopes\cite{wilson1990confocal}.
 This describes the image formation from a single point source 
 and hence requires scanning in $\textbf{x}_{i}$ to form a 
@@ -78,10 +78,10 @@ The resultant image is given by the time average of
 Equation~\ref{eq:intensity_after_detector}:
 
 \begin{equation}\label{eq:confocal_image_time_ave}
-\left\langle I\left(\textbf{x}_{2}\right)\right\rangle = \left\langle \int S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right) \left| \int h_{1}\left(\textbf{x}_{0} + \frac{\textbf{x}_{1}}{M}\right) \tau\left(\textbf{x}_{0}\right) h_{2}\left(\textbf{x}_{0} + \frac{\textbf{x}_{2}}{M}\right)d\textbf{x}_{0}\right|^{2}d\textbf{x}_{1}\right\rangle
+\left\langle I\left(\textbf{x}_{2}\right)\right\rangle = \left\langle \int S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right) \left| \int h_{1}\left(\textbf{x}_{0} + \frac{\textbf{x}_{1}}{M}\right) \tau\left(\textbf{x}_{0}\right) h_{2}\left(\textbf{x}_{0} + \frac{\textbf{x}_{2}}{M}\right)d\textbf{x}_{0}\right|^{2}d\textbf{x}_{1}\right\rangle,
 \end{equation}
 
-Where $\left\langle . \right\rangle$ is the time average. 
+where $\left\langle . \right\rangle$ is the time average. 
 Since the only time-dependent components are 
 $S\left(\textbf{x}_{1}\right)$ and $D\left(\textbf{x}_{2}\right)$ 
 only the time average of 
@@ -89,7 +89,7 @@ $S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right)$
 need be considered:
 
 \begin{equation}\label{eq:SD_time_ave}
-\left\langle S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right)\right\rangle = \sum_{i=0}^{N}\sum_{j=0}^{N} \left\langle b_{i}\left(t\right) b_{j}\left(t\right)\right\rangle \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{j}\right)
+\left\langle S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right)\right\rangle = \sum_{i=0}^{N}\sum_{j=0}^{N} \left\langle b_{i}\left(t\right) b_{j}\left(t\right)\right\rangle \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{j}\right).
 \end{equation}
 
 The transmittance of each pixel should be entirely 
@@ -97,10 +97,10 @@ uncorrelated with the transmittance of any other pixel.
 Therefore, a sequence of transmittances is chosen such that:
 
 \begin{equation}\label{eq:pixel_uncorrelation}
-\left\langle b_{i}\left(t\right) b_{j}\left(t\right)\right\rangle = \delta_{ij}
+\left\langle b_{i}\left(t\right) b_{j}\left(t\right)\right\rangle = \delta_{ij},
 \end{equation}
 
-Where $\delta_{ij}$ is the Kronecker delta. $b_{i}\left(t\right)$ 
+where $\delta_{ij}$ is the Kronecker delta. $b_{i}\left(t\right)$ 
 can therefore be any orthonormal sequence, such as an infinite, 
 random sequence of $\pm1$ or finite-length complementary Golay 
 sequence\cite{golay1949multi}. Unfortunately, such sequences 
@@ -109,10 +109,10 @@ achievable. By adding a DC shift this limitation can be overcome
 and the pixel transmissivities become:
 
 \begin{equation}\label{eq:detector_aperture_time_DC}
-S\left(\textbf{x}\right) = D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[b_{i}\left(t\right) + 1\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right)
+S\left(\textbf{x}\right) = D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[b_{i}\left(t\right) + 1\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right).
 \end{equation} 
 
-So, the pixel transmissivities, $\left[b_{i}\left(t\right) + 
+So, the pixel transmissivities, $\frac{1}{2}\left[b_{i}\left(t\right) + 
 1\right]$, alternate between $0$ and $1$ as $b_{i}\left(t\right)$ 
 varies between $\pm1$. Imposing the additional requirement that 
 $\left\langle b_{i}\left(t\right) \right\rangle = 0$, then 
@@ -121,7 +121,7 @@ Equation~\ref{eq:SD_time_ave} becomes:
 \begin{equation}\label{eq:SD_time_ave_DC}
 \begin{split}
 \left\langle S\left(\textbf{x}_{1}\right) D\left(\textbf{x}_{2}\right)\right\rangle &= \frac{1}{4} \sum_{i=0}^{N}\sum_{j=0}^{N} \left\langle \left[b_{i}\left(t\right) + 1\right] \left[b_{j}\left(t\right) + 1\right] \right\rangle \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{j}\right)\\
-&= \frac{1}{4} \left[\sum_{i=0}^{N} \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{i}\right) + \sum_{i=0}^{N}\sum_{j=0}^{N} \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{j}\right)\right]\\
+&= \frac{1}{4} \left[\sum_{i=0}^{N} \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{i}\right) + \sum_{i=0}^{N}\sum_{j=0}^{N} \delta\left(\textbf{x}_{1} - \textbf{x}_{i}\right) \delta\left(\textbf{x}_{2} - \textbf{x}_{j}\right)\right].\\
 \end{split}
 \end{equation}
 
@@ -139,10 +139,10 @@ Therefore, the image formed by the transmitted light, $I_{T}$,
 is a composite of a conventional and confocal image:
 
 \begin{equation}\label{eq:transmitted_image}
-I_{T} = I_{conf} + I_{conv}
+I_{T} = I_{conf} + I_{conv},
 \end{equation}
 
-Where $I_{conf}$ and $I_{conv}$ are the confocal and 
+where $I_{conf}$ and $I_{conv}$ are the confocal and 
 conventional images respectively. Instead of an array of 
 pixels with programmable transmissivity, the Aurox Clarity 
 module implements a disk with a photolithographed 
@@ -154,10 +154,10 @@ Equation~\ref{eq:detector_aperture_time_DC} should therefore
 be modified to:
 
 \begin{equation}\label{eq:detector_aperture_arc}
-S\left(\textbf{x}\right) = D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[b_{i}\left(\textbf{x}_{r}\right) + 1\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right)
+S\left(\textbf{x}\right) = D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[b_{i}\left(\textbf{x}_{r}\right) + 1\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right),
 \end{equation}
 
-Where $\textbf{x}_{r}$ is the rotation coordinate. In 
+where $\textbf{x}_{r}$ is the rotation coordinate. In 
 this case, the final image is obtained by averaging over 
 $\textbf{x}_{r}$ rather than over time, but the result is 
 still Equation~\ref{eq:transmitted_image}. Previous 
@@ -170,25 +170,25 @@ reflected off the disk where the transmissivity is $0$. In
 this case, the detector mask is defined as:
 
 \begin{equation}\label{eq:detector_aperture_arc_reflect}
-D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[1 - b_{i}\left(\textbf{x}_{r}\right)\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right)
+D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[1 - b_{i}\left(\textbf{x}_{r}\right)\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right).
 \end{equation}
 
 Applying the same average over $\textbf{x}_{r}$ as before, 
 the image formed by the reflected light, $I_{R}$, is:
 
 \begin{equation}\label{eq:reflected_image}
-I_{R} = I_{conv} - I_{conf}
+I_{R} = I_{conv} - I_{conf}.
 \end{equation}
 
 Therefore, both the confocal and conventional images can 
 be recovered by:
 
 \begin{equation}\label{eq:confocal_image}
-I_{conf} = \frac{1}{2}\left(I_{T} - I_{R}\right)
+I_{conf} = \frac{1}{2}\left(I_{T} - I_{R}\right),
 \end{equation}
 
 \begin{equation}\label{eq:conventional_image}
-I_{conv} = \frac{1}{2}\left(I_{T} + I_{R}\right)
+I_{conv} = \frac{1}{2}\left(I_{T} + I_{R}\right).
 \end{equation}
 
 This has the benefits of only requiring one exposure for 
@@ -228,54 +228,45 @@ and egg chambers.
 \subsubsection{Neuro-muscular Junction}
 \label{subsubsec:Aurox_NMJ_prep}
 
-(XX this section lacks crucial details, paraformaldahyde and BSA
-concenstrations, antibody dilutions etc... Either the details or a say
-done in ref x XX) 
-
 The \textit{Drosophila melanogaster} neuro-muscular junction (NMJ) 
 samples were prepared by following the protocol. 
 3rd instar \textit{Drosophila melanogaster} larvae (Oregon-R 
 strain) were dissected in HL3 buffer with $0.3mM~\text{Ca}^{2+}$ to 
 prepare a larval fillet. After this, larvae were fixed with 
-paraformaldehyde and blocked using BSA. Larvae were stained 
-overnight with Horseradish Peroxidase (HRP) conjugated to Alexa 568 
-fluorophore to visualise the neurons, and primary mouse antibody 
-against Discs large (DLG) to visualise the postsynaptic density. 
-The next day, the larvae were counterstained with secondary 
-antibody to detect the DLG (donkey anti-mouse conjugated to 
-Alexa 488 fluorophore was used), as well as DAPI to visualise the 
-nuclei. The larvae were then washed and mounted in 65\% 
-vectashield\cite{brent2009drosophila}. This dilution of 
+4\% paraformaldehyde and blocked using 1\% BSA.\cite{brent2009drosophila} Larvae were stained overnight with 1:100 Horseradish Peroxidase (HRP) 
+conjugated to Alexa568 fluorophore to visualise the neurons, and 
+primary mouse antibody against Discs large (DLG) to visualise the 
+postsynaptic density. The next day, the larvae were counterstained 
+with secondary antibody to detect the DLG (1:200 donkey anti-mouse 
+conjugated to Alexa488 fluorophore was used), as well as 1:1000 from 1mg/mL 
+stock DAPI to visualise the nuclei. The larvae were then washed and mounted 
+in 65\% vectashield\cite{brent2009drosophila}. This dilution of 
 vectashield is compatible with the AMEP4694 $60\times$, 1.42 NA oil 
 immersion lens.
 
 \subsubsection{Egg chambers}
 \label{subsubsec:Aurox_Egg_chambers_prep}
 
-(XX better protocol here, more details precent like concenstrations,
-times etc... This if you could use this to reproduce the experiments
-with no other input XX)
 
-The \textit{Drosophila melanogaster} egg chamber samples were 
-prepared by following the (XX which? or do you just me the following protocol? XX)  protocol. Ovaries were isolated from 
-\textit{Drosophila melanogaster} adult females straight into fixation 
-medium and fixed in 4\% PFA (prepared fresh from a stock solution 
-of 16\% paraformaldehyde, methanol free ultra - pure EM grade, 
-Polysciences) in Cytoskeleton Buffer for 10 minutes without added 
-detergent\cite{jia2016automatic,zhang2020nanoscale,leyton2016pfa}. 
-Ovaries were then heptane permeabilised (XX how? XX)  and post fixed in 4\% PFA 
-in PBS for not more than 15 minutes, then washed three times with 
-PBS/TX-100, 0.05\%. Actin was labelled with phalloidin Alexa 488 
-(Phalloidin: stock 200 units/ml in Methanol, 6.6 $\mu$M) at between 
-5 and 20 $\mu$l stock in 200 $\mu$l for at least 45 min at RT (or 
-O/N at $4^{\circ}$C). Labelled ovarioles were washed three times with 
-PBS TX-100, 0.05\%, and then finally with PBS before being 
-pre-incubated at RT for at least 3 hours in 70\% Vectashield. This 
-was removed and replaced with fresh 70\% Vectashield prior to samples 
-being mounted under a coverslip raised on two thin strips of 
-double-sided sticky tape to avoid flattening\cite{davidson2016localized}.
-The edges of the coverslips were double varnished, and slides were stored 
-at $4^{\circ}$C until use.
+The \textit{Drosophila melanogaster} egg chamber samples were prepared by the 
+following protocol. Ovaries were isolated from \textit{Drosophila 
+melanogaster} adult females straight into fixation medium and fixed in 4\% PFA 
+(prepared fresh from a stock solution of 16\% paraformaldehyde, methanol free 
+ultra - pure EM grade, Polysciences) in Cytoskeleton Buffer for 10 minutes 
+without added 
+detergent\cite{jia2016automatic,zhang2020nanoscale,leyton2016pfa}.  Ovaries 
+were then heptane permeabilised with 800$\mu$l heptane and post fixed in 4\% 
+PFA in PBS for not more than 15 minutes, then washed three times with 
+PBS/TX-100, 0.05\%. Actin was labelled with phalloidin Alexa 488 Phalloidin: 
+stock 200 units/ml in Methanol, 6.6 $\mu$M) at between 5 and 20 $\mu$l stock 
+in 200 $\mu$l for at least 45 min at RT (or O/N at $4^{\circ}$C). Labelled 
+ovarioles were washed three times with PBS TX-100, 0.05\%, and then finally 
+with PBS before being pre-incubated at RT for at least 3 hours in 70\% 
+Vectashield. This was removed and replaced with fresh 70\% Vectashield prior 
+to samples being mounted under a coverslip raised on two thin strips of 
+double-sided sticky tape to avoid flattening\cite{davidson2016localized}. The 
+edges of the coverslips were double varnished, and slides were stored at 
+$4^{\circ}$C until use.
 
 \section{Experimental Results}
 \label{sec:Aurox_results}

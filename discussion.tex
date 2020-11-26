@@ -34,11 +34,11 @@ modes up to radial order, $n = 10$. Figure~\ref{fig:zernike_fitting_accuracy}
 shows the results of this experiment on wavefront images of various sizes. In 
 no case is the expected Zernike mode amplitude returned exactly - there is 
 always some degree of error in the Zernike mode amplitude measurement. 
-Zernike modes with an even azimuthal frequency appear to perform worse than 
-Zernike modes with either an odd or zero azimuthal frequency. All non-zero 
-azimuthal frequency Zernike modes display a trend of increasing percentage 
-error with radial order. The magnitude of percentage error also decreases 
-with increasing simulated wavefront size. 
+Zernike modes with an even azimuthal frequency appear to perform either 
+considerably worse or better than Zernike modes with either an odd or zero 
+azimuthal frequency. All non-zero azimuthal frequency Zernike modes display a 
+trend of increasing percentage error with radial order. The magnitude of 
+percentage error also decreases with increasing simulated wavefront size. 
 
 Interestingly, there is often a clear split in percentage error between 
 Zernike modes with positive and negative even azimuthal frequencies. This is most visible in 
@@ -46,7 +46,7 @@ Figure~\ref{fig:Zernike_fitting_percentage_error_one_mode_256_shape} but it
 can be observed in some radial orders in all the simulated wavefront sizes 
 shown in Figure~\ref{fig:zernike_fitting_accuracy}. This observed difference 
 in performance between these Zernike modes occurs because positive even 
-azimuthal frequencies have a component of variation along the aligned with 
+azimuthal frequencies have a component of variation aligned with 
 either the $x$ or $y$ axis whereas negative even azimuthal frequencies do 
 not. Zernike modes with a positive even azimuthal frequencies are vulnerable 
 to a class of discretisation error where some of the principle variation in 
@@ -178,7 +178,7 @@ wavefronts for azimuthal frequencies less than 0.
 		$32\times32$ pixels} \label{fig:zernike_fitting_accuracy_resize}
 \end{figure}
 
-There accuracy of the Zernike mode amplitude fitting is a limiting factor in two key areas. Firstly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring an ideal control matrix and, therefore, the ideal characterisation assay shown in Figure~\ref{fig:characterisation_assay_ideal}. Secondly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring a perfectly flat wavefront through direct wavefront sensing.
+The accuracy of the Zernike mode amplitude fitting is a limiting factor in two key areas. Firstly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring an ideal control matrix and, therefore, the ideal characterisation assay shown in Figure~\ref{fig:characterisation_assay_ideal}. Secondly, the accuracy of the Zernike mode fitting is one of the limiting factors to acquiring a perfectly flat wavefront through direct wavefront sensing correction.
 
 \subsection{Sensorless correction accuracy}
 \label{subsec:sensorless_accuracy}
@@ -217,9 +217,9 @@ amplitudes were $[-2,2]$ radians. If \textit{scipy}'s
 constraints, the fitting shown in 
 Figure~\ref{fig:zernike_fitting_current_power_metric_no_bound_2} is 
 obtained. Clearly, there are two problems with this fit. Firstly, the value 
-of $\mu$ is $-688$ radians - a frankly absurdly high aberration, certainly 
-not physically possible for the sample type and depth of imaging in 
-question, and not an aberration amplitude the ALPAO-69 DM on DeepSIM (or and 
+of $\mu$ is $-688$ radians. This is a frankly absurdly high aberration, 
+certainly not physically possible for the sample type and depth of imaging in 
+question, and not an aberration amplitude the ALPAO-69 DM on DeepSIM (or any 
 microscopy deformable mirror) is capable of applying. Secondly, the fit has 
 allegedly found a minimum opposed to the desired maximum image quality for 
 this mode. 
@@ -238,7 +238,7 @@ order of magnitude and corresponds to a maximum.
 It is worth noting that the image quality amplitudes for data points labelled 
 ``Measured metric values'' in Figure~\ref{fig:sensorless_fitting_accuracy} 
 were obtained from images acquired with the corresponding Zernike mode 
-amplitudes applied. By contrast, the data points labbeled ``Zernike amplitude 
+amplitudes applied. By contrast, the data points labelled ``Zernike amplitude 
 for maximum quality'' are obtained from the theoretical image quality metric 
 value according to the obtained fit (i.e. $f(\mu)$) and not from an acquired 
 image. They do not represent the image quality obtained when applying the 
@@ -286,11 +286,11 @@ applied, this can bias future image quality measurements and prevent
 correction of subsequent Zernike modes. The first case explains why the order 
 Zernike modes are corrected in, specified by the user in the interface shown 
 in Figure~\ref{fig:DM_sensorless_ao_parameters}, is important. The second 
-case explains the existence of the "Reset DM" and "Apply last pattern" 
-buttons in Figure~\ref{fig:DM_methods_cockpit}. "Reset DM" returns all 
-actuators to their default 0 position. "Apply last pattern" applies the last 
+case explains the existence of the ``Reset DM'' and ``Apply last pattern'' 
+buttons in Figure~\ref{fig:DM_methods_cockpit}. ``Reset DM'' returns all 
+actuators to their default 0 position. ``Apply last pattern'' applies the last 
 recorded actuator pattern applied to the DM. Actuator patterns applied 
-through "Reset DM" are not recorded. These buttons allow a user to toggle 
+through ``Reset DM'' are not recorded. These buttons allow a user to toggle 
 between the calculated sensorless correction pattern and no correction 
 pattern (i.e. all mirror actuators have no voltage applied). 
 
@@ -337,27 +337,28 @@ Figure~\ref{fig:sensorless_unsuccessful_start}.
 		\label{fig:sensorless_successful_end}
 	\end{subfigure}
 	\caption[Visual distinction between unsuccessful and
-          successful sensorless correction routines]{Visual
-          distinction between successful and unsuccessful sensorless
-          correction routines. \textbf{(a)} A bovine pulmonary artery
-          endothelial junction before an unsuccessful sensorless
-          correction routine \textbf{(b)} A bovine pulmonary artery
-          endothelial after an unsuccessful sensorless correction
-          routine. \textbf{(a)} and \textbf{(b)} are displayed on the
-          same colour scale and show the Alexa488 channel staining
-          F-actin. \textbf{(c)} A \textit{drosophila} neuro-muscular
-          junction before a successful sensorless correction routine
-          \textbf{(d)} A \textit{drosophila} neuro-muscular junction
-          after a successful sensorless correction
-          routine. \textbf{(c)} and \textbf{(d)} are displayed on the
-          same colour scale and show the neuron, visualised with Horseradish 
-          Peroxidase (HRP) conjugated to Alexa568 fluorophore.}
+	successful sensorless correction routines]{Visual
+		distinction between successful and unsuccessful sensorless
+		correction routines. \textbf{(a)} A bovine pulmonary artery
+		endothelial junction before an unsuccessful sensorless
+		correction routine \textbf{(b)} A bovine pulmonary artery
+		endothelial after an unsuccessful sensorless correction
+		routine. \textbf{(a)} and \textbf{(b)} are displayed on the
+		same colour scale and show the Alexa488 channel staining
+		F-actin. \textbf{(c)} A \textit{drosophila} neuro-muscular
+		junction before a successful sensorless correction routine
+		\textbf{(d)} A \textit{drosophila} neuro-muscular junction
+		after a successful sensorless correction
+		routine. \textbf{(c)} and \textbf{(d)} are displayed on the
+		same colour scale and show the neuron, visualised with Horseradish 
+		Peroxidase (HRP) conjugated to Alexa568 fluorophore.}
 	\label{fig:sensorless_routine_success_failure}
 \end{figure}
 
 In a successful sensorless correction routine, the improvement in image 
 quality will be visually apparent. Typically, this manifests as increased 
-image contrast. Where a structured illumination pattern has been applied 
+image contrast, overall image intensity, and additional fine structures becoming 
+observable. Where a structured illumination pattern has been applied 
 during correction, such with IsoSense, the illumination pattern maybe become 
 visible. Figure~\ref{fig:sensorless_successful_end} shows the results of a 
 successful sensorless correction routine performed on the Alexa488 channel of 
