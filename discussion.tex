@@ -121,15 +121,16 @@ inversely proportional to the overall Zernike mode fitting accuracy.
 
 The splitting in fitting error between positive and negative even azimuthal 
 frequencies is 
-once again observed, and it is observed for all resizing factors. However, a 
-splitting in fitting error is also observed in 
+once again observed, and it is observed for all resizing factors. 
+A splitting in fitting error is also observed in 
 Figure~\ref{fig:zernike_fitting_accuracy_resize} between positive and 
 negative odd azimuthal frequencies which was not present previously. One 
 might suspect that this is due to the order in which the image axes are 
-integrated along using \textit{scipy}'s $trapz$ function. However, reversing 
-the order in which the axes are integrated along preserves this error 
-splitting as presented in Figure~\ref{fig:zernike_fitting_accuracy_resize}. 
-Another reasonable candidate for suspicion might be the function used to 
+integrated along using \textit{scipy}'s $trapz$ function. However, the error splitting presented in 
+Figure~\ref{fig:zernike_fitting_accuracy_resize} between positive and 
+negative azimuthal frequencies is preserved even when the order in which 
+the axes are integrated along is reversed. Another reasonable candidate 
+for suspicion might be the function used to 
 resize the wavefront. If this were the source of this difference in fitting 
 errors, it should not occur in 
 Figure~\ref{fig:Zernike_fitting_percentage_error_random_modes_repeat_resize_factor_1} since the simulated wavefronts used in this dataset have not been 
@@ -345,9 +346,9 @@ Figure~\ref{fig:sensorless_unsuccessful_start}.
 		endothelial after an unsuccessful sensorless correction
 		routine. \textbf{(a)} and \textbf{(b)} are displayed on the
 		same colour scale and show the Alexa488 channel staining
-		F-actin. \textbf{(c)} A \textit{drosophila} neuro-muscular
+		F-actin. \textbf{(c)} A \textit{Drosophila} neuro-muscular
 		junction before a successful sensorless correction routine
-		\textbf{(d)} A \textit{drosophila} neuro-muscular junction
+		\textbf{(d)} A \textit{Drosophila} neuro-muscular junction
 		after a successful sensorless correction
 		routine. \textbf{(c)} and \textbf{(d)} are displayed on the
 		same colour scale and show the neuron, visualised with Horseradish 
@@ -362,7 +363,7 @@ observable. Where a structured illumination pattern has been applied
 during correction, such with IsoSense, the illumination pattern maybe become 
 visible. Figure~\ref{fig:sensorless_successful_end} shows the results of a 
 successful sensorless correction routine performed on the Alexa488 channel of 
-a \textit{drosophila} neuro-muscular junction, prepared as described in 
+a \textit{Drosophila} neuro-muscular junction, prepared as described in 
 Section~\ref{subsec:DeepSIM_sample_prep}. 
 Figure~\ref{fig:sensorless_successful_end} shows enhanced contrast, higher 
 overall intensity and additional fine structure compared to 
