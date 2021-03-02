@@ -5,11 +5,11 @@
 
 The origin of optical aberrations and their effect on image
 formation from a geometric optics standpoint and how this leads 
-decreased image quality and resolution has already been covered 
+to decreased image quality and resolution has already been covered 
 in Section~\ref{sec:aberrations}. The extent of optical 
 aberrations in thick samples and the particular effects of
 aberrations on structured illumination microscopy (SIM) imaging 
-are worth paying particular attention to. 
+are worth paying attention to. 
 
 In widefield microscopy, an even field of illumination is 
 applied to the field of view and the resultant fluorescent
@@ -36,7 +36,7 @@ point spread function (PSF). Section~\ref{sec:aberrations} has already
 discussed the effect aberrations have on distorting the system
 PSF, $H(\textbf{r})$. However, in SIM imaging the illumination 
 pattern, $I(\textbf{r})$, is also formed in the same imaging path
-and is therefore the illumination pattern formation is also 
+and therefore the illumination pattern formation is also 
 affected by aberrations.
 
 Consider the illumination pattern function. Fully coherent
@@ -87,14 +87,17 @@ images are determined by the system's ability to reliably
 image the high spatial frequencies\cite{debarre2008adaptive,thomas2015enhanced}.
 The aberrations which affect the strength of high spatial 
 frequency signals can be divided into two categories: 
-isoplanar and anisoplanar aberrations. Single adaptive 
-elements, such as the deformable mirror in the DeepSIM 
-setup, can only correct for the isoplanar aberrations.
-Anisoplanar aberrations will still introduce artifacts 
-in the final, reconstructed data. However, provided that
-the anisoplanar aberrations are considerably smaller than
-the isoplanar aberrations, these aberrations will be small
-compared to the SIM image and will not prevent a successful
+isoplanar and anisoplanar aberrations. In this context, 
+isoplanar aberrations are aberrations which are constant 
+over the imaging field of view. Anisoplanar aberrations 
+are, intitively, ones which vary over the field of view. 
+Single adaptive elements, such as the deformable mirror 
+in the DeepSIM setup, can only correct for the isoplanar 
+aberrations. Anisoplanar aberrations will still introduce 
+artifacts in the final, reconstructed data. However, provided 
+that the anisoplanar aberrations are considerably smaller than
+the isoplanar aberrations, the effect of these aberrations will 
+be small and will not prevent a successful
 reconstruction\cite{thomas2015enhanced}.
 
 The cumulative effect of the optical aberrations is that
@@ -114,16 +117,19 @@ images at an unprecedented depth.
 Anisotropies in the sample fluorescence distribution can bias 
 the corrections towards improving the image quality in a 
 non-uniform manner. There has recently been a technique developed 
-to overcome  this issue; IsoSense\cite{vzurauskas2019isosense}. 
+to overcome  this issue; IsoSense\cite{vzurauskas2019isosense}.  
 It relies  on producing spatially structured light in order to fill 
 empty sections of the image Fourier spectrum. IsoSense is designed 
 to be used in SIM setups since 
 they often incorporate spatial light modulators (SLM) as high-speed, 
 dynamic diffraction  gratings and SIM is particularly sensitive to 
-Fourier space anisotropies.
+Fourier space anisotropies. This technique was developed by Dr Mantas 
+\v{Z}urauskas. Previously, a bespoke LabView implementation which was
+not integrated into the rest of the microscope control 
+framework, and an user experienced in adaptive optics were required 
+to successfully implement this technique.
 
-Microscope-AOtools incorporates the methods necessary to implement
-IsoSense. Figure~\ref{fig:isosense_visualisation} shows both
+Microscope-AOtools incorporates the methods necessary for a general user to implement IsoSense and is integrated into the Microscope Cockpit UI. Figure~\ref{fig:isosense_visualisation} shows both
 the structured illumination pattern applied to the SLM 
 and the location of the beams in Fourier space. The illumination
 pattern shown in Figure~\ref{fig:isosense_visualisation_real} is
@@ -135,11 +141,10 @@ $(\gamma \omega_{l}, 0)$, $(-\gamma \omega_{l}, 0)$,
 $(\frac{\gamma \omega_{l}}{2}, \frac{\gamma \omega_{l}}{2})$, 
 $(-\frac{\gamma \omega_{l}}{2}, \frac{\gamma \omega_{l}}{2})$, 
 $(\frac{\gamma \omega_{l}}{2}, -\frac{\gamma \omega_{l}}{2})$, 
-$(-\frac{\gamma \omega_{l}}{2}, -\frac{\gamma \omega_{l}}{2})$. 
-$u,v$ are the spatial frequency analogues of the $x,y$ axes. 
+$(-\frac{\gamma \omega_{l}}{2}, -\frac{\gamma \omega_{l}}{2})$.  
 $\omega_{l}$ is the lateral diffraction limit in reciprocal space 
 as per Equation~\ref{eq:lateral_spatial_freq_res} and $\gamma$ is 
-a user defined fill fraction. This fill fraction controls the 
+a user defined fill fraction, where $\gamma$ has a range $[0, 1]$. This fill fraction controls the 
 positions of the beams in the interference pattern and hence the 
 region of the Fourier spectrum which will be enhanced over normal 
 illumination. The resultant emission image  obtained, $E(\textbf{r})$, 
@@ -156,10 +161,10 @@ coordinate vector. Applying a Fourier transform yields:
 
 \begin{equation}\label{eq:isosense_ft}
 \begin{split}
-\mathcal{F}[F(\textbf{r})] &= \mathcal{F}[D(\textbf{r})\times I(\textbf{r})] \\
-\tilde{\textbf{F}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \circledast \tilde{\textbf{I}}(\textbf{k}) \\
-\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\iint\tilde{\textbf{D}}(\textbf{k})\delta(\textbf{k} - \kappa)dudv \\
-\tilde{\textbf{F}}(\textbf{k}) &= \sum_{\kappa}\tilde{\textbf{D}}(\textbf{k} - \kappa),
+\mathcal{F}[E(\textbf{r})] &= \mathcal{F}[D(\textbf{r})\times I(\textbf{r})] \\
+\tilde{\textbf{E}}(\textbf{k}) &= \tilde{\textbf{D}}(\textbf{k}) \circledast \tilde{\textbf{I}}(\textbf{k}) \\
+\tilde{\textbf{E}}(\textbf{k}) &= \sum_{\kappa}\iint\tilde{\textbf{D}}(\textbf{k})\delta(\textbf{k} - \kappa)dudv \\
+\tilde{\textbf{E}}(\textbf{k}) &= \sum_{\kappa}\tilde{\textbf{D}}(\textbf{k} - \kappa),
 \end{split}
 \end{equation}
 
@@ -234,10 +239,11 @@ for live-sample, open-dish imaging, we utilise the live \textit{Drosophila melan
 \subsection{Sample preparation}
 \label{subsec:DeepSIM_sample_prep}
 
-The samples were prepared by following the 
-protocol\cite{brent2009drosophila}. 3rd instar \textit{Drosophila 
-	melanogaster} larvae (Bruchpilot (Brp)-GFP strain) were dissected in HL3 
-buffer with 0.3mM $\text{Ca}^{2+}$ to prepare a so-called larval fillet,
+The samples were prepared by were prepared by Ms Dalia Gala according to 
+the following protocol.\cite{brent2009drosophila}. 3rd instar 
+\textit{Drosophila melanogaster} larvae (Bruchpilot (Brp)-GFP strain) 
+were dissected in HL3 
+buffer with 0.3mM $\text{Ca}^{2+}$ to prepare a larval fillet,
 and the larval brains were removed. After this, larvae were stained for 15 
 minutes with 1:50 Horseradish Peroxidase (HRP) conjugated to Alexa568 
 fluorophore to visualise the neurons, washed with HL3 buffer with 0.3mM 
@@ -249,15 +255,19 @@ prevent the larvae from moving.
 
 To verify both that the system is capable of achieving super-resolution
 and that Microscope-AOtools is capable of correcting for optical 
-aberrations, the Argolight SIM slide was imaged. The structure chosen for
-imaging was a set of pairs of $36 \mu$m-long horizontal lines pairs lines 
-with gradually increasing spacing, from $0$ to $390$nm, with a step of 
-$30$nm. 
+aberrations, an Argolight SIM slide was imaged. The Argolight SIM slide 
+is a commercially available slide provided by Argolight. It consists of 
+several different fluorescent patterns are embedded inside a special 
+glass substrate. They are designed for assessing and following
+the performances of fluorescence-based imaging systems.\cite{argolight2017user}
 
-This structure was chosen for two principal reasons. Firstly, the known
-separation of the fluorescent structures allows for an accurate gauge of 
-the system resolving power. The structure was excited at $488$nm and 
-measured with a peak emission wavelength of $610$nm. Therefore, utilising 
+The structure chosen for imaging was a set of pairs of $36 \mu$m-long 
+horizontal lines pairs lines with gradually increasing spacing, from $0$ 
+to $390$nm, with a step of $30$nm. This structure was chosen for two 
+principal reasons. Firstly, the known separation of the fluorescent 
+structures allows for an accurate gauge of the system resolving power. 
+The structure was excited at $488$nm and measured with a peak emission 
+wavelength of $610$nm. Therefore, utilising 
 Equation~\ref{eq:lateral_res_extension_factor_real} the diffraction 
 limited lateral resolution in a SIM reconstruction would be $161$nm i.e. 
 the first 6 separations should not be resolvable. Secondly, the refractive 

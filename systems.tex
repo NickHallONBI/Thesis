@@ -114,7 +114,7 @@ magnification factor.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/optical_system_schematic.jpg}
-	\caption[A simple schematic diagram of a transmissive optical system]{A simple schematic diagram of a transmissive optical system}
+	\caption[A simple schematic diagram of a transmissive optical system]{A simple schematic diagram of a transmissive optical system. An aperture mask with amplitude transmittance, $\tau\left(\textbf{x}\right)$, is placed at $\textbf{x}_{0}$. A source with intensity sensitvity described by $S\left(\textbf{x}\right)$ is placed at ${x}_{1}$. A detector with a mask profile described by $D\left(\textbf{x}\right)$ is placed at $\textbf{x}_{2}$. $\textbf{x}_{1}$ and $\textbf{x}_{2}$ are conjugate planes.}
 	\label{fig:optical_system_schematic}
 \end{figure}
 
@@ -186,8 +186,7 @@ and the pixel transmissivities become:
 S\left(\textbf{x}\right) = D\left(\textbf{x}\right) = \frac{1}{2} \sum_{i=0}^{N} \left[b_{i}\left(t\right) + 1\right]\delta\left(\textbf{x} - \textbf{x}_{i}\right).
 \end{equation} 
 
-So, the pixel transmissivities, $\frac{1}{2}\left[b_{i}\left(t\right) + 
-1\right]$, alternate between $0$ and $1$ as $b_{i}\left(t\right)$ 
+So, the pixel transmissivities, $\frac{1}{2}\left[1 + b_{i}\left(t\right)\right]$, alternate between $0$ and $1$ as $b_{i}\left(t\right)$ 
 varies between $\pm1$. Imposing the additional requirement that 
 $\left\langle b_{i}\left(t\right) \right\rangle = 0$, then 
 Equation~\ref{eq:SD_time_ave} becomes:
