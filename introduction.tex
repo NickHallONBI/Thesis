@@ -44,7 +44,7 @@ microscopy could solve some of the issues when visualising otherwise
 transparent samples\cite{burch1942phase}. More typically microscopy 
 samples were chemically fixed as these samples were more stable and 
 easier to refractive index match to the microscope. Histological staining 
-was, for decades, the primary method for revealing biological structures\cite{alturkistani2016histological}. The properties and function 
+was, for decades, the primary method for revealing biological structures\cite{alturkistani2016histological}. The properties and functions 
 of living material were then inferred from fixed samples. This was, as one 
 author put it, ``like reconstructing a football game from a series of still 
 pictures,...an arduous (and some would say hopeless) 
@@ -54,15 +54,16 @@ Fluorescence microscopy enabled the selective visualisation of specific
 molecules, as well as the imaging of dynamic processes \textit{in situ}. 
 Fluorescence is the property of atoms and molecules whereby they emit light
 after stimulation from an external energy source. In steady-state conditions 
-(i.e. without an external energy source) the electrons of the atom or  
-molecule are found in the ground state. Photons from the external energy  
+(i.e. without an external energy source) the electrons of the atom  
+are found in the ground state. Photons from the external energy  
 source are absorbed by these electrons, raising them to excited singlet 
 states. When these excited electrons return to the ground state, they can 
 release their energy as a photon - it is this phenomenon which is called 
 fluorescence\cite{ghiran2011introduction}. For atoms, these energy states are
-reasonably discrete and (for the lowest levels) easy enough to draw in 
+discrete and (for the lowest levels) easy enough to draw in 
 Jab\l{}onski diagrams. Molecules capable of fluorescence, called 
-fluorophores, have more complex energy level landscapes and broad ``energy bands'' of possible excitation and emission 
+fluorophores, have more complex energy level landscapes and broad ``energy 
+bands'' of possible excitation and emission 
 wavelengths. Additionally, the absorption and emission cross-sections are not 
 the same for all wavelengths. This leads to excitation and emission spectra 
 for fluorescent molecules. Figure~\ref{fig:GFP_emission_absorption_spectra} 
@@ -78,19 +79,25 @@ shows the excitation and emission spectra for Green Fluorescent Protein
 \end{sidewaysfigure*}
 
 The first fluorescence microscopes were developed at the beginning of the 20th Century\cite{yuste2005fluorescence,renz2013fluorescence}. The real power of 
-fluorescence microscopy came as the specificity of labelling improved. The 
+fluorescence microscopy came as the specificity of labelling improved.  The 
 first iteration of this was the development of antibody fluorescent labelling 
 which allowed for, among other things, localisation of viral particles in 
 biological 
 cultures\cite{coons1942demonstration,coons1951fluorescent,weller1954fluorescent}.
-The second, and arguably more profound, iteration was the discovery and 
-cloning of \textit{Aequorea Victoria} GFP, and the development of chromatic
-variants\cite{prasher1992primary,heim1996engineering}. This allowed for 
-specific proteins of interest to be individually labelled and for biologists 
-to monitor gene-expression\cite{chalfie1994green}. Since then, additional 
-properties of fluorescent proteins, such as their conformational changes 
-in response to binding events, environmental changes, or enzymatic activity, 
-have been utilised to great effect\cite{toseland2013fluorescent}. 
+The second iteration was the discovery and cloning of \textit{Aequorea 
+Victoria} GFP, and the development of chromatic 
+variants\cite{prasher1992primary,heim1996engineering}. This development was 
+arguably more profound since previous fluorphores were synthetic molecules 
+which, despite better photostability and a higher fluorescence quantum yield, 
+proved ill-suited to cell imaging due to difficulties establishing a specific 
+linkage between them and a target protein, and their toxic effects inside the 
+cell.\cite{sahoo2012fluorescent} The development of organic fluorescent tags 
+such as GFP allowed for specific proteins of interest to be individually 
+labelled enabling, for example, biologists to monitor \textit{in vivo} 
+processes such as gene-expression\cite{chalfie1994green}. Since then, 
+additional properties of fluorescent proteins, such as their conformational 
+changes in response to binding events, environmental changes, or enzymatic 
+activity, have been utilised to great effect\cite{toseland2013fluorescent}. 
 Fluorescence microscopy has allowed biologists to visualise dynamic biological
 processes in real time.
 
@@ -99,13 +106,24 @@ processes in real time.
 
 A fundamental property of all microscopes and microscopy images is that of 
 resolution - the minimum separation between two objects where they can still
-be determined to be two distinct objects. Consider an optical plane, 
-$\textbf{O}$, where a biological specimen is placed - the `sample plane'. Also
-consider a separate optical plane, $\textbf{O'}$, where the image of the
-specimen is formed - the `image plane'. The microscope, with circular entrance
-and exit pupils, maps the field distributions between $\textbf{O}$ and 
-$\textbf{O'}$. Figure~\ref{fig:simplified_microscope_layout} shows a schematic
-of this simplified system.
+be observed as two distinct objects. This should not be confused with 
+either magnification or contrast. Magnification is the ratio between the 
+apparent object size (i.e. the size of an object in the image taken of it) 
+and its true size. Contrast, in this context, is a measure of the confidence 
+that the observed signal corresponds the presence of the molecules/proteins 
+of interest to which the fluorphores are conjugated. For example, a 
+fluorphore with highly non-specific binding may be imaged by a microsope with 
+both high magnification and resolution. However, since much of the observed 
+signal might originate from binding sites other than the one of interest, 
+such an image would still be said to have low contrast.
+
+Consider an optical plane, $\textbf{O}$, where a biological specimen is 
+placed - the `sample plane'. Also consider a separate optical plane, 
+$\textbf{O'}$, where the image of the specimen is formed - the `image plane'. 
+The microscope, with circular entrance and exit pupils, maps the field 
+distributions between $\textbf{O}$ and $\textbf{O'}$. 
+Figure~\ref{fig:simplified_microscope_layout} shows a schematic of this 
+simplified system.
 
 \begin{figure}[h]
 	\centering
@@ -122,16 +140,17 @@ of this simplified system.
 	\label{fig:simplified_microscope_layout}
 \end{figure}
 
-Consider a point source located at $\textbf{O}$ isotropically emitting 
-monochromatic light of wavelength $\lambda$. Every ray forms an angle, 
-$\theta$, with the optical axis $\textbf{OO'}$. The highest angle collected
-by the entrance pupil is $\alpha$. A point source can be considered an 
-infinitely narrow aperture and $\alpha$ determines the highest 
-diffraction order which the entrance pupil - i.e. the microscope
-objective aperture - can collect\cite{davidson2002optical}. Considering this 
-and, more generally, the diffraction of light through a circular aperture 
-it is possible to obtain that the field intensity at \textbf{O'} is 
-proportional to\cite{goodman2005introduction,born2013principles}:
+Consider a point source located at $\textbf{O}$ in a media of refractive 
+index, $n$, isotropically emitting monochromatic light of wavelength 
+$\lambda$. Every ray forms an angle, $\theta$, with the optical axis 
+$\textbf{OO'}$. The highest angle collected by the entrance pupil is 
+$\alpha$. A point source can be considered an infinitely narrow aperture and 
+$\alpha$ determines the highest diffraction order which the entrance pupil - 
+i.e. the microscope objective aperture - can 
+collect\cite{davidson2002optical}. Considering this and, more generally, the 
+diffraction of light through a circular aperture it is possible to obtain 
+that the field intensity at \textbf{O'} is proportional 
+to\cite{goodman2005introduction,born2013principles}:
 
 \begin{equation}\label{eq:image_field_insentity}
 \mathcal{I}_{w}(v) = \left|\frac{2\mathcal{J}_{1}(v)}{v}\right|^2,
@@ -206,40 +225,59 @@ separate.
 		objects. For two point objects separated by $< r_{l}$, \textbf{(a)} \& 
 		\textbf{(b)}, they are not separable as individual objects. At a 
 		separation $\ge r_{l}$, \textbf{(c)} \& \textbf{(d)}, the two point 
-		objects are separable.}
+		objects are separable. These figures were generated using the 
+		code presented in Appendix~\ref{sec:ideal_po_sep_code}}
 	\label{fig:Airy_ring_2_object_seperation}
 \end{figure}
 
 Several approximations had to be made to obtain Equations~\ref{eq:lateral_res}
-and~\ref{eq:axial_res}. Firstly, the Fraunhofer and paraxial approximations are
-assumed to hold\cite{goodman2005introduction}. Obviously, the microscope system
-has been greatly simplified to essentially just the entrance and exit pupils. 
-More complex but accurate models for modern microscopy set-ups have been 
-demonstrated\cite{torok2007optical, foreman2011computational}. Finally, this
-idealised system only considers the shape of the apertures - i.e. the entrance
-and exit pupils - and the wavelength of light. If one were to observe objects 
-such as these, with these field distributions corresponding to well-specified
-models, there would be no resolution limit at all\cite{den1997resolution}. In 
-practice, the field distributions of objects are not precisely known, therefore
-determining the location of the first minima is not as simple as it has been 
-presented here. The first minima may not even be radially symmetric. 
+and~\ref{eq:axial_res}. Firstly, the Fraunhofer and paraxial approximations are assumed to hold\cite{goodman2005introduction}. The Fraunhofer, or far-field, approximation is given as\cite{lucke2006rayleigh}:
+
+\begin{equation}\label{eq:fraunhofer}
+	r \gg \frac{\pi a^{2}}{\lambda},
+\end{equation}
+
+Where $a$ is aperture or slit size (in this case the diameter of a circular aperture), $r$ is the distance from the aperture, and $\lambda$ is the wavelength of light as before. The paraxial, or small angle, approximation is given as\cite{greivenkamp2004field}:
+
+\begin{equation}\label{eq:paraxial}
+\sin(\theta) \approx \tan(\theta) \approx \theta~~~~~\cos(\theta) \approx 1.
+\end{equation}
+
+Where $\theta$ is the angle a ray makes with the optical axis. Additionally, the microscope system has been greatly simplified to essentially just the 
+entrance and exit pupils. More complex but accurate models for modern 
+microscopy set-ups have been 
+demonstrated\cite{torok2007optical,foreman2011computational}. Finally, this 
+idealised system only considers the shape of the apertures - i.e. the 
+entrance and exit pupils - and the wavelength of light. If one were to 
+observe objects such as these, with these field distributions corresponding 
+to well-specified models, there would be no resolution limit at 
+all\cite{den1997resolution}. In practice, the field distributions of objects 
+are not precisely known, therefore determining the location of the first 
+minima is not as simple as it has been presented here. The first minima may 
+not even be radially symmetric. 
 
 Furthermore, the `true' resolution achievable by a microscopy system is 
 affected by other factors such as the signal-to-noise ratio of an
 image, coherence conditions of illumination, apodization, discretisation 
-errors for digital cameras, to name a few\cite{den1997resolution}. One of the 
-key distinction between the Abbe diffraction limit and the Rayleigh 
-criterion is that the Rayleigh based his criterion on the sensitivity of the 
-human eye to intensity variations\cite{weisenburger2015light}. There have 
-been attempts to develop alternative resolution measurements for point 
-objects\cite{ram2006beyond}. Unfortunately, the actual resolution achieved in 
-biological samples varies across the image plane, determined by factors such 
-as the labelling density of the underlying biological 
-specimen\cite{culley2017nanoj}. The `true' resolution of a system for a given 
-sample is therefore a quantity which is impossible to determine analytically. 
-The ideal lateral and axial resolutions in Equations~\ref{eq:lateral_res} 
-and~\ref{eq:axial_res} are nonetheless useful quantities as the theoretical, 
-ideal resolution limit of a microscopy system.
+errors for digital cameras, to name a few\cite{den1997resolution}. An alternative formulation of the lateral resolution limit in Equation~\ref{eq:lateral_res} is known as the Abbe diffraction limit\cite{abbe1873beitrage}:
+
+\begin{equation}\label{eq:lateral_res_abbe}
+	r_{l} = \frac{\lambda}{2NA}
+\end{equation}
+
+One of the key distinctions between the Abbe diffraction limit and the 
+Rayleigh criterion is that the Rayleigh based his criterion on the 
+sensitivity of the human eye to intensity 
+variations\cite{weisenburger2015light}. There have been attempts to develop 
+alternative resolution measurements for point objects\cite{ram2006beyond}. 
+Unfortunately, the actual resolution achieved in biological samples varies 
+across the image plane, determined by factors such as the labelling density 
+of the underlying biological specimen\cite{culley2017nanoj}. The `true' 
+resolution of a system for a given sample is therefore a quantity which is 
+impossible to determine analytically. The ideal lateral and axial resolutions 
+in Equations~\ref{eq:lateral_res} and~\ref{eq:axial_res} are nonetheless 
+useful quantities as the theoretical, ideal resolution limit of a microscopy 
+system.
 
 Returning to the concept of a point object as an infinitely narrow aperture allows 
 for a more complete understanding of the resolution limit. A spatially structured 
@@ -285,7 +323,7 @@ region in $k_{z}$ is bandpass limited at both high and low spatial frequencies.
 This results in the ``missing cone'' phenomenon which limits the axial spatial 
 frequencies which are able to be collected, in turn limiting the axial 
 resolution\cite{behan2009three,arnison20023d}. This, coupled with the fact that
-for all practical cases $k_{a} \ll k_{l}$, explains why the axial resolution is
+for all practical cases $\omega_{a} \ll \omega_{l}$, explains why the axial resolution is
 always worse than the lateral resolution of a system. Figure~\ref{fig:WF_OTF} 
 shows the complete 3D observable region, obtained by rotating 
 Figure~\ref{fig:WF_OTF_xz} around the $k_{z}$ axis. Only spatial frequencies
@@ -348,13 +386,28 @@ Far-field techniques fall into 4 broad categories: structured illumination
 microscopy (SIM), stimulated emission depletion (STED) microscopy, 
 single-molecule localisation microscopy (SMLM) and interferometric-based 
 techniques. There are some implementations which combine several 
-techniques. Each super-resolution technique has benefits and drawbacks which 
+techniques. Table~\ref{tab:technique_res} shows the typical lateral and axial resolution limits of the conventional and far-field super-resolution techniques, aswell as whether these resolutions are primarily affected by the numerical aperature of the imaging system\cite{schermelleh2010guide,schermelleh2019super,von2017three,blom2014sted,vicidomini2018sted,gustafsson2000surpassing}:
+
+\begin{table}[H]
+	\begin{tabular}{ | p{4cm} | p{3cm} | p{2.5cm} | p{2cm} |}
+		\hline
+		Imaging technique & Typical lateral resolution & Typical axial resolution & Affected by NA?\\ \hline
+		Widefield (with deconvolution) & 180-250 nm  & 600-800 nm & Yes \\ \hline
+		Confocal & 180-250 nm  & 500-700 nm & Yes \\ \hline
+		3D SIM & 100-130 nm  & 250-400 nm & Yes \\ \hline
+		3D STED & 20-100 nm  & 20-100 nm & No \\ \hline
+		SMLM & 10-50 nm  & 20-100 nm & No \\ \hline
+	\end{tabular}
+	\caption{\label{tab:technique_res}Typical lateral and axial resolutions of the imaging technique categories and whether those resolutions are affected by numerical aperature.}
+\end{table}
+
+Each super-resolution technique has benefits and drawbacks which 
 need to be considered when employing them including; the resolution 
 (laterally and axially) required and the resolution achievable with each 
 technique, acquisition speed, photodamage incurred, depth of imaging and 
 multi-colour capability\cite{hell20152015,schermelleh2019super} Although it 
-has a modest resolution improvement, SIM is the most widely accepted 
-super-resolution technique for biology thanks to its multi-colour capability,
+has a modest resolution improvement, SIM is the most widely utilised
+super-resolution technique for biological imaging thanks to its multi-colour capability,
 high temporal resolution and low photodamage impact\cite{leung2011review}.
 
 \subsection{Structured Illumination Microscopy}
@@ -462,15 +515,15 @@ convolution theorem and a Fourier transform yields:
 \end{equation}
 
 where bold text and $\sim$ indicates the Fourier transform of the respective real-space
-functions. $O(\textbf{k}) = \tilde{H}(\textbf{k})$ is the optical transfer
+functions. $O(\textbf{k}) = \tilde{\textbf{H}}(\textbf{k})$ is the optical transfer
 function (OTF) of the imaging system. The complex values of $O(\textbf{k})$
 describe the attenuation of the spatial frequencies within the observable 
 region described by Equation~\ref{eq:observable region}. For uniform 
-illumination - i.e. widefield imaging - $\tilde{I}(\textbf{k}) = \delta(0)$ 
+illumination - i.e. widefield imaging - $\tilde{\textbf{I}}(\textbf{k}) = \delta(0)$ 
 where $\delta$ is the Dirac delta function, and therefore only the spatial 
 frequencies within the observable region contribute to the image formation as 
 previously noted.  However, if $I(\textbf{r})$ is spatially structured then 
-the convolution $\tilde{D}(\textbf{k})\circledast \tilde{I}(\textbf{k})$ is 
+the convolution $\tilde{\textbf{D}}(\textbf{k})\circledast \tilde{\textbf{I}}(\textbf{k})$ is 
 non-local and the  data within the observable region contains contributions 
 from spatial frequencies which are normally outside the observable region.
 
@@ -507,21 +560,21 @@ written as:
 \begin{equation}\label{eq:fluorescent_image_conditions}
 \begin{split}
 F(\textbf{r}) &= [D(\textbf{r})I(\textbf{r})] \circledast H(\textbf{r})\\
-F(\textbf{r}) &= \sum\limits_{m}{\int H(\textbf{r}-\textbf{r}'))I_{m}(z - z')D(\textbf{r}')J_{m}(\textbf{r}'_{xy})}d\textbf{r}'\\
+F(\textbf{r}) &= \sum\limits_{m}{\int H(\textbf{r}-\textbf{r}')I_{m}(z - z')D(\textbf{r}')J_{m}(\textbf{r}'_{xy})}d\textbf{r}'\\
 F(\textbf{r}) &= \sum\limits_{m}{\left[HI_{m}\circledast DJ_{m}\right](\textbf{r})}\\
 \end{split},
 \end{equation}
 
-where $\textbf{r}'$ denotes the sample reference from, $\textbf{r}$ denotes
+where $\textbf{r}'$ denotes the sample reference frame, $\textbf{r}$ denotes
 the data-set reference frame and $\textbf{r} - \textbf{r}'$ denotes the 
 reference frame of the objective. Taking the Fourier transform of the 
 $m$-th term, $F_{m}(\textbf{r})$, yields:
 
 \begin{equation}\label{eq:fluorescent_image_mth_ft}
-\tilde{F}_{m}(\textbf{k}) = \tilde{O}_{m}\left[\tilde{D}(\textbf{k}) \circledast \tilde{J}_{m}(\textbf{k}_{xy})\right],
+\tilde{\textbf{F}}_{m}(\textbf{k}) = \tilde{\textbf{O}}_{m}\left[\tilde{\textbf{D}}(\textbf{k}) \circledast \tilde{\textbf{J}}_{m}(\textbf{k}_{xy})\right],
 \end{equation}
 
-where $\tilde{O}_{m} = O \circledast \tilde{I}_{m} = \mathcal{F}[HI_{m}]$.
+where $\tilde{\textbf{O}}_{m} = O \circledast \tilde{\textbf{I}}_{m} = \mathcal{F}[HI_{m}]$.
 Here the second condition of the lateral functions being purely harmonic allows
 $J_{m}(\textbf{r}_{xy})$ to be written as:
 
@@ -530,7 +583,7 @@ J_{m}(\textbf{r}_{xy}) = e^{i\left(2\pi\textbf{p}_m\cdot\textbf{r}_{xy} + \phi_{
 \end{equation}
 
 \begin{equation}\label{eq:lateral_illumination_ft}
-\Rightarrow \tilde{J}_{m}(\textbf{k}_{xy}) = \delta\left(\textbf{k}_{xy} - \textbf{p}_m\right)e^{i\phi_{m}},
+\Rightarrow \tilde{\textbf{J}}_{m}(\textbf{k}_{xy}) = \delta\left(\textbf{k}_{xy} - \textbf{p}_m\right)e^{i\phi_{m}},
 \end{equation}
 
 Substituting Equation~\ref{eq:lateral_illumination_ft} into 
@@ -541,28 +594,27 @@ the observed data can be written as:
 \tilde{\textbf{F}}(\textbf{k}) = \sum\limits_{m}{\tilde{\textbf{O}}_{m}(\textbf{k})e^{i\phi_{m}}\tilde{\textbf{D}}\left(\textbf{k} - \textbf{p}_m\right)}.
 \end{equation}
 
-Therefore, each image is a sum of a finite number, $N$, copies of the object 
+Therefore, each image is a sum of a finite number, $M$, copies of the object 
 information, $\tilde{\textbf{D}}$, each shifted laterally in reciprocal space by 
 $\textbf{p}_{m}$, filtered by the OTF, $O$, and phase shifted by $\phi_{m}$.
-Acquiring $N$ images with different values of $\phi_{m}$ gives a system of 
+Acquiring $M$ images with different values of $\phi_{m}$ gives a system of 
 linear equations with as many equations as unknowns. The frequency components
-can therefore be separated by applying an $N\times N$ separation matrix. The 
+can therefore be separated by applying an $M\times M$ separation matrix. The 
 values of $\phi_{m}$ are generally chosen to be evenly spaced between 
 $[0,2\pi]$ radians to ensure a well-conditioned separation 
-matrix\cite{gustafsson2008three}.
+matrix such that $\phi_{m} = m\phi$\cite{gustafsson2008three}.
 
 Considering the practical implications further simplifies the situation. 
 Firstly, the intensity distribution of light is a real-valued function and
 therefore the exponentials in Equation~\ref{eq:lateral_illumination_ft} must
 occur in pairs with $\pm\textbf{p}_{m}$. Since the Fourier transform of a 
-real-valued function has the symmetry property $\tilde{a}(-\textbf{k}) = 
-\tilde{a}^{*}(\textbf{k})$ - where $\tilde{a}^{*}$ is the complex conjugate of $\tilde{a}$ - only one component need be calculated and the
+real-valued function has the symmetry property $\tilde{\textbf{a}}(-\textbf{k}) = 
+\tilde{\textbf{a}}^{*}(\textbf{k})$ (where $\tilde{\textbf{a}}^{*}$ is the complex conjugate of $\tilde{\textbf{a}}$) only one component need be calculated and the
 other can be determined by symmetry. Secondly, if the $\textbf{p}_{m}$ are
 chosen such that they are all either the fundamental frequency or higher 
 harmonics of the same frequency then $\textbf{p}_{m} = m\textbf{p}$ where
-$\textbf{p}$ is the fundamental frequency. Furthermore, if the phases are 
-chosen such that $\phi_{m} = m\phi$. Taking these effects into account, 
-Equation~\ref{eq:single_SIM_image} becomes:
+$\textbf{p}$ is the fundamental frequency Taking these effects into 
+account, Equation~\ref{eq:single_SIM_image} becomes:
 
 \begin{equation}\label{eq:single_SIM_image_simple}
 \tilde{\textbf{F}}(\textbf{k}) = \sum\limits_{m}{\tilde{\textbf{O}}_{m}(\textbf{k})e^{im\phi}\tilde{\textbf{D}}\left(\textbf{k} - m\textbf{p}\right)}.
@@ -793,7 +845,7 @@ these variances arise from sample heterogeneities since different biological
 structures possess varied refractive 
 indices\cite{bashkatov2011optical, jacques2013optical, kim2010measurement, sandell2011review}.
 These refractive index variances introduce path differences between 
-different section of the light wavefront. A generalised pupil function 
+different sections of the light wavefront. A generalised pupil function 
 (GPF) defined as\cite{antonello2014optimisation}:
 
 \begin{equation}\label{eq:GPF}
@@ -801,7 +853,7 @@ P\left(\textbf{r}_{xy}\right) = A\left(\textbf{r}_{xy}\right)e^{i\Phi\left(\text
 \end{equation}
 
 is a complex-valued function. Defining the GPF on the normalised system 
-pupil and assuming the pupil is circular simplifies the following analysis
+pupil, with $\rho = [0,1]$ and $\theta = [0,2\pi]$, and assuming the pupil is circular simplifies the following analysis
 and is generally more intuitive. In such a system, the GPF has the form:
 
 \begin{equation}\label{eq:GPF_polar}
@@ -809,8 +861,8 @@ P\left(\rho,\theta\right) = A\left(\rho,\theta\right)e^{i\Phi\left(\rho,\theta\r
 \end{equation}
 
 The real-valued function $A\left(\rho,\theta\right)$ accounts for amplitude
-aberrations and the real-valued function $\Phi\left(\rho,\theta\right)$ 
-accounts for the phase aberrations. Revisiting the simplified optical
+variations and the real-valued function $\Phi\left(\rho,\theta\right)$ 
+accounts for the phase variations. Revisiting the simplified optical
 system in Figure~\ref{fig:simplified_microscope_layout}, assuming a point
 source a $\textbf{O}$ and that the exit pupil of the system is the unit 
 disk, the field intensity at the $x'y'$ plane is proportional 
@@ -837,10 +889,11 @@ Zernike modes are not suitable to represent phase distortions arising
 from all sources, such as air turbulence or fabrication errors in the 
 single-point diamond turning process\cite{wyant1992basic}. However, the 
 sources of phase distortions for which a Zernike representation is not
-appropriate do not generally arise in a biological context. Additionally, the Zernike modes have 
-a number of useful mathematical properties, and low order Zernike modes 
-correspond to well-known optical aberrations e.g. defocus, astigmatism, 
-coma, spherical 
+appropriate, such as phase distortions with discontinuities, do not 
+generally arise in a biological context. Additionally, the Zernike modes 
+have a number of useful mathematical properties, and low order Zernike 
+modes correspond to well-known optical aberrations e.g. defocus, 
+astigmatism, coma, spherical 
 aberration\cite{born2013principles,booth2007adaptive,zernike1934diffraction,lakshminarayanan2011zernike}.
 Using the Zernike polynomials, the phase distortions, $\Phi\left(\rho,\theta\right)$
 can be written as:
@@ -882,7 +935,8 @@ R^{m}_{n}(\rho) = \sum_{s=0}^{\frac{n-m}{2}}{\frac{(-1)^{s}(n-s)!}{s!\left(\frac
 \end{cases}.
 \end{equation}
 
-This formulation of Zernike modes is normalised. Throughout this thesis the 
+This formulation of Zernike modes is normalised in that the RMS phase 
+variation across the pupil is 1 for each mode. Throughout this thesis the 
 Noll index ordering convention is used\cite{noll1976zernike}. 
 Appendix~\ref{app:zernike_expansion} describes this ordering convention and 
 contains the algebraic expansion for the Zernike polynomials up to radial 
@@ -939,8 +993,9 @@ overall image intensity and resolving power remains unaffected. For this
 reason piston (and often tip and tilt) are considered ``non-optical'' 
 aberrations. 
 Figure~\ref{fig:Airy_ring_2D_2_object_seperation_aberration_comparison_rms_1}
-shows the same two point objects aberrated with phase deformations of 
-$rms(\Phi) = 1$. The image intensity is severely degraded and the resolving
+shows the same two point objects aberrated with a phase deformation of 
+$rms(\Phi) = 1$ composed of a number of Zernike modes of varying 
+amplitudes. The image intensity is severely degraded and the resolving
 power is significantly less than the diffraction limited case. Evidently, 
 the presence of phase distortions is a limiting factor to imaging systems 
 from achieving the ideal diffraction limited 
@@ -978,7 +1033,9 @@ resolution\cite{antonello2014optimisation,booth2014adaptive}.
 		sources at separation $r_{l}$ aberrated with $rms(\Phi) = 1$ of purely 
 		piston, tip, and tilt respectively. \textbf{(d)} Ideal diffraction 
 		limited point sources at separation $r_{l}$ aberrated with a random 
-		phase distortion with $rms(\Phi) = 1$}
+		phase distortion with $rms(\Phi) = 1$. These figures were 
+		generated using the code presented in 
+		Appendix~\ref{sec:aberrated_po_sep_code}}
 	\label{fig:aberrations_res}
 \end{figure*}
 
@@ -989,9 +1046,10 @@ As previously mentioned, phase aberrations arise in microscopy primarily
 due to heterogeneities in the structure of the biological sample being 
 imaged. Consider the objective lens of a microscope, in the absence of
 optical aberrations, as in Figure~\ref{fig:wavefront_focus_ideal}, a flat
-wavefront is focused to a single diffraction limited spot. Introducing
-a heterogeneous media distorts the phase wavefront and leads to an 
-extended, non-diffraction limited focal spot as seen in 
+wavefront propagating through a linear medium is focused to a single 
+diffraction limited spot. Introducing a heterogeneous - but still linear 
+- media distorts the phase wavefront and leads to an extended, 
+non-diffraction limited focal spot as seen in 
 Figure~\ref{fig:wavefront_focus_aberrated}. However, if, as in 
 Figure~\ref{fig:wavefront_focus_corrected}, the wavefront is not flat when 
 it enters the microscope objective but instead shaped to compensate for 
@@ -1061,7 +1119,7 @@ in the beam path, such as an opto-acoustic lens.
 		fluorescent sample, $\Phi_{I}$, arrives at the aperture of
 		the microscope. It is reimaged onto the adaptive
 		element. The adaptive element has some phase, $\Phi_{AO}$,
-		on its surface. The light then passed through a beamsplitter
+		on its surface. The light then passes through a beamsplitter
 		and is focused onto an imaging device. The residual phase
 		aberration, $\Phi_{R} = \Phi_{I} - \Phi_{AO}$, is either
 		calculated directly by the wavefront sensor or inferred
@@ -1135,9 +1193,9 @@ and is laid out as follows:
 	this thesis; ``Hall, Nicholas J., David Miguel Susano Pinto, and Ian M. 
 	Dobbie. ``BeamDelta: simple alignment tool for optical systems.'' 
 	\textit{Wellcome Open Research} 4.194 (2019): 194.''\cite{dobbie2019beamdelta} 
-	The hardware control software - Python Microscope - used to synchronise 
+	The hardware control software - Python Microscope\cite{pinto2021python} - used to synchronise 
 	the disparate hardware elements of each microscope setup and the 
-	graphical user interface (GUI) software - Microscope-Cockpit - which 
+	graphical user interface (GUI) software - Microscope-Cockpit\cite{phillips2021microscope} - which 
 	is used to operate the microscopes are also discussed.
 	\item Chapter 3 corresponds to scientific publication: ``Hall, Nicholas, 
 	et al. ``Microscope-AOtools: A generalised adaptive optics 
@@ -1161,7 +1219,7 @@ and is laid out as follows:
 Discussions of existing limitations and areas for further development to the 
 presented AO implementation are presented in Chapter 6. Conclusions are drawn 
 in Chapter 7. The Aurox Clarity system was built by Dr Syed Hussain of the 
-Dynamic Optics and Photonics Group, University of Oxford and Toshiki Kubo of the
+Dynamic Optics and Photonics Group, University of Oxford and Mr Toshiki Kubo of the
 Department of Applied Physics, Osaka University. The design and original 
 implementation of the DeepSIM system was built by Dr Ian Dobbie, Dr Mick 
 Philips, Dr Antonia G\"{o}hler and Dr Mantas \v{Z}urauskas, 

@@ -1,3 +1,306 @@
-\chapter{Sample Title}
+\chapter{Point object seperation figure generation}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Figures~\ref{fig:Airy_ring_2_object_seperation} and 
+\ref{fig:aberrations_res} were generated using the code 
+presented in Sections~\ref{sec:ideal_po_sep_code} and 
+\ref{sec:aberrated_po_sep_code} respectively. The majority of 
+imported packages are freely available through PyPI. 
+czernike is part of the enzpy Python package. The fourier 
+package is used to generate aberrated PSFs using regular
+Fourier optics\cite{schmidt2010numerical} and real-valued 
+Zernike coefficients in the pupil only. It was developed and 
+provided by Dr Jacopo Antonello.
+
+\section{Ideal point object seperation}
+\label{sec:ideal_po_sep_code}
+
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+	
+import sys  # noqa
+import numpy as np  # noqa
+import matplotlib.pyplot as plt  # noqa
+	
+from h5py import File
+	
+from czernike import RZern  # noqa
+from fourier import Fraunhofer  # noqa
+	
+plt.close('all')
+	
+Np = 256
+wavelength = 561.0e-9
+NA = 1.1
+n1 = 1.51
+d = 1.22*wavelength/(2*NA)
+pixel_size = d/32
+crit_fracs = [0.5,1.0,1.22,1.5,2.0]
+n_alpha = 8  # maximum radial order of Zernike polynomials
+	
+v = np.linspace(-((pixel_size*(Np/2))/d)*np.pi,
+((pixel_size*(Np/2))/d)*np.pi, Np)
+	
+# load an object
+#with File('./obj.h5', 'r') as f:
+#    obj = f['obj'][()]
+it = 0
+	
+for crit_frac in crit_fracs:
+	
+	point_obj_1 = np.zeros((Np,Np))
+	point_obj_1[Np//2, Np//2] = 1
+	
+	point_obj_2 = np.zeros((Np,Np))
+	point_obj_2[Np//2, Np//2 + 
+		int((crit_frac*wavelength)/(2*NA*pixel_size))] = 1
+	
+	obj = np.zeros((Np,Np))
+	obj[Np//2, Np//2] = 1
+	obj[Np//2, Np//2 + 
+		int((crit_frac*wavelength)/(2*NA*pixel_size))] = 1
+	
+	# object to make PSFs using Fourier optics
+	fh = Fraunhofer(wavelength=wavelength, NA=NA, N=Np,
+		pixel_size=pixel_size, n_alpha=n_alpha)
+	
+	# random aberration
+	alpha = fh.make_random_aberration(rms=1)
+	
+	# uncomment for fixed aberration
+	alpha *= 0
+	noll = 1
+	alpha[noll - 1] = 0
+	
+	psf = fh.psf(alpha)
+	mtf = fh.mtf(psf)
+	
+	point_obj_1_img = fh.incoherent(point_obj_1, psf)
+	point_obj_1_img_norm = 
+		point_obj_1_img/np.max(point_obj_1_img)
+	
+	point_obj_2_img = fh.incoherent(point_obj_2, psf)
+	point_obj_2_img_norm = 
+		point_obj_2_img/np.max(point_obj_2_img)
+	
+	img = fh.incoherent(obj, psf)
+	img_norm = img/np.max(img)
+	
+	display_min = np.min(img_norm)
+	display_max = np.max(img_norm)
+	
+	plt.figure(it*2,figsize=(10,3.85))
+	nn = 1
+	mm = 2
+	
+	plt.subplot(nn, mm, 1)
+	plt.plot(v, point_obj_1_img_norm[Np//2,:], 'r--')
+	plt.plot(v, point_obj_2_img_norm[Np//2,:], 'b--')
+	plt.plot(v, (point_obj_1_img_norm+
+		point_obj_2_img_norm)[Np//2,:], 'g')
+	plt.ylabel("Normalised intensity")
+	plt.xlabel("Normalised lateral coordinate")
+	#plt.title("Object separation %.3f\u03C0" %crit_frac)
+	#plt.tight_layout()
+	
+	plt.subplot(nn, mm, 2)
+	plt.imshow(img)
+	plt.tick_params(axis='both', which='both', 
+		bottom=False, top=False, labelbottom=False, 
+		right=False, left=False, labelleft=False)
+	
+	plt.tight_layout()
+	plt.savefig("Airy_ring_2_object_seperation_%s_%s" 
+		%(str(crit_frac)[0],str(crit_frac)[2:]), 
+		bbox_inches='tight')
+	
+	it += 1
+	
+plt.show()
+\end{lstlisting}
+
+\section{Aberrated point object seperation}
+\label{sec:aberrated_po_sep_code}
+
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys  # noqa
+import numpy as np  # noqa
+import matplotlib.pyplot as plt  # noqa
+
+from h5py import File
+
+from czernike import RZern  # noqa
+from fourier import Fraunhofer  # noqa
+
+plt.close('all')
+
+Np = 256
+wavelength = 561.0e-9
+NA = 1.1
+n1 = 1.51
+d = 1.22*wavelength/(2*NA)
+pixel_size = d/32
+crit_frac = 1.22
+n_alpha = 8  # maximum radial order of Zernike polynomials
+
+v = np.linspace(-3*np.pi, 3*np.pi, Np)
+
+# load an object
+#with File('./obj.h5', 'r') as f:
+#    obj = f['obj'][()]
+
+point_obj_1 = np.zeros((Np,Np))
+point_obj_1[Np//2, Np//2] = 1
+
+point_obj_2 = np.zeros((Np,Np))
+point_obj_2[Np//2, Np//2 + 
+	int((crit_frac*wavelength)/(2*NA*pixel_size))] = 1
+
+obj = np.zeros((Np,Np))
+obj[Np//2, Np//2] = 1
+obj[Np//2, Np//2 + 
+	int((crit_frac*wavelength)/(2*NA*pixel_size))] = 1
+
+# object to make PSFs using Fourier optics
+fh = Fraunhofer(
+wavelength=wavelength, NA=NA, N=Np, pixel_size=pixel_size,
+n_alpha=n_alpha)
+
+# random aberration
+alpha = fh.make_random_aberration(rms=1)
+
+# uncomment for fixed aberration
+alpha *= 0
+noll = 1
+alpha[noll - 1] = 0
+
+psf = fh.psf(alpha)
+mtf = fh.mtf(psf)
+
+point_obj_1_img = fh.incoherent(point_obj_1, psf)
+point_obj_1_img_norm = point_obj_1_img/np.max(point_obj_1_img)
+
+point_obj_2_img = fh.incoherent(point_obj_2, psf)
+point_obj_2_img_norm = point_obj_2_img/np.max(point_obj_2_img)
+
+img = fh.incoherent(obj, psf)
+img_norm = img/np.max(img)
+
+display_min = np.min(img_norm)
+display_max = np.max(img_norm)
+
+# random aberration
+alpha_ab = fh.make_random_aberration(rms=1)
+
+it = 0
+for noll in range(1,12):
+#for noll in range(1):
+
+	# uncomment for fixed aberration
+	alpha_ab *= 0
+	alpha_ab[noll - 1] = 1
+
+	psf_ab = fh.psf(alpha_ab)
+	mtf_ab = fh.mtf(psf_ab)
+
+	point_obj_1_img_ab = fh.incoherent(point_obj_1, psf_ab)
+	point_obj_1_img_norm_ab = 
+		point_obj_1_img_ab/np.max(point_obj_1_img)
+
+	point_obj_2_img_ab = fh.incoherent(point_obj_2, psf_ab)
+	point_obj_2_img_norm_ab = 
+		point_obj_2_img_ab/np.max(point_obj_2_img)
+
+	img_ab = fh.incoherent(obj, psf_ab)
+	img_norm_ab = img_ab/np.max(img)
+
+	plt.figure(it*2)
+	nn = 2
+	mm = 2
+
+	plt.subplot(nn, mm, 1)
+	plt.plot(v, point_obj_1_img_norm_ab[Np//2,:])
+	plt.ylabel("Normalised intensity")
+	plt.xlabel("Normalised lateral coordinate")
+
+	plt.subplot(nn, mm, 2)
+	plt.imshow(point_obj_1_img_norm_ab, vmin=display_min, 
+		vmax=display_max)
+	plt.tick_params(axis='both', which='both', bottom=False, 
+		top=False, labelbottom=False, right=False, 
+		left=False, labelleft=False)
+	plt.title('PSF')
+
+	plt.subplot(nn, mm, 3)
+	plt.plot(v, point_obj_1_img_norm_ab[Np//2,:], 'r--')
+	plt.plot(v, point_obj_2_img_norm_ab[Np//2,:], 'b--')
+	plt.plot(v, 
+		(point_obj_1_img_norm_ab+point_obj_2_img_norm_ab)
+		[Np//2,:], 'g')
+	plt.ylabel("Normalised intensity")
+	plt.xlabel("Normalised lateral coordinate")
+	#plt.title("Object separation %.3f\u03C0" %crit_frac)
+
+	plt.subplot(nn, mm, 4)
+	plt.imshow(img_norm_ab, vmin=display_min, 
+	vmax=display_max)
+	plt.tick_params(axis='both', which='both', bottom=False, 
+		top=False, labelbottom=False, right=False, 
+		left=False, labelleft=False)
+	plt.title('Image')
+
+	plt.tight_layout()
+	plt.savefig("Airy_ring_2D_2_object_seperation_%s_%s_Noll_%i" 
+	%(str(crit_frac)[0],str(crit_frac)[2:],noll), 
+	bbox_inches='tight')
+
+	plt.figure((it*2)+1)
+	nn = 2
+	mm = 2
+
+	plt.subplot(nn, mm, 1)
+	plt.plot(v, point_obj_1_img_norm[Np//2,:], 'r--')
+	plt.plot(v, point_obj_2_img_norm[Np//2,:], 'b--')
+	plt.plot(v, 
+		(point_obj_1_img_norm+point_obj_2_img_norm)[Np//2,:]
+		,'g')
+	plt.ylabel("Normalised intensity")
+	plt.xlabel("Normalised lateral coordinate")
+	#plt.title("Object separation %.3f\u03C0" %crit_frac)
+
+	plt.subplot(nn, mm, 2)
+	plt.imshow(img_norm, vmin=display_min, vmax=display_max)
+	plt.tick_params(axis='both', which='both', bottom=False, 
+		top=False, labelbottom=False, right=False, 
+		left=False, labelleft=False)
+	plt.title('Unaberrated image')
+
+	plt.subplot(nn, mm, 3)
+	plt.plot(v, point_obj_1_img_norm_ab[Np//2,:], 'r--')
+	plt.plot(v, point_obj_2_img_norm_ab[Np//2,:], 'b--')
+	plt.plot(v, 
+		(point_obj_1_img_norm_ab+point_obj_2_img_norm_ab)
+		[Np//2,:], 'g')
+	plt.ylabel("Normalised intensity")
+	plt.xlabel("Normalised lateral coordinate")
+	#plt.title("Object separation %.3f\u03C0" %crit_frac)
+
+	plt.subplot(nn, mm, 4)
+	plt.imshow(img_norm_ab, vmin=display_min, 
+		vmax=display_max)
+	plt.tick_params(axis='both', which='both', bottom=False, 
+		top=False, labelbottom=False, right=False, 
+		left=False, labelleft=False)
+	plt.title('Aberrated image')
+
+	plt.tight_layout()
+	plt.savefig("Airy_ring_2D_2_object_seperation_aberration_c
+	omparison_Noll_%i" %noll, bbox_inches='tight')
+
+	it += 1
+
+plt.show()
+\end{lstlisting}
